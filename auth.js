@@ -1,20 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { auth } from "./firebase-config.js";
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCOaDDacOZNJT-W_ma9ZRT2KB-IGk1H2lc",
-  authDomain: "thanhthanhtea-e1feb.firebaseapp.com",
-  projectId: "thanhthanhtea-e1feb",
-  storageBucket: "thanhthanhtea-e1feb.firebasestorage.app",
-  messagingSenderId: "754380937369",
-  appId: "1:754380937369:web:2765e9b1ef9314de144008",
-  measurementId: "G-Q9SZ82ZFNT"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 // DOM Elements
@@ -62,8 +48,8 @@ onAuthStateChanged(auth, (user) => {
         
         headerAuthSection.innerHTML = `
             <div style="display: flex; align-items: center; gap: 10px;">
-                <img src="${photoURL}" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">
-                <span style="font-weight: 600; color: var(--primary-dark);">${displayName}</span>
+                <img src="${photoURL}" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; cursor: pointer;" onclick="window.location.href='profile.html'" title="Trang cá nhân">
+                <span style="font-weight: 600; color: var(--primary-dark); cursor: pointer;" onclick="window.location.href='profile.html'" title="Trang cá nhân">${displayName}</span>
                 <button onclick="handleLogout()" class="btn-outline pill-btn" style="padding: 5px 15px; font-size: 0.9rem; margin-left: 10px;">Đăng xuất</button>
             </div>
         `;

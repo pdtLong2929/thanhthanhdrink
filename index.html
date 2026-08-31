@@ -493,6 +493,20 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Modal Action Buttons -->
+                    <div class="modal-section pt-4 border-t" style="margin-top: auto;">
+                        <div style="display: flex; gap: 15px;">
+                            <button id="modal-btn-add-cart" class="btn-outline pill-btn"
+                                style="flex: 1; padding: 12px; font-weight: 600;">
+                                <i class="ph ph-shopping-cart" style="margin-right: 5px;"></i> Thêm vào giỏ
+                            </button>
+                            <button id="modal-btn-order" class="btn-primary pill-btn"
+                                style="flex: 1; padding: 12px; font-weight: 600;">
+                                Đặt hàng ngay
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -501,7 +515,7 @@
     <!-- Overlay -->
     <div id="overlay" class="overlay"></div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
     <!-- Auth Modal -->
     <div id="auth-modal" class="modal-overlay" style="display: none;">
         <div class="auth-modal-box text-center">
@@ -516,6 +530,45 @@
                     style="width: 20px; height: 20px;">
                 Tiếp tục với Google
             </button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal-overlay" style="display: none;">
+        <div class="auth-modal-box">
+            <button class="auth-modal-close" onclick="document.getElementById('checkout-modal').style.display='none'"
+                style="position:absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-main);"><i
+                    class="ph ph-x"></i></button>
+            <h2
+                style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-dark); text-align: center;">
+                Thông tin giao hàng</h2>
+
+            <form id="checkout-form" onsubmit="event.preventDefault(); submitDirectOrder();">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Họ và
+                        tên người nhận</label>
+                    <input type="text" id="checkout-name" required placeholder="Nhập họ và tên"
+                        style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Số
+                        điện thoại</label>
+                    <input type="tel" id="checkout-phone" required placeholder="Nhập số điện thoại"
+                        pattern="[0-9]{10,11}"
+                        style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);">
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Địa
+                        chỉ giao hàng</label>
+                    <textarea id="checkout-address" required placeholder="Nhập số nhà, tên đường, phường/xã..." rows="3"
+                        style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); resize: none; font-family: inherit;"></textarea>
+                </div>
+
+                <button type="submit" id="checkout-submit-btn" class="btn-primary pill-btn"
+                    style="width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 600;">Xác nhận đặt hàng</button>
+            </form>
         </div>
     </div>
 
