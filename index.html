@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Thanh Trà - Thức uống tươi mát, đậm vị tự nhiên</title>
+    <meta name="description"
+        content="Thanh Thanh Trà mang đến những thức uống trái cây tươi ngon, thanh mát với công thức độc đáo.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Phosphor Icons for simple icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-icon">TTF</div>
+                <div class="brand-text">
+                    <h1>Thanh Thanh Trà</h1>
+                    <span>TRÁI CÂY TƯƠI</span>
+                </div>
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#home" class="active">Trang chủ</a></li>
+                    <li><a href="#about">Giới thiệu</a></li>
+                    <li><a href="#menu">Thực đơn</a></li>
+                    <li><a href="#customize">Tuỳ chọn</a></li>
+                    <li><a href="#pricing">Bảng giá</a></li>
+                    <li><a href="#contact">Liên hệ</a></li>
+                </ul>
+            </nav>
+            <div class="header-cta" id="header-auth-section">
+                <a href="#" class="btn-primary pill-btn" onclick="document.getElementById('auth-modal').style.display='flex'; return false;">Đăng nhập / Đăng ký</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Banner Slider -->
+        <section id="home" class="hero-banner-slider">
+            <!-- Background Slider -->
+            <div class="banner-slides-wrapper" id="hero-slides-wrapper">
+                <div class="banner-slide active">
+                    <img src="images/banner1.jpg" alt="Banner 1">
+                </div>
+                <div class="banner-slide">
+                    <img src="images/banner2.jpg" alt="Banner 2">
+                </div>
+                <div class="banner-slide">
+                    <img src="images/banner3.jpg" alt="Banner 3">
+                </div>
+            </div>
+
+            <!-- Fade overlays -->
+            <div class="banner-overlay-fade left-fade"></div>
+            <div class="banner-overlay-fade right-fade"></div>
+
+            <!-- Dots -->
+            <div class="banner-dots" id="hero-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+        </section>
+
+        <!-- Original Hero Section -->
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <span class="badge-outline">TRÁI CÂY TƯƠI MỖI NGÀY</span>
+                    <h2 class="hero-title">Thức uống tươi mát, đậm vị tự nhiên</h2>
+                    <p class="hero-description">17 món trà trái cây, sữa chua và smoothie – mỗi món đều có đầy đủ thành
+                        phần, lượng calo theo size M/L và chỉ số dinh dưỡng. Lướt xem từng ly rồi chọn ly hợp gu nhất.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#menu" class="btn-primary pill-btn btn-lg">Xem thực đơn</a>
+                        <a href="reviews.html" class="btn-outline pill-btn btn-lg">Xem đánh giá</a>
+                    </div>
+                    
+                    <div class="hero-reviews-wrapper" style="margin-top: 2rem; width: 100%; max-width: 500px; overflow: hidden;">
+                        <div class="reviews-slider" id="reviews-slider" style="transition: opacity 0.5s ease-in-out;">
+                            <!-- Reviews injected by JS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <img src="https://placehold.co/400x400/b5e4dc/3c7363?text=Logo+TTF&font=Montserrat"
+                        alt="Logo Thanh Thanh Trà" class="hero-image logo-image-placeholder">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="hero-banner-slider">
+            <!-- Background Slider -->
+            <div class="banner-slides-wrapper" id="about-slides-wrapper">
+                <div class="banner-slide active">
+                    <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="About 1">
+                </div>
+                <div class="banner-slide">
+                    <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="About 2">
+                </div>
+                <div class="banner-slide">
+                    <img src="https://images.unsplash.com/photo-1547516508-4c1f9c7c4ec3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="About 3">
+                </div>
+            </div>
+
+            <!-- Fade overlays -->
+            <div class="banner-overlay-fade left-fade-about"></div>
+            <div class="banner-overlay-fade right-fade-about"></div>
+
+            <!-- Content -->
+            <div class="hero-container slider-hero-container" id="about-texts-wrapper">
+                <div class="about-text-slide active">
+                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                        <span class="badge-outline" style="background: rgba(255,253,243,0.9);">CÂU CHUYỆN THƯƠNG HIỆU</span>
+                        <h2 class="hero-title">Hương vị từ sự tận tâm</h2>
+                        <p class="hero-description">Chúng tôi chọn lọc kỹ lưỡng từng loại trái cây tươi ngon nhất mỗi ngày để mang đến cho bạn những thức uống không chỉ ngon miệng mà còn tốt cho sức khỏe.</p>
+                        <a href="about.html" class="btn-primary pill-btn" style="margin-top: 20px; display: inline-block;">Tìm hiểu thêm</a>
+                    </div>
+                </div>
+                <div class="about-text-slide">
+                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                        <span class="badge-outline" style="background: rgba(255,253,243,0.9);">NGUỒN GỐC TỰ NHIÊN</span>
+                        <h2 class="hero-title">Nông sản Việt nguyên bản</h2>
+                        <p class="hero-description">Khởi nguồn từ tình yêu với nông sản Việt, Thanh Thanh Trà trân trọng từng trái cây từ nông trại đến tay bạn, mong muốn mỗi ly nước là một trải nghiệm trọn vẹn.</p>
+                        <a href="about.html" class="btn-primary pill-btn" style="margin-top: 20px; display: inline-block;">Tìm hiểu thêm</a>
+                    </div>
+                </div>
+                <div class="about-text-slide">
+                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                        <span class="badge-outline" style="background: rgba(255,253,243,0.9);">PHONG CÁCH SỐNG XANH</span>
+                        <h2 class="hero-title">Tươi trẻ & Đầy năng lượng</h2>
+                        <p class="hero-description">Không chỉ là thức uống giải khát, mỗi sản phẩm còn mang theo nguồn năng lượng tích cực, giúp bạn khởi đầu một ngày mới đầy cảm hứng và sảng khoái.</p>
+                        <a href="about.html" class="btn-primary pill-btn" style="margin-top: 20px; display: inline-block;">Tìm hiểu thêm</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dots -->
+            <div class="banner-dots" id="about-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+        </section>
+
+
+
+        <!-- Menu Categories -->
+        <section id="categories" class="categories-section bg-mint-light">
+            <div class="section-header text-center">
+                <span class="badge-outline">THỰC ĐƠN</span>
+                <h2 class="section-title">Ba nhóm đồ uống</h2>
+                <p class="section-subtitle">Cùng một công thức: trái cây cắt trong ngày, không dùng bột pha sẵn, không
+                    phẩm màu.</p>
+            </div>
+
+            <div class="categories-grid container">
+                <div class="category-card">
+                    <div class="cat-icon-placeholder">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="Trà Trái Cây">
+                    </div>
+                    <h3>Trà Trái Cây</h3>
+                    <p>Trà ủ lạnh 8 tiếng, pha cùng trái cây tươi cắt trong ngày. Thanh mát, ít calo, uống cả ngày không
+                        ngán.</p>
+                    <div class="cat-meta">
+                        <span class="cat-price">55k / 65k</span> · <span class="cat-count">7 món</span>
+                    </div>
+                    <a href="menu.html?tab=TRÀ TRÁI CÂY" class="btn-text">Xem trà <i class="ph ph-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-icon-placeholder">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2405/2405479.png" alt="Sữa Chua">
+                    </div>
+                    <h3>Sữa Chua</h3>
+                    <p>Sữa chua nhà làm lên men 12 tiếng, kết hợp trái cây nghiền. Nhiều lợi khuẩn, chua dịu, béo nhẹ.
+                    </p>
+                    <div class="cat-meta">
+                        <span class="cat-price">55k / 65k</span> · <span class="cat-count">5 món</span>
+                    </div>
+                    <a href="menu.html?tab=SỮA CHUA" class="btn-text">Xem sữa chua <i class="ph ph-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-icon-placeholder">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1182/1182103.png" alt="Smoothie">
+                    </div>
+                    <h3>Smoothie</h3>
+                    <p>Trái cây đông lạnh xay mịn cùng sữa, không thêm nước. Đặc, no lâu – hợp cho bữa sáng hoặc sau
+                        buổi tập.</p>
+                    <div class="cat-meta">
+                        <span class="cat-price">85k / 95k</span> · <span class="cat-count">5 món</span>
+                    </div>
+                    <a href="menu.html?tab=SMOOTHIE" class="btn-text">Xem smoothie <i class="ph ph-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Menu (Products) -->
+        <section id="menu" class="featured-menu container">
+            <div class="section-header text-center">
+                <span class="badge-outline">KHÁCH GỌI NHIỀU NHẤT</span>
+                <h2 class="section-title">Món nổi bật</h2>
+                <p class="section-subtitle">Bấm vào từng ly để xem thành phần, calo theo size và chỉ số dinh dưỡng.</p>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <!-- Products injected by JS -->
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="menu.html" class="btn-primary pill-btn btn-lg">Xem toàn bộ 17 món</a>
+            </div>
+        </section>
+
+
+
+        <!-- Customize Section -->
+        <section id="customize" class="customize-section bg-mint-light">
+            <div class="section-header text-center">
+                <span class="badge-outline">CUSTOMIZE</span>
+                <h2 class="section-title">Ly nước theo đúng ý bạn</h2>
+                <p class="section-subtitle">Mọi món đều chỉnh được đường và đá. Riêng smoothie có thể đổi sang sữa hạt
+                    hoặc sữa ít béo.</p>
+            </div>
+
+            <div class="customize-grid container">
+                <!-- Sugar Options -->
+                <div class="customize-card">
+                    <h3>Mức đường</h3>
+                    <p>Từ 0% đến 100%. Chọn 50% là vừa miệng với hầu hết khách.</p>
+                    <div class="bars-container">
+                        <div class="bar-item">
+                            <div class="bar h-20"></div>
+                            <span>0%</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar h-40"></div>
+                            <span>25%</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar h-60"></div>
+                            <span>50%</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar h-80"></div>
+                            <span>75%</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar h-100"></div>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ice Options -->
+                <div class="customize-card">
+                    <h3>Mức đá</h3>
+                    <p>0% cho ly đậm vị, 100% cho ly mát lạnh nhất.</p>
+                    <div class="circles-container">
+                        <div class="circle-item">
+                            <div class="circle c-0"></div>
+                            <span>0%</span>
+                        </div>
+                        <div class="circle-item">
+                            <div class="circle c-50"></div>
+                            <span>50%</span>
+                        </div>
+                        <div class="circle-item">
+                            <div class="circle c-100"></div>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Milk Options -->
+                <div class="customize-card milk-card">
+                    <div class="milk-header">
+                        <h3>Loại sữa <span class="text-light">(smoothie)</span></h3>
+                        <p>Đổi sữa tươi sang lựa chọn khác, không tính thêm phí.</p>
+                    </div>
+                    <div class="milk-options">
+                        <div class="milk-option">
+                            <div class="add-icon"><i class="ph ph-plus"></i></div>
+                            <div>
+                                <h4>Sữa hạt</h4>
+                                <p>Hạnh nhân / óc chó – thuần chay</p>
+                            </div>
+                        </div>
+                        <div class="milk-option">
+                            <div class="add-icon"><i class="ph ph-plus"></i></div>
+                            <div>
+                                <h4>Sữa ít béo</h4>
+                                <p>Giảm khoảng 35 kcal mỗi ly</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-container container">
+            <div class="footer-brand">
+                <div class="logo-area light">
+                    <div class="logo-icon dark-teal-bg">TTF</div>
+                    <div class="brand-text">
+                        <h3>Thanh Thanh Trà</h3>
+                        <span>TRÁI CÂY TƯƠI</span>
+                    </div>
+                </div>
+                <p>Trà trái cây, sữa chua và smoothie làm từ trái cây tươi cắt trong ngày.</p>
+                <div class="social-links">
+                    <a href="#"><i class="ph ph-facebook-logo"></i></a>
+                    <a href="#"><i class="ph ph-instagram-logo"></i></a>
+                    <a href="#"><i class="ph ph-tiktok-logo"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="link-column">
+                    <h4>Thực đơn</h4>
+                    <ul>
+                        <li><a href="#">Trà trái cây</a></li>
+                        <li><a href="#">Sữa chua</a></li>
+                        <li><a href="#">Smoothie</a></li>
+                        <li><a href="#">Bảng giá</a></li>
+                    </ul>
+                </div>
+                <div class="link-column">
+                    <h4>Về quán</h4>
+                    <ul>
+                        <li><a href="#">Tuỳ chọn đường & đá</a></li>
+                        <li><a href="#">Nguyên liệu</a></li>
+                        <li><a href="#">Tuyển dụng</a></li>
+                        <li><a href="#">Nhượng quyền</a></li>
+                    </ul>
+                </div>
+                <div class="link-column contact-column">
+                    <h4>Liên hệ</h4>
+                    <ul>
+                        <li>123 Đường ABC, Quận 1, TP.HCM</li>
+                        <li>090 000 0000</li>
+                        <li>hello@thanhthanhtra.vn</li>
+                        <li>7:00 – 22:00 mỗi ngày</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Thanh Thanh Trà. Đơn vị tính giá: 1.000 VNĐ.</p>
+            <p>Thiết kế độc quyền.</p>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="ph ph-x"></i></button>
+            <div class="modal-layout">
+                <!-- Left: Image Slider -->
+                <div class="modal-image-col">
+                    <div class="modal-image-hint">Lướt hoặc bấm mũi tên để xem món khác</div>
+                    <button class="slider-btn prev"><i class="ph ph-caret-left"></i></button>
+                    <img id="modal-img" src="" alt="Product">
+                    <button class="slider-btn next"><i class="ph ph-caret-right"></i></button>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="modal-details-col">
+                    <div class="modal-category" id="modal-category">TRÀ TRÁI CÂY</div>
+                    <h2 class="modal-title" id="modal-title">Trà Cam Bưởi</h2>
+                    <p class="modal-desc" id="modal-desc">Cặp đôi họ cam quýt kinh điển, nhiều vitamin C nhất menu.</p>
+
+                    <div class="modal-tags" id="modal-tags">
+                        <span class="tag">Best seller</span>
+                        <span class="tag">Giàu vitamin C</span>
+                    </div>
+
+                    <p class="modal-long-desc" id="modal-long-desc">Cam vàng vắt tay lấy nước, bưởi da xanh tách tép
+                        nguyên múi thả vào ly. Trà ô long nhẹ hương giữ cho vị bưởi không bị đắng.</p>
+
+                    <div class="modal-section">
+                        <h3>THÀNH PHẦN</h3>
+                        <div class="ingredients-list" id="modal-ingredients">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3>SIZE & CALO</h3>
+                        <div class="size-selector">
+                            <div class="size-btn active" data-size="M">
+                                <span class="size-name">Size M</span>
+                                <span class="size-price" id="price-m">55<sup>k</sup></span>
+                                <span class="size-calo" id="calo-m">142 kcal</span>
+                            </div>
+                            <div class="size-btn" data-size="L">
+                                <span class="size-name">Size L</span>
+                                <span class="size-price" id="price-l">65<sup>k</sup></span>
+                                <span class="size-calo" id="calo-l">178 kcal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3>DINH DƯỠNG (<span id="current-size-label">SIZE M</span>)</h3>
+                        <div class="nutrition-list">
+                            <div class="nutri-item">
+                                <span class="nutri-label">Đường</span>
+                                <div class="nutri-bar-bg">
+                                    <div class="nutri-bar-fill" id="bar-sugar" style="width: 70%"></div>
+                                </div>
+                                <span class="nutri-val" id="val-sugar">30 g</span>
+                            </div>
+                            <div class="nutri-item">
+                                <span class="nutri-label">Chất xơ</span>
+                                <div class="nutri-bar-bg">
+                                    <div class="nutri-bar-fill" id="bar-fiber" style="width: 30%"></div>
+                                </div>
+                                <span class="nutri-val" id="val-fiber">2.8 g</span>
+                            </div>
+                            <div class="nutri-item">
+                                <span class="nutri-label">Đạm</span>
+                                <div class="nutri-bar-bg">
+                                    <div class="nutri-bar-fill" id="bar-protein" style="width: 10%"></div>
+                                </div>
+                                <span class="nutri-val" id="val-protein">0.8 g</span>
+                            </div>
+                            <div class="nutri-item">
+                                <span class="nutri-label">Vitamin C</span>
+                                <div class="nutri-bar-bg">
+                                    <div class="nutri-bar-fill" id="bar-vitc" style="width: 90%"></div>
+                                </div>
+                                <span class="nutri-val" id="val-vitc">96 mg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Options in modal as requested -->
+                    <div class="modal-section pt-4 border-t">
+                        <h3>TUỲ CHỌN ĐƯỜNG & ĐÁ</h3>
+                        <div class="quick-options">
+                            <div class="option-group">
+                                <h4>Đường</h4>
+                                <div class="option-btns">
+                                    <button class="opt-btn">0%</button>
+                                    <button class="opt-btn">50%</button>
+                                    <button class="opt-btn active">100%</button>
+                                </div>
+                            </div>
+                            <div class="option-group">
+                                <h4>Đá</h4>
+                                <div class="option-btns">
+                                    <button class="opt-btn">Ít đá</button>
+                                    <button class="opt-btn active">Bình thường</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <script src="script.js"></script>
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content text-center">
+            <button class="modal-close" onclick="document.getElementById('auth-modal').style.display='none'"><i class="ph ph-x"></i></button>
+            <h2 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-dark);">Đăng nhập / Đăng ký</h2>
+            <p style="color: var(--text-light); margin-bottom: 30px;">Vui lòng đăng nhập để tiếp tục</p>
+            <button id="google-login-btn" class="btn-outline pill-btn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" style="width: 20px; height: 20px;">
+                Tiếp tục với Google
+            </button>
+        </div>
+    </div>
+    
+    <script type="module" src="auth.js"></script>
+</body>
+
+</html>
