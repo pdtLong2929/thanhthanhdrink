@@ -1782,7 +1782,7 @@ button {
 @media (max-width: 480px) {
     /* Fix slider height on mobile */
     .hero-banner-slider {
-        aspect-ratio: 0.75 / 1 !important;
+        aspect-ratio: 1 / 0.75 !important;
         min-height: 400px !important;
     }
 
