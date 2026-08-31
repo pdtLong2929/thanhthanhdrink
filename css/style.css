@@ -1416,6 +1416,11 @@ button {
         text-align: center;
     }
 
+    .hero-container .hero-image-wrapper {
+        order: -1;
+        margin-bottom: -15px;
+    }
+
     .hero-buttons {
         justify-content: center;
     }
