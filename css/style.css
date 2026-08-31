@@ -1780,10 +1780,17 @@ button {
 
 /* Mobile Slider Text Fix */
 @media (max-width: 480px) {
+    /* Make logo smaller on mobile */
+    .logo-image-placeholder {
+        width: 75% !important;
+        max-width: 260px !important;
+        margin: 0 auto;
+    }
+
     /* Fix slider height on mobile */
     .hero-banner-slider {
-        aspect-ratio: 1 / 0.5 !important;
-        min-height: 400px !important;
+        aspect-ratio: 1 / 0.6 !important;
+        min-height: 320px !important;
     }
 
     .slider-hero-container .hero-title {
