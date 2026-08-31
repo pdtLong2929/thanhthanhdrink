@@ -1,5 +1,5 @@
 import { db, auth } from "./firebase-config.js";
-import { collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { collection, getDocs, addDoc, query, where, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 // State could be handled differently in a larger app, 
 // but for simplicity, we'll keep products and reviews in a store object
@@ -56,17 +56,40 @@ export async function addToCart(cartItem) {
     if (!user) return false;
 
     try {
-        await addDoc(collection(db, "carts"), {
-            uid: user.uid,
-            productId: cartItem.productId,
-            name: cartItem.name,
-            image: cartItem.image,
-            size: cartItem.size,
-            sugar: cartItem.sugar,
-            ice: cartItem.ice,
-            price: cartItem.price,
-            timestamp: new Date()
-        });
+        // Check if exact item already exists
+        const q = query(
+            collection(db, "carts"),
+            where("uid", "==", user.uid),
+            where("productId", "==", cartItem.productId),
+            where("size", "==", cartItem.size),
+            where("sugar", "==", cartItem.sugar),
+            where("ice", "==", cartItem.ice)
+        );
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+            // Item exists, increment quantity
+            const existingDoc = querySnapshot.docs[0];
+            const currentQuantity = existingDoc.data().quantity || 1;
+            await updateDoc(doc(db, "carts", existingDoc.id), {
+                quantity: currentQuantity + 1,
+                timestamp: new Date()
+            });
+        } else {
+            // Item doesn't exist, add new with quantity 1
+            await addDoc(collection(db, "carts"), {
+                uid: user.uid,
+                productId: cartItem.productId,
+                name: cartItem.name,
+                image: cartItem.image,
+                size: cartItem.size,
+                sugar: cartItem.sugar,
+                ice: cartItem.ice,
+                price: cartItem.price,
+                quantity: 1,
+                timestamp: new Date()
+            });
+        }
         return true;
     } catch (e) {
         console.error("Lỗi khi thêm vào giỏ:", e);
