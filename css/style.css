@@ -1465,6 +1465,16 @@ button {
 }
 
 @media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .section-title {
+        font-size: 1.6rem;
+    }
+    .hero-description {
+        font-size: 0.95rem;
+    }
+
     .product-grid {
         grid-template-columns: 1fr;
     }
@@ -1756,4 +1766,14 @@ button {
 }
 
 @media (max-width: 900px) { html { font-size: 15px; } }
-@media (max-width: 480px) { html { font-size: 14px; } }
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .section-title {
+        font-size: 1.6rem;
+    }
+    .hero-description {
+        font-size: 0.95rem;
+    }
+ html { font-size: 14px; } }
