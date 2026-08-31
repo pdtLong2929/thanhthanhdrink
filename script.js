@@ -80,6 +80,8 @@ let currentSize = 'M';
 // INITIALIZATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
+    initHeroSlider();
+    initAboutSlider();
     initReviewsSlider();
     initProductGrid(); // Init default 8 items for featured
     initFullMenu(); // Initialize the full menu section
@@ -110,6 +112,95 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 // RENDER FUNCTIONS
 // ==========================================
+
+function initHeroSlider() {
+    const slides = document.querySelectorAll('#hero-slides-wrapper .banner-slide');
+    const dots = document.querySelectorAll('#hero-dots .dot');
+    if (!slides.length) return;
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    let slideInterval;
+
+    function goToSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        goToSlide((currentSlide + 1) % totalSlides);
+    }
+
+    // Initialize auto slide
+    function startSlide() {
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    function stopSlide() {
+        clearInterval(slideInterval);
+    }
+
+    // Dot click events
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            stopSlide();
+            goToSlide(index);
+            startSlide();
+        });
+    });
+
+    startSlide();
+}
+
+function initAboutSlider() {
+    const slides = document.querySelectorAll('#about-slides-wrapper .banner-slide');
+    const texts = document.querySelectorAll('.about-text-slide');
+    const dots = document.querySelectorAll('#about-dots .dot');
+    if (!slides.length) return;
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    let slideInterval;
+
+    function goToSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        if (texts.length) texts.forEach(t => t.classList.remove('active'));
+        
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        if (texts.length && texts[index]) texts[index].classList.add('active');
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        goToSlide((currentSlide + 1) % totalSlides);
+    }
+
+    // Initialize auto slide
+    function startSlide() {
+        slideInterval = setInterval(nextSlide, 6000); // slightly different timing
+    }
+
+    function stopSlide() {
+        clearInterval(slideInterval);
+    }
+
+    // Dot click events
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            stopSlide();
+            goToSlide(index);
+            startSlide();
+        });
+    });
+
+    startSlide();
+}
 
 function initReviewsSlider() {
     const sliderContainer = document.getElementById('reviews-slider');
