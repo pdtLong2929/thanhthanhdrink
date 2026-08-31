@@ -198,6 +198,9 @@ button {
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(82, 162, 159, 0.1);
     transition: var(--transition);
+    position: relative;
+    overflow: visible !important;
+    z-index: 1000;
 }
 
 .header-container {
@@ -1425,10 +1428,6 @@ button {
 }
 
 @media (max-width: 768px) {
-    .navigation ul {
-        display: none;
-    }
-
     .header-cta {
         display: none;
     }
@@ -1509,7 +1508,7 @@ button {
     width: 90%;
     max-width: 400px;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     animation: slideUp 0.3s ease-out;
 }
 
@@ -1530,11 +1529,162 @@ button {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Mobile Auth Button - hidden on desktop, shown in mobile menu */
+.mobile-auth-cta {
+    display: none;
+}
+
+/* =========================================
+   RESPONSIVE (MOBILE) STYLES
+   ========================================= */
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+    /* Header & Navigation */
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .navigation {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        display: none;
+        /* hidden by default on mobile */
+        z-index: 9999;
+    }
+
+    .navigation.active {
+        display: flex !important;
+    }
+
+    .navigation ul {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+    }
+
+    .mobile-auth-cta {
+        display: block;
+        padding-top: 15px;
+        margin-top: 10px;
+        border-top: 1px solid rgba(82, 162, 159, 0.15);
+    }
+
+    .mobile-auth-cta .btn-primary {
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding: 12px 24px;
+        font-size: 0.95rem;
+    }
+
+
+    .header-cta {
+        display: none;
+        /* hide auth button on header mobile, or could move to menu */
+    }
+
+    /* Grids */
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-links {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    /* Hero */
+    .hero-content h2 {
+        font-size: 2.5rem;
+    }
+
+    /* Modals */
+    .modal-layout {
+        flex-direction: column;
+    }
+
+    .modal-image-col {
+        width: 100%;
+        min-height: 250px;
+        padding-top: 30px;
+    }
+
+    .modal-img {
+        max-height: 300px;
+    }
+
+    .modal-details-col {
+        padding: 20px 0;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+        padding: 20px;
+        overflow-y: auto;
+        /* Allow scrolling the whole modal on small screens */
+    }
+
+    .auth-modal-box {
+        width: 95%;
+        padding: 30px 20px;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu-controls {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #reviews-grid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -94,6 +94,27 @@
         }
 
         /* Profile Info */
+
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+            }
+            .profile-sidebar {
+                width: 100%;
+            }
+            .profile-content {
+                padding: 20px;
+            }
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .info-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
         .info-header {
             display: flex;
             align-items: center;
@@ -173,6 +194,11 @@
             <div class="header-cta" id="header-auth-section">
                 <!-- Injected by auth.js -->
             </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="ph ph-list"></i>
+            </button>
         </div>
     </header>
 

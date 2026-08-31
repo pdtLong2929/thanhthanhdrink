@@ -32,7 +32,6 @@ async function fetchDataFromFirebase() {
 
         initProductGrid();
         initReviewsSlider();
-        updateSliderButtons(); // Khởi tạo nút slider
         initFullMenu(); // Initialize the full menu section AFTER data is loaded
         initReviewsPage(); // Initialize reviews page AFTER data is loaded
     } catch (error) {
@@ -40,42 +39,80 @@ async function fetchDataFromFirebase() {
     }
 }
 
-// Khởi tạo ứng dụng sau khi DOM load
-document.addEventListener('DOMContentLoaded', () => {
-    fetchDataFromFirebase();
-    initHeroSlider();
-    initHeroSlider();
-    initAboutSlider();
-    initModal();
-    initScrollspy();
+function initApp() {
+    // 1. XỬ LÝ MOBILE MENU (Thực thi ngay lập tức)
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navigation = document.querySelector('.navigation');
 
-    // Gán sự kiện đóng modal
-    document.querySelector('.close-modal').addEventListener('click', closeModal);
-    document.getElementById('overlay').addEventListener('click', closeModal);
+    if (mobileToggle && navigation) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigation.classList.toggle('active');
+        });
 
-    // Gán sự kiện chuyển ảnh modal
-    document.querySelector('.slider-btn.prev').addEventListener('click', prevModalProduct);
-    document.querySelector('.slider-btn.next').addEventListener('click', nextModalProduct);
+        // Đóng menu khi click link bên trong
+        navigation.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navigation.classList.remove('active');
+            });
+        });
 
-    // Header shadow on scroll
+        // Click ra ngoài menu thì tự đóng
+        document.addEventListener('click', (e) => {
+            if (!navigation.contains(e.target) && !mobileToggle.contains(e.target)) {
+                navigation.classList.remove('active');
+            }
+        });
+    }
+
+    // 2. KHỞI TẠO CÁC HÀM ASYNC / SLIDER AN TOÀN
+    try { fetchDataFromFirebase(); } catch (err) { console.error("Firebase Error:", err); }
+    try { initHeroSlider(); } catch (err) { console.error("Hero Slider Error:", err); }
+    try { initAboutSlider(); } catch (err) { console.error("About Slider Error:", err); }
+    try { initModal(); } catch (err) { console.error("Modal Init Error:", err); }
+    try { initScrollspy(); } catch (err) { console.error("Scrollspy Error:", err); }
+
+    // SỰ KIỆN ĐÓNG MODAL
+    const closeModalBtn = document.querySelector('.close-modal');
+    if (closeModalBtn && typeof closeModal === 'function') {
+        closeModalBtn.addEventListener('click', closeModal);
+    }
+
+    const overlay = document.getElementById('overlay');
+    if (overlay && typeof closeModal === 'function') {
+        overlay.addEventListener('click', closeModal);
+    }
+
+    // SỰ KIỆN CHUYỂN ẢNH MODAL (Kiểm tra xem hàm có tồn tại hay không trước khi gán)
+    const prevBtn = document.querySelector('.slider-btn.prev');
+    if (prevBtn && typeof prevModalProduct === 'function') {
+        prevBtn.addEventListener('click', prevModalProduct);
+    }
+
+    const nextBtn = document.querySelector('.slider-btn.next');
+    if (nextBtn && typeof nextModalProduct === 'function') {
+        nextBtn.addEventListener('click', nextModalProduct);
+    }
+
+    // HEADER SHADOW KHI SCROLL
     window.addEventListener('scroll', () => {
         const header = document.querySelector('.header');
-        if (window.scrollY > 10) {
-            header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
-        } else {
-            header.style.boxShadow = 'none';
+        if (header) {
+            header.style.boxShadow = window.scrollY > 10 ? '0 2px 10px rgba(0,0,0,0.05)' : 'none';
         }
     });
 
-    // Option buttons toggle
+    // 5. NÚT CHỌN OPTION SIZE / TOPPING
     document.querySelectorAll('.opt-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const group = this.closest('.option-btns');
-            group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
+            if (group) {
+                group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            }
         });
     });
-});
+}
 
 // ==========================================
 // RENDER FUNCTIONS
@@ -756,3 +793,11 @@ window.submitDirectOrder = async function () {
         btn.disabled = false;
     }
 };
+
+
+// Safe initialization: works with both regular scripts and ES modules
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
