@@ -1777,3 +1777,34 @@ button {
         font-size: 0.95rem;
     }
  html { font-size: 14px; } }
+
+/* Mobile Slider Text Fix */
+@media (max-width: 480px) {
+    .slider-hero-container .hero-title {
+        font-size: 1.4rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 8px !important;
+    }
+    .slider-hero-container .hero-description {
+        font-size: 0.85rem !important;
+        margin-bottom: 12px !important;
+        padding: 0 10px;
+    }
+    .slider-hero-container {
+        padding-top: 30px !important;
+    }
+    
+    /* Make badges smaller too */
+    .slider-hero-container .badge-outline {
+        font-size: 0.7rem !important;
+        padding: 4px 10px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    /* Make buttons smaller */
+    .slider-hero-container .btn-primary {
+        padding: 8px 16px !important;
+        font-size: 0.9rem !important;
+        margin-top: 10px !important;
+    }
+}
