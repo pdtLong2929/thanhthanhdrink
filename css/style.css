@@ -1632,6 +1632,8 @@ button {
         width: 100%;
         padding: 12px 24px;
         font-size: 0.95rem;
+        color: var(--white) !important;
+        font-weight: 600;
     }
 
 
