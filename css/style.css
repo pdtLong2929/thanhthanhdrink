@@ -1688,3 +1688,66 @@ button {
         grid-template-columns: 1fr;
     }
 }
+/* =========================================
+   AUTH & CHECKOUT MODALS REFACTORED
+   ========================================= */
+.auth-title {
+    margin-bottom: 20px; 
+    font-family: 'Playfair Display', serif; 
+    color: var(--primary-dark);
+    text-align: center;
+}
+.auth-subtitle {
+    color: var(--text-light); 
+    margin-bottom: 30px;
+}
+.auth-google-btn {
+    width: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px; 
+    font-weight: 600;
+}
+.auth-google-icon {
+    width: 20px; 
+    height: 20px;
+}
+.checkout-close {
+    position: absolute; 
+    top: 15px; 
+    right: 15px; 
+    background: none; 
+    border: none; 
+    font-size: 1.5rem; 
+    cursor: pointer; 
+    color: var(--text-main);
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.checkout-address-group {
+    margin-bottom: 25px;
+}
+.form-group label {
+    display: block; 
+    font-weight: 600; 
+    margin-bottom: 8px; 
+    color: var(--text-main);
+}
+.form-input {
+    width: 100%; 
+    padding: 12px 16px; 
+    border-radius: 8px; 
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.form-textarea {
+    resize: none; 
+    font-family: inherit;
+}
+.checkout-submit {
+    width: 100%; 
+    padding: 12px; 
+    font-size: 1.1rem; 
+    font-weight: 600;
+}

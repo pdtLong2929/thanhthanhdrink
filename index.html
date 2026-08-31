@@ -13,7 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=4">
     <!-- Phosphor Icons for simple icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
@@ -520,19 +520,17 @@
     <!-- Overlay -->
     <div id="overlay" class="overlay"></div>
 
-    <script type="module" src="script.js?v=4"></script>
+    <script type="module" src="js/main.js?v=4"></script>
     <!-- Auth Modal -->
     <div id="auth-modal" class="modal-overlay" style="display: none;">
         <div class="auth-modal-box text-center">
             <button class="auth-modal-close" onclick="document.getElementById('auth-modal').style.display='none'"><i
                     class="ph ph-x"></i></button>
-            <h2 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-dark);">Đăng
-                nhập / Đăng ký</h2>
-            <p style="color: var(--text-light); margin-bottom: 30px;">Vui lòng đăng nhập để tiếp tục</p>
-            <button id="google-login-btn" class="btn-outline pill-btn"
-                style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600;">
+            <h2 class="auth-title">Đăng nhập / Đăng ký</h2>
+            <p class="auth-subtitle">Vui lòng đăng nhập để tiếp tục</p>
+            <button id="google-login-btn" class="btn-outline pill-btn auth-google-btn">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo"
-                    style="width: 20px; height: 20px;">
+                    class="auth-google-icon">
                 Tiếp tục với Google
             </button>
         </div>
@@ -541,43 +539,33 @@
     <!-- Checkout Modal -->
     <div id="checkout-modal" class="modal-overlay" style="display: none;">
         <div class="auth-modal-box">
-            <button class="auth-modal-close" onclick="document.getElementById('checkout-modal').style.display='none'"
-                style="position:absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-main);"><i
-                    class="ph ph-x"></i></button>
-            <h2
-                style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-dark); text-align: center;">
-                Thông tin giao hàng</h2>
+            <button class="auth-modal-close checkout-close" onclick="document.getElementById('checkout-modal').style.display='none'">
+                <i class="ph ph-x"></i>
+            </button>
+            <h2 class="auth-title">Thông tin giao hàng</h2>
 
             <form id="checkout-form" onsubmit="event.preventDefault(); submitDirectOrder();">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Họ và
-                        tên người nhận</label>
-                    <input type="text" id="checkout-name" required placeholder="Nhập họ và tên"
-                        style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);">
+                <div class="form-group">
+                    <label>Họ và tên người nhận</label>
+                    <input type="text" id="checkout-name" required placeholder="Nhập họ và tên" class="form-input">
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Số
-                        điện thoại</label>
-                    <input type="tel" id="checkout-phone" required placeholder="Nhập số điện thoại"
-                        pattern="[0-9]{10,11}"
-                        style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);">
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="tel" id="checkout-phone" required placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" class="form-input">
                 </div>
 
-                <div style="margin-bottom: 25px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Địa
-                        chỉ giao hàng</label>
-                    <textarea id="checkout-address" required placeholder="Nhập số nhà, tên đường, phường/xã..." rows="3"
-                        style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); resize: none; font-family: inherit;"></textarea>
+                <div class="form-group checkout-address-group">
+                    <label>Địa chỉ giao hàng</label>
+                    <textarea id="checkout-address" required placeholder="Nhập số nhà, tên đường, phường/xã..." rows="3" class="form-input form-textarea"></textarea>
                 </div>
 
-                <button type="submit" id="checkout-submit-btn" class="btn-primary pill-btn"
-                    style="width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 600;">Xác nhận đặt hàng</button>
+                <button type="submit" id="checkout-submit-btn" class="btn-primary pill-btn checkout-submit">Xác nhận đặt hàng</button>
             </form>
         </div>
     </div>
 
-    <script type="module" src="auth.js"></script>
+    <script type="module" src="js/auth.js"></script>
 </body>
 
 </html>
