@@ -24,7 +24,7 @@
     <header class="header">
         <div class="header-container">
             <div class="logo-area">
-                <div class="logo-icon">TTF</div>
+                <link rel="icon" type="image/png" href="images/logo.png">
                 <div class="brand-text">
                     <h1>Thanh Thanh Trà</h1>
                     <span>TRÁI CÂY TƯƠI</span>
@@ -42,7 +42,8 @@
                 <!-- Mobile Auth Button (visible only on mobile) -->
                 <div class="mobile-auth-cta">
                     <a href="#" class="btn-primary pill-btn"
-                        onclick="document.getElementById('auth-modal').style.display='flex'; document.querySelector('.navigation').classList.remove('active'); return false;">Đăng nhập / Đăng ký</a>
+                        onclick="document.getElementById('auth-modal').style.display='flex'; document.querySelector('.navigation').classList.remove('active'); return false;">Đăng
+                        nhập / Đăng ký</a>
                 </div>
             </nav>
             <div class="header-cta" id="header-auth-section">
@@ -109,8 +110,7 @@
                     </div>
                 </div>
                 <div class="hero-image-wrapper">
-                    <img src="images/logo.png"
-                        alt="Logo Thanh Thanh Trà" class="hero-image logo-image-placeholder">
+                    <img src="images/logo.png" alt="Logo Thanh Thanh Trà" class="hero-image logo-image-placeholder">
                 </div>
             </div>
         </section>
@@ -344,7 +344,7 @@
         <div class="footer-container container">
             <div class="footer-brand">
                 <div class="logo-area light">
-                    <div class="logo-icon dark-teal-bg">TTF</div>
+                    <img src="images/logo.png" alt="Logo" class="logo-image-header">
                     <div class="brand-text">
                         <h3>Thanh Thanh Trà</h3>
                         <span>TRÁI CÂY TƯƠI</span>
@@ -540,7 +540,8 @@
     <!-- Checkout Modal -->
     <div id="checkout-modal" class="modal-overlay" style="display: none;">
         <div class="auth-modal-box">
-            <button class="auth-modal-close checkout-close" onclick="document.getElementById('checkout-modal').style.display='none'">
+            <button class="auth-modal-close checkout-close"
+                onclick="document.getElementById('checkout-modal').style.display='none'">
                 <i class="ph ph-x"></i>
             </button>
             <h2 class="auth-title">Thông tin giao hàng</h2>
@@ -553,15 +554,18 @@
 
                 <div class="form-group">
                     <label>Số điện thoại</label>
-                    <input type="tel" id="checkout-phone" required placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" class="form-input">
+                    <input type="tel" id="checkout-phone" required placeholder="Nhập số điện thoại"
+                        pattern="[0-9]{10,11}" class="form-input">
                 </div>
 
                 <div class="form-group checkout-address-group">
                     <label>Địa chỉ giao hàng</label>
-                    <textarea id="checkout-address" required placeholder="Nhập số nhà, tên đường, phường/xã..." rows="3" class="form-input form-textarea"></textarea>
+                    <textarea id="checkout-address" required placeholder="Nhập số nhà, tên đường, phường/xã..." rows="3"
+                        class="form-input form-textarea"></textarea>
                 </div>
 
-                <button type="submit" id="checkout-submit-btn" class="btn-primary pill-btn checkout-submit">Xác nhận đặt hàng</button>
+                <button type="submit" id="checkout-submit-btn" class="btn-primary pill-btn checkout-submit">Xác nhận đặt
+                    hàng</button>
             </form>
         </div>
     </div>
@@ -571,7 +575,8 @@
     <!-- Success Modal -->
     <div id="success-modal" class="modal-overlay" style="display: none; z-index: 9999;">
         <div class="auth-modal-box text-center">
-            <button class="auth-modal-close checkout-close" onclick="document.getElementById('success-modal').style.display='none'">
+            <button class="auth-modal-close checkout-close"
+                onclick="document.getElementById('success-modal').style.display='none'">
                 <i class="ph ph-x"></i>
             </button>
             <div style="font-size: 4rem; color: #4caf50; margin-bottom: 10px; line-height: 1;">
