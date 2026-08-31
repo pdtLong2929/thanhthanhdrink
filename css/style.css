@@ -1780,10 +1780,18 @@ button {
 
 /* Mobile Slider Text Fix */
 @media (max-width: 480px) {
+    /* Fix fade overlay on mobile */
+    .banner-overlay-fade.left-fade-about, .banner-overlay-fade.right-fade-about {
+        width: 100% !important;
+        background: rgba(255, 253, 243, 0.6) !important;
+    }
+
     /* Make logo smaller on mobile */
     .logo-image-placeholder {
-        width: 75% !important;
+        width: 70% !important;
         max-width: 260px !important;
+        aspect-ratio: 1 / 1 !important;
+        height: auto !important;
         margin: 0 auto;
     }
 
