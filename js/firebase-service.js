@@ -50,3 +50,26 @@ export async function submitDirectOrder(orderItem, customerInfo) {
         return false;
     }
 }
+
+export async function addToCart(cartItem) {
+    const user = auth.currentUser;
+    if (!user) return false;
+
+    try {
+        await addDoc(collection(db, "carts"), {
+            uid: user.uid,
+            productId: cartItem.productId,
+            name: cartItem.name,
+            image: cartItem.image,
+            size: cartItem.size,
+            sugar: cartItem.sugar,
+            ice: cartItem.ice,
+            price: cartItem.price,
+            timestamp: new Date()
+        });
+        return true;
+    } catch (e) {
+        console.error("Lỗi khi thêm vào giỏ:", e);
+        return false;
+    }
+}

@@ -1,4 +1,4 @@
-import { fetchDataFromFirebase, submitDirectOrder } from './firebase-service.js';
+import { fetchDataFromFirebase, submitDirectOrder, addToCart } from './firebase-service.js';
 import { initHeroSlider, initAboutSlider, initScrollspy } from './ui-components.js';
 import { initProductGrid, initFullMenu, closeModal, updateNutrition, prevModalProduct, nextModalProduct, getCurrentProduct } from './product-menu.js';
 import { initReviewsPage } from './reviews.js';
@@ -81,6 +81,56 @@ function initApp() {
         });
     });
 
+
+    // 8. Add to Cart Button handling
+    const addCartBtn = document.getElementById('modal-btn-add-cart');
+    if(addCartBtn) {
+        addCartBtn.addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (!user) {
+                document.getElementById('auth-modal').style.display = 'flex';
+                closeModal();
+                return;
+            }
+            
+            addCartBtn.textContent = "Đang xử lý...";
+            addCartBtn.disabled = true;
+
+            const currentProduct = getCurrentProduct();
+            if (!currentProduct) return;
+
+            const sizeSelectedBtn = document.querySelector('.size-btn.active');
+            const sizeSelected = sizeSelectedBtn ? sizeSelectedBtn.textContent : 'M';
+            
+            const optionGroups = document.querySelectorAll('.option-group');
+            const sugarSelected = optionGroups.length > 0 && optionGroups[0].querySelector('.opt-btn.active') ? optionGroups[0].querySelector('.opt-btn.active').textContent : '100%';
+            const iceSelected = optionGroups.length > 1 && optionGroups[1].querySelector('.opt-btn.active') ? optionGroups[1].querySelector('.opt-btn.active').textContent : 'Bình thường';
+            
+            const price = sizeSelected === 'M' ? currentProduct.priceM : currentProduct.priceL;
+
+            const cartItem = {
+                productId: currentProduct.id,
+                name: currentProduct.name,
+                image: currentProduct.image,
+                size: sizeSelected,
+                sugar: sugarSelected,
+                ice: iceSelected,
+                price: price
+            };
+
+            const success = await addToCart(cartItem);
+            if(success) {
+                closeModal();
+                window.showSuccessModal("Thành công!", "Đã thêm sản phẩm vào giỏ hàng.", "Xem giỏ hàng", "profile.html#cart");
+            } else {
+                alert("Có lỗi xảy ra, vui lòng thử lại!");
+            }
+            
+            addCartBtn.innerHTML = '<i class="ph ph-shopping-cart" style="margin-right: 5px;"></i> Thêm vào giỏ';
+            addCartBtn.disabled = false;
+        });
+    }
+
     // 7. Order Button handling
     const orderBtn = document.getElementById('modal-btn-order');
     if(orderBtn) {
@@ -138,10 +188,10 @@ window.submitDirectOrder = async function () {
 
     const success = await submitDirectOrder(orderItem, {name, phone, address});
     if(success) {
-        alert("Đặt hàng thành công!");
         document.getElementById('checkout-modal').style.display = 'none';
         document.getElementById('checkout-form').reset();
         closeModal();
+        window.showSuccessModal("Thành công!", "Đã đặt hàng thành công.", "Xem đơn hàng", "profile.html#history");
     } else {
         alert("Có lỗi xảy ra, vui lòng thử lại!");
     }
@@ -153,4 +203,16 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);
 } else {
     initApp();
+}
+
+window.showSuccessModal = function(title, message, btnText, redirectUrl) {
+    document.getElementById('success-modal-title').textContent = title;
+    document.getElementById('success-modal-msg').textContent = message;
+    const btn = document.getElementById('success-modal-btn');
+    btn.textContent = btnText;
+    btn.onclick = () => {
+        window.location.href = redirectUrl;
+        return false;
+    };
+    document.getElementById('success-modal').style.display = 'flex';
 }

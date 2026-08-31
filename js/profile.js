@@ -51,41 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Handle Checkout
-    document.getElementById('checkout-btn')?.addEventListener('click', async () => {
+    // Handle Checkout - Open Modal
+    document.getElementById('checkout-btn')?.addEventListener('click', () => {
         if (!currentUserId || currentCartItems.length === 0) return;
-
-        try {
-            const checkoutBtn = document.getElementById('checkout-btn');
-            checkoutBtn.textContent = "Đang xử lý...";
-            checkoutBtn.disabled = true;
-
-            // Add to orders
-            const orderTotal = currentCartItems.reduce((sum, item) => sum + parseInt(item.price), 0);
-            await addDoc(collection(db, "orders"), {
-                uid: currentUserId,
-                items: currentCartItems,
-                total: orderTotal,
-                timestamp: new Date()
-            });
-
-            // Delete from carts
-            for (const item of currentCartItems) {
-                await deleteDoc(doc(db, "carts", item.docId));
-            }
-
-            alert("Đặt hàng thành công!");
-            loadCartData();
-            loadHistoryData();
-            checkoutBtn.textContent = "Thanh toán";
-            checkoutBtn.disabled = false;
-        } catch (error) {
-            console.error("Lỗi khi thanh toán:", error);
-            alert("Có lỗi xảy ra khi thanh toán.");
-            document.getElementById('checkout-btn').textContent = "Thanh toán";
-            document.getElementById('checkout-btn').disabled = false;
-        }
+        document.getElementById('checkout-modal').style.display = 'flex';
     });
+
 });
 
 async function loadCartData() {
@@ -218,4 +189,71 @@ window.showOrderDetails = function(index) {
 
     document.getElementById('order-details-content').innerHTML = contentHtml;
     document.getElementById('order-details-modal').style.display = 'flex';
+}
+
+window.showSuccessModal = function(title, message, btnText, redirectFn) {
+    document.getElementById('success-modal-title').textContent = title;
+    document.getElementById('success-modal-msg').textContent = message;
+    const btn = document.getElementById('success-modal-btn');
+    btn.textContent = btnText;
+    btn.onclick = () => {
+        redirectFn();
+        return false;
+    };
+    document.getElementById('success-modal').style.display = 'flex';
+}
+
+window.submitCartOrder = async function() {
+    if (!currentUserId || currentCartItems.length === 0) return;
+
+    const name = document.getElementById('checkout-name').value;
+    const phone = document.getElementById('checkout-phone').value;
+    const address = document.getElementById('checkout-address').value;
+    const btn = document.getElementById('checkout-submit-btn');
+
+    if (!name || !phone || !address) {
+        alert("Vui lòng điền đủ thông tin!");
+        return;
+    }
+
+    btn.textContent = "Đang xử lý...";
+    btn.disabled = true;
+
+    try {
+        const orderTotal = currentCartItems.reduce((sum, item) => sum + parseInt(item.price), 0);
+        await addDoc(collection(db, "orders"), {
+            uid: currentUserId,
+            items: currentCartItems,
+            total: orderTotal,
+            timestamp: new Date(),
+            customerName: name,
+            customerPhone: phone,
+            customerAddress: address
+        });
+
+        // Delete from carts
+        for (const item of currentCartItems) {
+            await deleteDoc(doc(db, "carts", item.docId));
+        }
+
+        document.getElementById('checkout-modal').style.display = 'none';
+        document.getElementById('checkout-form').reset();
+        
+        loadCartData();
+        loadHistoryData();
+        
+        window.showSuccessModal("Thành công!", "Đã đặt hàng thành công.", "Xem đơn hàng", () => {
+            document.getElementById('success-modal').style.display = 'none';
+            // switch to history tab
+            const historyTab = document.querySelector('.sidebar-item[data-target="tab-history"]');
+            if (historyTab) historyTab.click();
+        });
+
+    } catch (error) {
+        console.error("Lỗi khi thanh toán:", error);
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+    } finally {
+        btn.textContent = "Xác nhận đặt hàng";
+        btn.disabled = false;
+    }
 }

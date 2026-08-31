@@ -348,6 +348,53 @@
 
     <script type="module" src="js/auth.js"></script>
     <script type="module" src="js/profile.js"></script>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal-overlay" style="display: none; z-index: 9999;">
+        <div class="auth-modal-box text-center">
+            <button class="auth-modal-close checkout-close" onclick="document.getElementById('success-modal').style.display='none'">
+                <i class="ph ph-x"></i>
+            </button>
+            <div style="font-size: 4rem; color: #4caf50; margin-bottom: 10px; line-height: 1;">
+                <i class="ph-fill ph-check-circle"></i>
+            </div>
+            <h2 class="auth-title" id="success-modal-title" style="margin-bottom: 10px;">Thành công!</h2>
+            <p class="auth-subtitle" id="success-modal-msg" style="margin-bottom: 25px;">Thao tác thành công.</p>
+            <a href="#" id="success-modal-btn" class="btn-primary pill-btn"
+                style="display: inline-block; width: 100%; text-align: center; font-weight: 600;">Tiếp tục</a>
+        </div>
+    </div>
+
+
+    <!-- Checkout Modal for Cart -->
+    <div id="checkout-modal" class="modal-overlay" style="display: none; z-index: 9999;">
+        <div class="auth-modal-box">
+            <button class="auth-modal-close checkout-close" onclick="document.getElementById('checkout-modal').style.display='none'">
+                <i class="ph ph-x"></i>
+            </button>
+            <h2 class="auth-title">Thông tin giao hàng</h2>
+
+            <form id="checkout-form" onsubmit="event.preventDefault(); window.submitCartOrder();">
+                <div class="form-group">
+                    <label>Họ và tên người nhận</label>
+                    <input type="text" id="checkout-name" required placeholder="Nhập họ và tên" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="tel" id="checkout-phone" required placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" class="form-input">
+                </div>
+
+                <div class="form-group checkout-address-group">
+                    <label>Địa chỉ giao hàng</label>
+                    <textarea id="checkout-address" required placeholder="Nhập số nhà, tên đường, phường/xã..." rows="3" class="form-input form-textarea"></textarea>
+                </div>
+
+                <button type="submit" id="checkout-submit-btn" class="btn-primary pill-btn checkout-submit">Xác nhận đặt hàng</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>
