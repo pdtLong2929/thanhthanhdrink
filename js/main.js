@@ -4,82 +4,6 @@ import { initProductGrid, initFullMenu, closeModal, updateNutrition, prevModalPr
 import { initReviewsPage } from './reviews.js';
 import { auth } from './firebase-config.js';
 
-function initSiteContent() {
-    if (!store.siteContent) return;
-    
-    // Arrays
-    const arrayElements = document.querySelectorAll('[data-content-array]');
-    arrayElements.forEach(wrapper => {
-        const key = wrapper.getAttribute('data-content-array');
-        if (store.siteContent[key] && Array.isArray(store.siteContent[key]) && store.siteContent[key].length > 0) {
-            wrapper.innerHTML = '';
-            
-            // specific dot logic for hero slider
-            const isHero = wrapper.id === 'hero-slides-wrapper';
-            const dotsWrapper = isHero ? document.getElementById('hero-dots') : null;
-            if (dotsWrapper) dotsWrapper.innerHTML = '';
-
-            store.siteContent[key].forEach((url, index) => {
-                const div = document.createElement('div');
-                div.className = 'banner-slide' + (index === 0 ? ' active' : '');
-                div.innerHTML = `<img src="${url}" alt="Banner ${index+1}">`;
-                wrapper.appendChild(div);
-                
-                if (dotsWrapper) {
-                    const dot = document.createElement('span');
-                    dot.className = 'dot' + (index === 0 ? ' active' : '');
-                    dot.setAttribute('data-index', index);
-                    dotsWrapper.appendChild(dot);
-                }
-            });
-        }
-    });
-
-    // Single elements
-    const elements = document.querySelectorAll('[data-content]');
-    elements.forEach(el => {
-        const key = el.getAttribute('data-content');
-        if (store.siteContent[key]) {
-            if (el.tagName.toLowerCase() === 'img') {
-                el.src = store.siteContent[key];
-            } else {
-                el.innerHTML = store.siteContent[key];
-            }
-        }
-    });
-}
-
-function initCategories() {
-    const grid = document.getElementById('categories-grid');
-    if (!grid) return;
-    
-    grid.innerHTML = '';
-    
-    // Fallback if empty (shouldn't be, thanks to admin seed)
-    const cats = store.categories && store.categories.length > 0 
-                 ? store.categories 
-                 : [];
-
-    cats.forEach(cat => {
-        // count products
-        const count = store.products.filter(p => p.category === cat.id).length;
-        
-        const card = document.createElement('div');
-        card.className = 'category-card';
-        card.innerHTML = `
-            <div class="cat-icon-placeholder">
-                <img src="${cat.iconUrl || 'https://cdn-icons-png.flaticon.com/512/3075/3075977.png'}" alt="${cat.name}">
-            </div>
-            <h3>${cat.name}</h3>
-            <p>${cat.description || ''}</p>
-            <div class="cat-meta">
-                <span class="cat-price">${cat.priceRange || ''}</span> · <span class="cat-count">${count} món</span>
-            </div>
-            <a href="menu.html?tab=${encodeURIComponent(cat.id)}" class="btn-text">Xem ${cat.name.toLowerCase()} <i class="ph ph-arrow-right"></i></a>
-        `;
-        grid.appendChild(card);
-    });
-}
 
 function initApp() {
     // 1. Mobile Menu
@@ -107,8 +31,6 @@ function initApp() {
 
     // 2. Fetch Data and Init Components
     fetchDataFromFirebase([
-        initSiteContent,
-        initCategories,
         () => { try { initHeroSlider(); } catch (err) { console.error("Hero Slider Error:", err); } },
         () => { try { initAboutSlider(); } catch (err) { console.error("About Slider Error:", err); } },
         initProductGrid,

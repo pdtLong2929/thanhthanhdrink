@@ -81,7 +81,6 @@ onAuthStateChanged(auth, (user) => {
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <img src="${photoURL}" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; cursor: pointer;" onclick="window.location.href='profile.html'" title="Trang cá nhân">
                     <span style="font-weight: 600; color: var(--primary-dark); cursor: pointer;" onclick="window.location.href='profile.html'" title="Trang cá nhân">${displayName}</span>
-                    <button onclick="handleLogout()" class="btn-outline pill-btn" style="padding: 5px 15px; font-size: 0.9rem; margin-left: 10px;">Đăng xuất</button>
                 </div>
             `;
         }
@@ -91,7 +90,6 @@ onAuthStateChanged(auth, (user) => {
                 <div style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 15px;">
                     <img src="${photoURL}" alt="Avatar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; cursor: pointer;" onclick="window.location.href='profile.html'" title="Trang cá nhân">
                     <span style="font-weight: 600; color: var(--primary-dark); cursor: pointer; flex: 1; text-align: left;" onclick="window.location.href='profile.html'" title="Trang cá nhân">${displayName}</span>
-                    <button onclick="handleLogout(); const nav = document.querySelector('.navigation'); if(nav) nav.classList.remove('active');" class="btn-outline pill-btn" style="padding: 5px 15px; font-size: 0.9rem;">Đăng xuất</button>
                 </div>
             `;
         }

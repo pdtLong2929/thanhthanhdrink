@@ -5,6 +5,54 @@ import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/fireba
 
 const provider = new GoogleAuthProvider();
 
+function showDialog(message, type = 'alert') {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('custom-dialog-modal');
+        const icon = document.getElementById('dialog-icon');
+        const title = document.getElementById('dialog-title');
+        const msg = document.getElementById('dialog-message');
+        const okBtn = document.getElementById('dialog-ok-btn');
+        const cancelBtn = document.getElementById('dialog-cancel-btn');
+
+        msg.textContent = message;
+
+        if (type === 'confirm') {
+            icon.innerHTML = '<i class="ph-fill ph-question" style="color: #f59e0b;"></i>';
+            title.textContent = "Xác nhận";
+            cancelBtn.style.display = 'inline-block';
+        } else if (type === 'success') {
+            icon.innerHTML = '<i class="ph-fill ph-check-circle" style="color: #10b981;"></i>';
+            title.textContent = "Thành công";
+            cancelBtn.style.display = 'none';
+        } else if (type === 'error') {
+            icon.innerHTML = '<i class="ph-fill ph-warning-circle" style="color: #ef4444;"></i>';
+            title.textContent = "Lỗi";
+            cancelBtn.style.display = 'none';
+        } else {
+            icon.innerHTML = '<i class="ph-fill ph-info" style="color: #3b82f6;"></i>';
+            title.textContent = "Thông báo";
+            cancelBtn.style.display = 'none';
+        }
+
+        modal.style.display = 'block';
+
+        const cleanup = () => {
+            modal.style.display = 'none';
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+        };
+
+        okBtn.onclick = () => {
+            cleanup();
+            resolve(true);
+        };
+
+        cancelBtn.onclick = () => {
+            cleanup();
+            resolve(false);
+        };
+    });
+}
 // DOM Elements
 const loginOverlay = document.getElementById('login-overlay');
 const adminApp = document.getElementById('admin-app');
@@ -43,7 +91,7 @@ onAuthStateChanged(auth, async (user) => {
             adminApp.style.display = 'block';
             adminEmail.textContent = user.email;
             
-            initAdminData();
+            fetchProducts();
         } catch(e) {
             console.error(e);
             adminError.style.display = 'block';
@@ -107,7 +155,7 @@ hiddenFileInput.addEventListener('change', async (e) => {
         hiddenFileInput.value = '';
     } catch(err) {
         console.error("Lỗi upload:", err);
-        alert(`Có lỗi xảy ra khi tải ảnh lên. Chi tiết: ${err.message || err.code || err}`);
+        await showDialog(`Có lỗi xảy ra khi tải ảnh lên. Chi tiết: ${err.message || err.code || err}`, 'error');
     }
 });
 
@@ -143,223 +191,11 @@ hiddenMultiFileInput.addEventListener('change', async (e) => {
         hiddenMultiFileInput.value = '';
     } catch(err) {
         console.error("Lỗi upload:", err);
-        alert(`Có lỗi xảy ra khi tải ảnh lên nhiều ảnh. Chi tiết: ${err.message || err.code || err}`);
+        await showDialog(`Có lỗi xảy ra khi tải ảnh lên nhiều ảnh. Chi tiết: ${err.message || err.code || err}`, 'error');
     }
 });
 
 
-// ================= SITE CONTENT =================
-async function initAdminData() {
-    await fetchCategories();
-    await fetchSiteContent();
-    await fetchProducts();
-}
-
-async function fetchSiteContent() {
-    try {
-        const docSnap = await getDoc(doc(db, "siteContent", "main"));
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            
-            // Populate form
-            const fields = [
-                'heroTitle', 'heroDescription', 'heroBadge', 'heroLogo',
-                'storyBadge', 'storyTitle', 'storyDesc',
-                'missionBadge', 'missionTitle', 'missionDesc',
-                'menuBadge', 'menuTitle', 'menuDesc',
-                'aboutBadge1', 'aboutTitle1', 'aboutDesc1', 'aboutImg1',
-                'aboutBadge2', 'aboutTitle2', 'aboutDesc2', 'aboutImg2',
-                'aboutBadge3', 'aboutTitle3', 'aboutDesc3', 'aboutImg3',
-                'footerAddress', 'footerPhone', 'footerEmail', 'footerHours'
-            ];
-            
-            fields.forEach(field => {
-                const el = document.getElementById(field);
-                if (el && data[field]) el.value = data[field];
-            });
-            
-            if (data.heroBanners && Array.isArray(data.heroBanners)) {
-                document.getElementById('heroBanners').value = data.heroBanners.join('\n');
-            }
-        }
-    } catch (e) {
-        console.error("Lỗi khi tải nội dung tĩnh", e);
-    }
-}
-
-document.getElementById('site-content-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const heroBannersRaw = document.getElementById('heroBanners').value;
-    const heroBanners = heroBannersRaw.split('\n').map(l => l.trim()).filter(l => l);
-    
-    const data = {
-        heroTitle: document.getElementById('heroTitle').value,
-        heroDescription: document.getElementById('heroDescription').value,
-        heroBadge: document.getElementById('heroBadge').value,
-        heroLogo: document.getElementById('heroLogo').value,
-        heroBanners: heroBanners,
-        storyBadge: document.getElementById('storyBadge').value,
-        storyTitle: document.getElementById('storyTitle').value,
-        storyDesc: document.getElementById('storyDesc').value,
-        missionBadge: document.getElementById('missionBadge').value,
-        missionTitle: document.getElementById('missionTitle').value,
-        missionDesc: document.getElementById('missionDesc').value,
-        menuBadge: document.getElementById('menuBadge').value,
-        menuTitle: document.getElementById('menuTitle').value,
-        menuDesc: document.getElementById('menuDesc').value,
-        aboutBadge1: document.getElementById('aboutBadge1').value,
-        aboutTitle1: document.getElementById('aboutTitle1').value,
-        aboutDesc1: document.getElementById('aboutDesc1').value,
-        aboutImg1: document.getElementById('aboutImg1').value,
-        aboutBadge2: document.getElementById('aboutBadge2').value,
-        aboutTitle2: document.getElementById('aboutTitle2').value,
-        aboutDesc2: document.getElementById('aboutDesc2').value,
-        aboutImg2: document.getElementById('aboutImg2').value,
-        aboutBadge3: document.getElementById('aboutBadge3').value,
-        aboutTitle3: document.getElementById('aboutTitle3').value,
-        aboutDesc3: document.getElementById('aboutDesc3').value,
-        aboutImg3: document.getElementById('aboutImg3').value,
-        footerAddress: document.getElementById('footerAddress').value,
-        footerPhone: document.getElementById('footerPhone').value,
-        footerEmail: document.getElementById('footerEmail').value,
-        footerHours: document.getElementById('footerHours').value,
-    };
-    
-    try {
-        await setDoc(doc(db, "siteContent", "main"), data);
-        alert("Đã lưu nội dung thành công!");
-    } catch(err) {
-        console.error(err);
-        alert(`Lỗi khi lưu nội dung. Chi tiết: ${err.message || err.code || err}`);
-    }
-});
-
-
-// ================= CATEGORIES CRUD =================
-async function fetchCategories() {
-    try {
-        const snapshot = await getDocs(collection(db, "categories"));
-        const tbody = document.querySelector('#categories-table tbody');
-        const prodCategorySelect = document.getElementById('prodCategory');
-        
-        if (!tbody || !prodCategorySelect) return;
-
-        tbody.innerHTML = '';
-        prodCategorySelect.innerHTML = '';
-        
-        const categories = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        categories.sort((a, b) => (a.order || 0) - (b.order || 0));
-        
-        // Seed initial categories if empty
-        if (categories.length === 0) {
-            console.log("Seeding initial categories...");
-            const defaults = [
-                { id: 'tra', name: 'Trà Trái Cây', order: 1, priceRange: '55k / 65k' },
-                { id: 'suachua', name: 'Sữa Chua', order: 2, priceRange: '55k / 65k' },
-                { id: 'smoothie', name: 'Smoothie', order: 3, priceRange: '85k / 95k' }
-            ];
-            for (let c of defaults) {
-                await setDoc(doc(db, "categories", c.id), c);
-                categories.push(c);
-            }
-        }
-        
-        categories.forEach(cat => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><img src="${cat.iconUrl || ''}" alt="icon" style="width: 40px; height: 40px; object-fit: contain;"></td>
-                <td>${cat.id}</td>
-                <td>${cat.name}</td>
-                <td>${cat.description || ''}</td>
-                <td>${cat.order || 0}</td>
-                <td>
-                    <button class="btn-outline btn-edit-cat" data-id="${cat.id}">Sửa</button>
-                    <button class="btn-outline btn-del-cat" data-id="${cat.id}" style="color: #ef4444; border-color: #ef4444;">Xóa</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-            
-            const option = document.createElement('option');
-            option.value = cat.id;
-            option.textContent = cat.name;
-            prodCategorySelect.appendChild(option);
-        });
-
-        document.querySelectorAll('.btn-edit-cat').forEach(btn => {
-            btn.addEventListener('click', (e) => openCategoryModal(e.target.getAttribute('data-id'), categories));
-        });
-        document.querySelectorAll('.btn-del-cat').forEach(btn => {
-            btn.addEventListener('click', (e) => deleteCategory(e.target.getAttribute('data-id')));
-        });
-    } catch(e) {
-        console.error("Lỗi khi tải danh mục", e);
-    }
-}
-
-const catModal = document.getElementById('category-form-modal');
-document.getElementById('btn-add-category').addEventListener('click', () => {
-    document.getElementById('category-form').reset();
-    document.getElementById('catDocId').value = '';
-    document.getElementById('catId').readOnly = false;
-    document.getElementById('category-modal-title').textContent = "Thêm danh mục";
-    catModal.style.display = 'flex';
-});
-document.getElementById('close-category-modal').addEventListener('click', () => {
-    catModal.style.display = 'none';
-});
-
-function openCategoryModal(id, categories) {
-    const cat = categories.find(c => c.id === id);
-    if(!cat) return;
-    
-    document.getElementById('catDocId').value = cat.id;
-    document.getElementById('catId').value = cat.id;
-    document.getElementById('catId').readOnly = true;
-    document.getElementById('catName').value = cat.name;
-    document.getElementById('catDesc').value = cat.description || '';
-    document.getElementById('catPriceRange').value = cat.priceRange || '';
-    document.getElementById('catOrder').value = cat.order || 0;
-    document.getElementById('catIcon').value = cat.iconUrl || '';
-    
-    document.getElementById('category-modal-title').textContent = "Sửa danh mục";
-    catModal.style.display = 'flex';
-}
-
-document.getElementById('category-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = document.getElementById('catId').value.trim();
-    if(!id) return;
-    
-    const data = {
-        name: document.getElementById('catName').value,
-        description: document.getElementById('catDesc').value,
-        priceRange: document.getElementById('catPriceRange').value,
-        order: parseInt(document.getElementById('catOrder').value) || 0,
-        iconUrl: document.getElementById('catIcon').value
-    };
-    
-    try {
-        await setDoc(doc(db, "categories", id), data);
-        alert("Đã lưu danh mục thành công!");
-        catModal.style.display = 'none';
-        fetchCategories();
-    } catch(err) {
-        console.error(err);
-        alert(`Lỗi khi lưu danh mục. Chi tiết: ${err.message || err.code || err}`);
-    }
-});
-
-async function deleteCategory(id) {
-    if(confirm("Bạn có chắc chắn muốn xóa danh mục này? Hãy chắc chắn không còn món ăn nào thuộc danh mục này!")) {
-        try {
-            await deleteDoc(doc(db, "categories", id));
-            fetchCategories();
-        } catch(e) {
-            console.error(e);
-            alert(`Lỗi khi xóa danh mục. Chi tiết: ${e.message || e.code || e}`);
-        }
-    }
-}
 
 
 // ================= PRODUCTS =================
@@ -424,7 +260,7 @@ function renderProductsTable() {
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const docId = e.currentTarget.getAttribute('data-docid');
-            if (confirm("Bạn có chắc muốn xóa món này?")) {
+            if (await showDialog("Bạn có chắc muốn xóa món này?", 'confirm')) {
                 await deleteDoc(doc(db, "products", docId));
                 fetchProducts();
             }
@@ -504,11 +340,11 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
     
     try {
         await setDoc(doc(db, "products", docId || productData.id), productData); // Use custom ID if new
-        alert("Đã lưu món ăn!");
+        await showDialog("Đã lưu món ăn!", 'success');
         productModal.style.display = 'none';
         fetchProducts();
     } catch(err) {
         console.error(err);
-        alert(`Lỗi khi lưu món ăn. Chi tiết: ${err.message || err.code || err}`);
+        await showDialog(`Lỗi khi lưu món ăn. Chi tiết: ${err.message || err.code || err}`, 'error');
     }
 });

@@ -12,17 +12,21 @@ export const store = {
 
 export async function fetchDataFromFirebase(callbacks) {
     try {
-        const [productsSnapshot, reviewsSnapshot, siteContentSnapshot, categoriesSnapshot] = await Promise.all([
+        const [productsSnapshot, reviewsSnapshot, siteContentSnapshot] = await Promise.all([
             getDocs(collection(db, "products")),
             getDocs(collection(db, "reviews")),
-            getDoc(doc(db, "siteContent", "main")),
-            getDocs(collection(db, "categories"))
+            getDoc(doc(db, "siteContent", "main"))
         ]);
 
         store.products = productsSnapshot.docs.map(doc => doc.data());
         store.reviews = reviewsSnapshot.docs.map(doc => doc.data());
-        store.categories = categoriesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        store.categories.sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        // Use static categories since Admin panel no longer manages them
+        store.categories = [
+            { id: 'tra', name: 'Trà Trái Cây', order: 1 },
+            { id: 'suachua', name: 'Sữa Chua', order: 2 },
+            { id: 'smoothie', name: 'Smoothie', order: 3 }
+        ];
         
         if (siteContentSnapshot.exists()) {
             store.siteContent = siteContentSnapshot.data();
