@@ -93,9 +93,34 @@ export function initProductGrid() {
 export function initFullMenu() {
     const searchInput = document.getElementById('menu-search');
     const sortSelect = document.getElementById('menu-sort');
-    const tabs = document.querySelectorAll('.menu-tab-btn');
+    const tabsContainer = document.getElementById('menu-tabs');
+    
+    if (!tabsContainer || !searchInput || !sortSelect) return;
 
-    if (!searchInput) return;
+    // Build tabs dynamically
+    tabsContainer.innerHTML = '';
+    
+    // "All" tab
+    const allBtn = document.createElement('button');
+    allBtn.className = 'menu-tab-btn active';
+    allBtn.setAttribute('data-tab', 'ALL');
+    allBtn.style = 'padding: 8px 16px; border-radius: 20px; border: 1px solid var(--primary-dark); background: var(--primary-dark); color: white; font-weight: 600; cursor: pointer; transition: 0.3s;';
+    allBtn.textContent = `Tất cả (${store.products.length})`;
+    tabsContainer.appendChild(allBtn);
+
+    // Category tabs
+    const cats = store.categories || [];
+    cats.forEach(cat => {
+        const count = store.products.filter(p => p.category === cat.id).length;
+        const btn = document.createElement('button');
+        btn.className = 'menu-tab-btn';
+        btn.setAttribute('data-tab', cat.id);
+        btn.style = 'padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(82,162,159,0.3); background: transparent; color: var(--text-color); cursor: pointer; transition: 0.3s;';
+        btn.textContent = `${cat.name} (${count})`;
+        tabsContainer.appendChild(btn);
+    });
+
+    const tabs = document.querySelectorAll('.menu-tab-btn');
 
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');

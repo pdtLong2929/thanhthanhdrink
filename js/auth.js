@@ -32,9 +32,39 @@ window.handleLogout = () => {
     });
 };
 
-// Global function to open modal (so inline onclick handlers still work)
-window.openAuthModal = () => {
-    if (authModal) authModal.style.display = "flex";
+// Global function to open modal with optional custom notice message & title
+window.openAuthModal = (message, title) => {
+    const modal = document.getElementById("auth-modal");
+    if (!modal) return;
+
+    const titleEl = document.getElementById("auth-modal-title") || modal.querySelector(".auth-title");
+    const subEl = document.getElementById("auth-modal-subtitle") || modal.querySelector(".auth-subtitle");
+    const noticeEl = document.getElementById("auth-modal-notice");
+    const noticeText = document.getElementById("auth-modal-notice-text");
+
+    if (title && titleEl) {
+        titleEl.textContent = title;
+    } else if (titleEl) {
+        titleEl.textContent = "Đăng nhập / Đăng ký";
+    }
+
+    if (message) {
+        if (noticeEl) {
+            if (noticeText) noticeText.textContent = message;
+            else noticeEl.textContent = message;
+            noticeEl.style.display = "flex";
+        } else if (subEl) {
+            subEl.textContent = message;
+        }
+        if (subEl && noticeEl) {
+            subEl.textContent = "Vui lòng đăng nhập tài khoản Google để tiếp tục.";
+        }
+    } else {
+        if (noticeEl) noticeEl.style.display = "none";
+        if (subEl) subEl.textContent = "Vui lòng đăng nhập để tiếp tục";
+    }
+
+    modal.style.display = "flex";
 };
 
 // Listen to auth state changes

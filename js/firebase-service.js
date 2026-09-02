@@ -1,20 +1,32 @@
 import { db, auth } from "./firebase-config.js";
-import { collection, getDocs, addDoc, query, where, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { collection, getDocs, addDoc, query, where, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 // State could be handled differently in a larger app, 
 // but for simplicity, we'll keep products and reviews in a store object
 export const store = {
     products: [],
-    reviews: []
+    reviews: [],
+    categories: [],
+    siteContent: null
 };
 
 export async function fetchDataFromFirebase(callbacks) {
     try {
-        const productsSnapshot = await getDocs(collection(db, "products"));
-        store.products = productsSnapshot.docs.map(doc => doc.data());
+        const [productsSnapshot, reviewsSnapshot, siteContentSnapshot, categoriesSnapshot] = await Promise.all([
+            getDocs(collection(db, "products")),
+            getDocs(collection(db, "reviews")),
+            getDoc(doc(db, "siteContent", "main")),
+            getDocs(collection(db, "categories"))
+        ]);
 
-        const reviewsSnapshot = await getDocs(collection(db, "reviews"));
+        store.products = productsSnapshot.docs.map(doc => doc.data());
         store.reviews = reviewsSnapshot.docs.map(doc => doc.data());
+        store.categories = categoriesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        store.categories.sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        if (siteContentSnapshot.exists()) {
+            store.siteContent = siteContentSnapshot.data();
+        }
 
         store.products.sort((a, b) => {
             const idA = parseInt(a.id.replace('p', ''));
