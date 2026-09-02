@@ -274,3 +274,14 @@ export function nextModalProduct() {
 export function getCurrentProduct() {
     return currentProduct;
 }
+
+export function updateCategoryCounts() {
+    const cats = ['TRÀ TRÁI CÂY', 'SỮA CHUA', 'SMOOTHIE'];
+    cats.forEach(cat => {
+        const count = store.products.filter(p => p && p.category === cat).length;
+        const countSpan = document.getElementById(`count-${cat}`);
+        if (countSpan) {
+            countSpan.textContent = `${count} món`;
+        }
+    });
+}

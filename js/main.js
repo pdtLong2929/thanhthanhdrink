@@ -1,6 +1,6 @@
 import { fetchDataFromFirebase, submitDirectOrder, addToCart, store } from './firebase-service.js';
 import { initHeroSlider, initAboutSlider, initScrollspy } from './ui-components.js';
-import { initProductGrid, initFullMenu, closeModal, updateNutrition, prevModalProduct, nextModalProduct, getCurrentProduct } from './product-menu.js';
+import { initProductGrid, initFullMenu, closeModal, updateNutrition, prevModalProduct, nextModalProduct, getCurrentProduct, updateCategoryCounts } from './product-menu.js';
 import { initReviewsPage } from './reviews.js';
 import { auth } from './firebase-config.js';
 
@@ -35,7 +35,8 @@ function initApp() {
         () => { try { initAboutSlider(); } catch (err) { console.error("About Slider Error:", err); } },
         initProductGrid,
         initFullMenu,
-        initReviewsPage
+        initReviewsPage,
+        updateCategoryCounts
     ]).catch(err => console.error("Firebase Error:", err));
 
     try { initScrollspy(); } catch (err) { console.error("Scrollspy Error:", err); }
