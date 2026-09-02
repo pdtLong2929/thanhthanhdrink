@@ -77,156 +77,17 @@
         
         <div class="admin-layout">
             <aside class="admin-sidebar">
-                <div class="admin-nav-item active" data-target="tab-content">
-                    <i class="ph ph-browser"></i> Nội dung Trang web
-                </div>
-                <div class="admin-nav-item" data-target="tab-categories">
-                    <i class="ph ph-list-bullets"></i> Quản lý Danh mục
-                </div>
-                <div class="admin-nav-item" data-target="tab-products">
+                <div class="admin-nav-item active" data-target="tab-products">
                     <i class="ph ph-coffee"></i> Quản lý Món ăn
+                </div>
+                <div class="admin-nav-item" data-target="tab-url-guide">
+                    <i class="ph ph-image"></i> Hướng dẫn lấy URL ảnh
                 </div>
             </aside>
             
             <main class="admin-content">
-                <!-- Tab: Site Content -->
-                <div id="tab-content" class="tab-content active">
-                    <h2>Quản lý Nội dung Trang web</h2>
-                    <p style="margin-bottom: 20px; color: #64748b;">Thay đổi văn bản và hình ảnh hiển thị trên trang chủ và các trang khác.</p>
-                    
-                    <form id="site-content-form">
-                        <div class="admin-card">
-                            <h3>Section: Hero (Đầu trang)</h3>
-                            <div class="form-group">
-                                <label>Tiêu đề chính (Title)</label>
-                                <input type="text" id="heroTitle" class="form-input" placeholder="Thức uống tươi mát...">
-                            </div>
-                            <div class="form-group">
-                                <label>Đoạn mô tả (Description)</label>
-                                <textarea id="heroDescription" class="form-input form-textarea"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Badge (VD: TRÁI CÂY TƯƠI MỖI NGÀY)</label>
-                                <input type="text" id="heroBadge" class="form-input">
-                            </div>
-                            <div class="form-group">
-                                <label>Logo to (xoay) ở Đầu trang (URL)</label>
-                                <div style="display: flex; gap: 10px;">
-                                    <input type="text" id="heroLogo" class="form-input">
-                                    <button type="button" class="btn-outline upload-btn" data-target="heroLogo" style="padding: 0 15px; white-space: nowrap;">Tải lên</button>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Các ảnh nền (Banner) Đầu trang (Ngăn cách bởi xuống dòng)</label>
-                                <textarea id="heroBanners" class="form-input form-textarea" style="min-height: 120px;"></textarea>
-                                <button type="button" class="btn-outline upload-multi-btn" data-target="heroBanners" style="margin-top: 10px;">Tải lên nhiều ảnh</button>
-                            </div>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>Section: Về Chúng Tôi (About Slider)</h3>
-                            <!-- Slide 1 -->
-                            <div style="border: 1px solid #e2e8f0; padding: 15px; margin-bottom: 10px; border-radius: 6px;">
-                                <h4>Slide 1</h4>
-                                <div class="form-group"><label>Badge</label><input type="text" id="aboutBadge1" class="form-input"></div>
-                                <div class="form-group"><label>Tiêu đề</label><input type="text" id="aboutTitle1" class="form-input"></div>
-                                <div class="form-group"><label>Mô tả</label><textarea id="aboutDesc1" class="form-input form-textarea"></textarea></div>
-                                <div class="form-group"><label>Ảnh nền (URL)</label>
-                                    <div style="display: flex; gap: 10px;">
-                                        <input type="text" id="aboutImg1" class="form-input">
-                                        <button type="button" class="btn-outline upload-btn" data-target="aboutImg1" style="padding: 0 15px; white-space: nowrap;">Tải lên</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Slide 2 -->
-                            <div style="border: 1px solid #e2e8f0; padding: 15px; margin-bottom: 10px; border-radius: 6px;">
-                                <h4>Slide 2</h4>
-                                <div class="form-group"><label>Badge</label><input type="text" id="aboutBadge2" class="form-input"></div>
-                                <div class="form-group"><label>Tiêu đề</label><input type="text" id="aboutTitle2" class="form-input"></div>
-                                <div class="form-group"><label>Mô tả</label><textarea id="aboutDesc2" class="form-input form-textarea"></textarea></div>
-                                <div class="form-group"><label>Ảnh nền (URL)</label>
-                                    <div style="display: flex; gap: 10px;">
-                                        <input type="text" id="aboutImg2" class="form-input">
-                                        <button type="button" class="btn-outline upload-btn" data-target="aboutImg2" style="padding: 0 15px; white-space: nowrap;">Tải lên</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Slide 3 -->
-                            <div style="border: 1px solid #e2e8f0; padding: 15px; margin-bottom: 10px; border-radius: 6px;">
-                                <h4>Slide 3</h4>
-                                <div class="form-group"><label>Badge</label><input type="text" id="aboutBadge3" class="form-input"></div>
-                                <div class="form-group"><label>Tiêu đề</label><input type="text" id="aboutTitle3" class="form-input"></div>
-                                <div class="form-group"><label>Mô tả</label><textarea id="aboutDesc3" class="form-input form-textarea"></textarea></div>
-                                <div class="form-group"><label>Ảnh nền (URL)</label>
-                                    <div style="display: flex; gap: 10px;">
-                                        <input type="text" id="aboutImg3" class="form-input">
-                                        <button type="button" class="btn-outline upload-btn" data-target="aboutImg3" style="padding: 0 15px; white-space: nowrap;">Tải lên</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>Section: Câu Chuyện Thương Hiệu (Story)</h3>
-                            <div class="form-group"><label>Badge</label><input type="text" id="storyBadge" class="form-input"></div>
-                            <div class="form-group"><label>Tiêu đề</label><input type="text" id="storyTitle" class="form-input"></div>
-                            <div class="form-group"><label>Mô tả chi tiết</label><textarea id="storyDesc" class="form-input form-textarea" style="min-height:100px;"></textarea></div>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>Section: Sứ Mệnh Xanh (Mission)</h3>
-                            <div class="form-group"><label>Badge</label><input type="text" id="missionBadge" class="form-input"></div>
-                            <div class="form-group"><label>Tiêu đề</label><input type="text" id="missionTitle" class="form-input"></div>
-                            <div class="form-group"><label>Mô tả ngắn</label><textarea id="missionDesc" class="form-input form-textarea"></textarea></div>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>Section: Nhóm Đồ Uống (Menu Categories)</h3>
-                            <div class="form-group"><label>Badge</label><input type="text" id="menuBadge" class="form-input"></div>
-                            <div class="form-group"><label>Tiêu đề</label><input type="text" id="menuTitle" class="form-input"></div>
-                            <div class="form-group"><label>Mô tả ngắn</label><textarea id="menuDesc" class="form-input form-textarea"></textarea></div>
-                        </div>
-
-                        <div class="admin-card">
-                            <h3>Section: Footer (Liên hệ)</h3>
-                            <div class="form-group"><label>Địa chỉ</label><input type="text" id="footerAddress" class="form-input"></div>
-                            <div class="form-group"><label>Điện thoại</label><input type="text" id="footerPhone" class="form-input"></div>
-                            <div class="form-group"><label>Email</label><input type="text" id="footerEmail" class="form-input"></div>
-                            <div class="form-group"><label>Giờ mở cửa</label><input type="text" id="footerHours" class="form-input"></div>
-                        </div>
-
-                        <button type="submit" class="btn-primary pill-btn">Lưu Nội Dung</button>
-                    </form>
-                </div>
-
-                <!-- Tab: Categories -->
-                <div id="tab-categories" class="tab-content">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h2>Quản lý Danh mục (Loại đồ uống)</h2>
-                        <button id="btn-add-category" class="btn-primary pill-btn"><i class="ph ph-plus"></i> Thêm danh mục</button>
-                    </div>
-                    
-                    <div class="admin-card">
-                        <table id="categories-table">
-                            <thead>
-                                <tr>
-                                    <th>Icon</th>
-                                    <th>Mã (ID)</th>
-                                    <th>Tên danh mục</th>
-                                    <th>Mô tả</th>
-                                    <th>Thứ tự hiển thị</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Injected via JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
                 <!-- Tab: Products -->
-                <div id="tab-products" class="tab-content">
+                <div id="tab-products" class="tab-content active">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                         <h2>Quản lý Món ăn</h2>
                         <button id="btn-add-product" class="btn-primary pill-btn"><i class="ph ph-plus"></i> Thêm món mới</button>
@@ -251,6 +112,31 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- Tab: URL Guide -->
+                <div id="tab-url-guide" class="tab-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2>Hướng dẫn lấy URL ảnh</h2>
+                    </div>
+                    <div class="admin-card">
+                        <p style="margin-bottom: 15px; color: var(--text-main); line-height: 1.6;">
+                            Vì hệ thống chưa được đăng ký gói trả phí của Firebase nên tính năng tải ảnh trực tiếp từ máy tính lên có thể không hoạt động ổn định. Thay vào đó, bạn có thể copy link hình ảnh từ bất kỳ trang web nào (Facebook, Google Hình ảnh, Drive...) dán vào ô nhập <strong>Ảnh (URL)</strong>.
+                        </p>
+                        
+                        <h3 style="margin-bottom: 10px;">Các bước thực hiện:</h3>
+                        <ol style="padding-left: 20px; line-height: 1.8; margin-bottom: 20px; color: var(--text-main);">
+                            <li>Lên Google, Facebook hoặc kho ảnh của bạn.</li>
+                            <li>Nhấn <strong>chuột phải</strong> vào hình ảnh bạn muốn dùng.</li>
+                            <li>Chọn <strong>"Sao chép địa chỉ hình ảnh"</strong> (Copy image address).</li>
+                            <li>Quay lại trang này và dán (Paste) vào ô <strong>Ảnh (URL)</strong> khi thêm/sửa món nước.</li>
+                        </ol>
+
+                        <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-main);">
+                            <strong>Lưu ý:</strong> URL hình ảnh thường kết thúc bằng đuôi <code>.jpg</code>, <code>.png</code>, hoặc <code>.webp</code>.
+                        </div>
+                    </div>
+                </div>
+
             </main>
         </div>
     </div>
