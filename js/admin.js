@@ -285,7 +285,7 @@ function openProductModal(docId) {
             document.getElementById('prodDocId').value = p._docId;
             document.getElementById('prodId').value = p.id || '';
             document.getElementById('prodName').value = p.name || '';
-            document.getElementById('prodCategory').value = p.category || 'TRÀ TRÁI CÂY';
+            document.getElementById('prodCategory').value = p.category || 'tra';
             document.getElementById('prodPriceM').value = p.priceM || '';
             document.getElementById('prodPriceL').value = p.priceL || '';
             document.getElementById('prodCaloM').value = p.caloM || '';
