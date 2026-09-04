@@ -1,0 +1,525 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Thanh TrĂ  - Thá»©c uá»‘ng tÆ°Æ¡i mĂ¡t, Ä‘áº­m vá»‹ tá»± nhiĂªn</title>
+    <meta name="description"
+        content="Thanh Thanh TrĂ  mang Ä‘áº¿n nhá»¯ng thá»©c uá»‘ng trĂ¡i cĂ¢y tÆ°Æ¡i ngon, thanh mĂ¡t vá»›i cĂ´ng thá»©c Ä‘á»™c Ä‘Ă¡o.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Phosphor Icons for simple icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-icon">TTF</div>
+                <div class="brand-text">
+                    <h1>Thanh Thanh TrĂ </h1>
+                    <span>TRĂI CĂ‚Y TÆ¯Æ I</span>
+                </div>
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#home" class="active">Trang chá»§</a></li>
+                    <li><a href="#about">Giá»›i thiá»‡u</a></li>
+                    <li><a href="#menu">Thá»±c Ä‘Æ¡n</a></li>
+                    <li><a href="#customize">Tuá»³ chá»n</a></li>
+                    <li><a href="#pricing">Báº£ng giĂ¡</a></li>
+                    <li><a href="#contact">LiĂªn há»‡</a></li>
+                </ul>
+            </nav>
+            <div class="header-cta" id="header-auth-section">
+                <a href="#" class="btn-primary pill-btn"
+                    onclick="document.getElementById('auth-modal').style.display='flex'; return false;">ÄÄƒng nháº­p / ÄÄƒng
+                    kĂ½</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Banner Slider -->
+        <section id="home" class="hero-banner-slider">
+            <!-- Background Slider -->
+            <div class="banner-slides-wrapper" id="hero-slides-wrapper">
+                <div class="banner-slide active">
+                    <img src="images/banner1.jpg" alt="Banner 1">
+                </div>
+                <div class="banner-slide">
+                    <img src="images/banner2.jpg" alt="Banner 2">
+                </div>
+                <div class="banner-slide">
+                    <img src="images/banner3.jpg" alt="Banner 3">
+                </div>
+            </div>
+
+            <!-- Fade overlays -->
+            <div class="banner-overlay-fade left-fade"></div>
+            <div class="banner-overlay-fade right-fade"></div>
+
+            <!-- Dots -->
+            <div class="banner-dots" id="hero-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+        </section>
+
+        <!-- Original Hero Section -->
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <span class="badge-outline">TRĂI CĂ‚Y TÆ¯Æ I Má»–I NGĂ€Y</span>
+                    <h2 class="hero-title">Thá»©c uá»‘ng tÆ°Æ¡i mĂ¡t, Ä‘áº­m vá»‹ tá»± nhiĂªn</h2>
+                    <p class="hero-description">17 mĂ³n trĂ  trĂ¡i cĂ¢y, sá»¯a chua vĂ  smoothie â€“ má»—i mĂ³n Ä‘á»u cĂ³ Ä‘áº§y Ä‘á»§ thĂ nh
+                        pháº§n, lÆ°á»£ng calo theo size M/L vĂ  chá»‰ sá»‘ dinh dÆ°á»¡ng. LÆ°á»›t xem tá»«ng ly rá»“i chá»n ly há»£p gu nháº¥t.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#menu" class="btn-primary pill-btn btn-lg">Xem thá»±c Ä‘Æ¡n</a>
+                        <a href="reviews.html" class="btn-outline pill-btn btn-lg">Xem Ä‘Ă¡nh giĂ¡</a>
+                    </div>
+
+                    <div class="hero-reviews-wrapper"
+                        style="margin-top: 2rem; width: 100%; max-width: 500px; overflow: hidden;">
+                        <div class="reviews-slider" id="reviews-slider" style="transition: opacity 0.5s ease-in-out;">
+                            <!-- Reviews injected by JS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <img src="https://placehold.co/400x400/b5e4dc/3c7363?text=Logo+TTF&font=Montserrat"
+                        alt="Logo Thanh Thanh TrĂ " class="hero-image logo-image-placeholder">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="hero-banner-slider">
+            <!-- Background Slider -->
+            <div class="banner-slides-wrapper" id="about-slides-wrapper">
+                <div class="banner-slide active">
+                    <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                        alt="About 1">
+                </div>
+                <div class="banner-slide">
+                    <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                        alt="About 2">
+                </div>
+                <div class="banner-slide">
+                    <img src="https://images.unsplash.com/photo-1547516508-4c1f9c7c4ec3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                        alt="About 3">
+                </div>
+            </div>
+
+            <!-- Fade overlays -->
+            <div class="banner-overlay-fade left-fade-about"></div>
+            <div class="banner-overlay-fade right-fade-about"></div>
+
+            <!-- Content -->
+            <div class="hero-container slider-hero-container" id="about-texts-wrapper">
+                <div class="about-text-slide active">
+                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                        <span class="badge-outline" style="background: rgba(255,253,243,0.9);">CĂ‚U CHUYá»†N THÆ¯Æ NG
+                            HIá»†U</span>
+                        <h2 class="hero-title">HÆ°Æ¡ng vá»‹ tá»« sá»± táº­n tĂ¢m</h2>
+                        <p class="hero-description">ChĂºng tĂ´i chá»n lá»c ká»¹ lÆ°á»¡ng tá»«ng loáº¡i trĂ¡i cĂ¢y tÆ°Æ¡i ngon nháº¥t má»—i
+                            ngĂ y Ä‘á»ƒ mang Ä‘áº¿n cho báº¡n nhá»¯ng thá»©c uá»‘ng khĂ´ng chá»‰ ngon miá»‡ng mĂ  cĂ²n tá»‘t cho sá»©c khá»e.</p>
+                        <a href="about.html" class="btn-primary pill-btn"
+                            style="margin-top: 20px; display: inline-block;">TĂ¬m hiá»ƒu thĂªm</a>
+                    </div>
+                </div>
+                <div class="about-text-slide">
+                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                        <span class="badge-outline" style="background: rgba(255,253,243,0.9);">NGUá»’N Gá»C Tá»° NHIĂN</span>
+                        <h2 class="hero-title">NĂ´ng sáº£n Viá»‡t nguyĂªn báº£n</h2>
+                        <p class="hero-description">Khá»Ÿi nguá»“n tá»« tĂ¬nh yĂªu vá»›i nĂ´ng sáº£n Viá»‡t, Thanh Thanh TrĂ  trĂ¢n trá»ng
+                            tá»«ng trĂ¡i cĂ¢y tá»« nĂ´ng tráº¡i Ä‘áº¿n tay báº¡n, mong muá»‘n má»—i ly nÆ°á»›c lĂ  má»™t tráº£i nghiá»‡m trá»n váº¹n.
+                        </p>
+                        <a href="about.html" class="btn-primary pill-btn"
+                            style="margin-top: 20px; display: inline-block;">TĂ¬m hiá»ƒu thĂªm</a>
+                    </div>
+                </div>
+                <div class="about-text-slide">
+                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                        <span class="badge-outline" style="background: rgba(255,253,243,0.9);">PHONG CĂCH Sá»NG
+                            XANH</span>
+                        <h2 class="hero-title">TÆ°Æ¡i tráº» & Äáº§y nÄƒng lÆ°á»£ng</h2>
+                        <p class="hero-description">KhĂ´ng chá»‰ lĂ  thá»©c uá»‘ng giáº£i khĂ¡t, má»—i sáº£n pháº©m cĂ²n mang theo nguá»“n
+                            nÄƒng lÆ°á»£ng tĂ­ch cá»±c, giĂºp báº¡n khá»Ÿi Ä‘áº§u má»™t ngĂ y má»›i Ä‘áº§y cáº£m há»©ng vĂ  sáº£ng khoĂ¡i.</p>
+                        <a href="about.html" class="btn-primary pill-btn"
+                            style="margin-top: 20px; display: inline-block;">TĂ¬m hiá»ƒu thĂªm</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dots -->
+            <div class="banner-dots" id="about-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+        </section>
+
+
+
+        <!-- Menu Categories -->
+        <section id="categories" class="categories-section bg-mint-light">
+            <div class="section-header text-center">
+                <span class="badge-outline">THá»°C ÄÆ N</span>
+                <h2 class="section-title">Ba nhĂ³m Ä‘á»“ uá»‘ng</h2>
+                <p class="section-subtitle">CĂ¹ng má»™t cĂ´ng thá»©c: trĂ¡i cĂ¢y cáº¯t trong ngĂ y, khĂ´ng dĂ¹ng bá»™t pha sáºµn, khĂ´ng
+                    pháº©m mĂ u.</p>
+            </div>
+
+            <div class="categories-grid container">
+                <div class="category-card">
+                    <div class="cat-icon-placeholder">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="TrĂ  TrĂ¡i CĂ¢y">
+                    </div>
+                    <h3>TrĂ  TrĂ¡i CĂ¢y</h3>
+                    <p>TrĂ  á»§ láº¡nh 8 tiáº¿ng, pha cĂ¹ng trĂ¡i cĂ¢y tÆ°Æ¡i cáº¯t trong ngĂ y. Thanh mĂ¡t, Ă­t calo, uá»‘ng cáº£ ngĂ y khĂ´ng
+                        ngĂ¡n.</p>
+                    <div class="cat-meta">
+                        <span class="cat-price">55k / 65k</span> Â· <span class="cat-count">7 mĂ³n</span>
+                    </div>
+                    <a href="menu.html?tab=TRĂ€ TRĂI CĂ‚Y" class="btn-text">Xem trĂ  <i class="ph ph-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-icon-placeholder">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2405/2405479.png" alt="Sá»¯a Chua">
+                    </div>
+                    <h3>Sá»¯a Chua</h3>
+                    <p>Sá»¯a chua nhĂ  lĂ m lĂªn men 12 tiáº¿ng, káº¿t há»£p trĂ¡i cĂ¢y nghiá»n. Nhiá»u lá»£i khuáº©n, chua dá»‹u, bĂ©o nháº¹.
+                    </p>
+                    <div class="cat-meta">
+                        <span class="cat-price">55k / 65k</span> Â· <span class="cat-count">5 mĂ³n</span>
+                    </div>
+                    <a href="menu.html?tab=Sá»®A CHUA" class="btn-text">Xem sá»¯a chua <i class="ph ph-arrow-right"></i></a>
+                </div>
+
+                <div class="category-card">
+                    <div class="cat-icon-placeholder">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1182/1182103.png" alt="Smoothie">
+                    </div>
+                    <h3>Smoothie</h3>
+                    <p>TrĂ¡i cĂ¢y Ä‘Ă´ng láº¡nh xay má»‹n cĂ¹ng sá»¯a, khĂ´ng thĂªm nÆ°á»›c. Äáº·c, no lĂ¢u â€“ há»£p cho bá»¯a sĂ¡ng hoáº·c sau
+                        buá»•i táº­p.</p>
+                    <div class="cat-meta">
+                        <span class="cat-price">85k / 95k</span> Â· <span class="cat-count">5 mĂ³n</span>
+                    </div>
+                    <a href="menu.html?tab=SMOOTHIE" class="btn-text">Xem smoothie <i class="ph ph-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Menu (Products) -->
+        <section id="menu" class="featured-menu container">
+            <div class="section-header text-center">
+                <span class="badge-outline">KHĂCH Gá»ŒI NHIá»€U NHáº¤T</span>
+                <h2 class="section-title">MĂ³n ná»•i báº­t</h2>
+                <p class="section-subtitle">Báº¥m vĂ o tá»«ng ly Ä‘á»ƒ xem thĂ nh pháº§n, calo theo size vĂ  chá»‰ sá»‘ dinh dÆ°á»¡ng.</p>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <!-- Products injected by JS -->
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="menu.html" class="btn-primary pill-btn btn-lg">Xem toĂ n bá»™ 17 mĂ³n</a>
+            </div>
+        </section>
+
+
+
+        <!-- Customize Section -->
+        <section id="customize" class="customize-section bg-mint-light">
+            <div class="section-header text-center">
+                <span class="badge-outline">CUSTOMIZE</span>
+                <h2 class="section-title">Ly nÆ°á»›c theo Ä‘Ăºng Ă½ báº¡n</h2>
+                <p class="section-subtitle">Má»i mĂ³n Ä‘á»u chá»‰nh Ä‘Æ°á»£c Ä‘Æ°á»ng vĂ  Ä‘Ă¡. RiĂªng smoothie cĂ³ thá»ƒ Ä‘á»•i sang sá»¯a háº¡t
+                    hoáº·c sá»¯a Ă­t bĂ©o.</p>
+            </div>
+
+            <div class="customize-grid container">
+                <!-- Sugar Options -->
+                <div class="customize-card">
+                    <h3>Má»©c Ä‘Æ°á»ng</h3>
+                    <p>Tá»« 0% Ä‘áº¿n 100%. Chá»n 50% lĂ  vá»«a miá»‡ng vá»›i háº§u háº¿t khĂ¡ch.</p>
+                    <div class="bars-container">
+                        <div class="bar-item">
+                            <div class="bar h-20"></div>
+                            <span>0%</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar h-40"></div>
+                            <span>25%</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar h-60"></div>
+                            <span>50%</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar h-80"></div>
+                            <span>75%</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar h-100"></div>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ice Options -->
+                <div class="customize-card">
+                    <h3>Má»©c Ä‘Ă¡</h3>
+                    <p>0% cho ly Ä‘áº­m vá»‹, 100% cho ly mĂ¡t láº¡nh nháº¥t.</p>
+                    <div class="circles-container">
+                        <div class="circle-item">
+                            <div class="circle c-0"></div>
+                            <span>0%</span>
+                        </div>
+                        <div class="circle-item">
+                            <div class="circle c-50"></div>
+                            <span>50%</span>
+                        </div>
+                        <div class="circle-item">
+                            <div class="circle c-100"></div>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Milk Options -->
+                <div class="customize-card milk-card">
+                    <div class="milk-header">
+                        <h3>Loáº¡i sá»¯a <span class="text-light">(smoothie)</span></h3>
+                        <p>Äá»•i sá»¯a tÆ°Æ¡i sang lá»±a chá»n khĂ¡c, khĂ´ng tĂ­nh thĂªm phĂ­.</p>
+                    </div>
+                    <div class="milk-options">
+                        <div class="milk-option">
+                            <div class="add-icon"><i class="ph ph-plus"></i></div>
+                            <div>
+                                <h4>Sá»¯a háº¡t</h4>
+                                <p>Háº¡nh nhĂ¢n / Ă³c chĂ³ â€“ thuáº§n chay</p>
+                            </div>
+                        </div>
+                        <div class="milk-option">
+                            <div class="add-icon"><i class="ph ph-plus"></i></div>
+                            <div>
+                                <h4>Sá»¯a Ă­t bĂ©o</h4>
+                                <p>Giáº£m khoáº£ng 35 kcal má»—i ly</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-container container">
+            <div class="footer-brand">
+                <div class="logo-area light">
+                    <div class="logo-icon dark-teal-bg">TTF</div>
+                    <div class="brand-text">
+                        <h3>Thanh Thanh TrĂ </h3>
+                        <span>TRĂI CĂ‚Y TÆ¯Æ I</span>
+                    </div>
+                </div>
+                <p>TrĂ  trĂ¡i cĂ¢y, sá»¯a chua vĂ  smoothie lĂ m tá»« trĂ¡i cĂ¢y tÆ°Æ¡i cáº¯t trong ngĂ y.</p>
+                <div class="social-links">
+                    <a href="#"><i class="ph ph-facebook-logo"></i></a>
+                    <a href="#"><i class="ph ph-instagram-logo"></i></a>
+                    <a href="#"><i class="ph ph-tiktok-logo"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="link-column">
+                    <h4>Thá»±c Ä‘Æ¡n</h4>
+                    <ul>
+                        <li><a href="#">TrĂ  trĂ¡i cĂ¢y</a></li>
+                        <li><a href="#">Sá»¯a chua</a></li>
+                        <li><a href="#">Smoothie</a></li>
+                        <li><a href="#">Báº£ng giĂ¡</a></li>
+                    </ul>
+                </div>
+                <div class="link-column">
+                    <h4>Vá» quĂ¡n</h4>
+                    <ul>
+                        <li><a href="#">Tuá»³ chá»n Ä‘Æ°á»ng & Ä‘Ă¡</a></li>
+                        <li><a href="#">NguyĂªn liá»‡u</a></li>
+                        <li><a href="#">Tuyá»ƒn dá»¥ng</a></li>
+                        <li><a href="#">NhÆ°á»£ng quyá»n</a></li>
+                    </ul>
+                </div>
+                <div class="link-column contact-column">
+                    <h4>LiĂªn há»‡</h4>
+                    <ul>
+                        <li>123 ÄÆ°á»ng ABC, Quáº­n 1, TP.HCM</li>
+                        <li>090 000 0000</li>
+                        <li>hello@thanhthanhtra.vn</li>
+                        <li>7:00 â€“ 22:00 má»—i ngĂ y</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Thanh Thanh TrĂ . ÄÆ¡n vá»‹ tĂ­nh giĂ¡: 1.000 VNÄ.</p>
+            <p>Thiáº¿t káº¿ Ä‘á»™c quyá»n.</p>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal"><i class="ph ph-x"></i></button>
+            <div class="modal-layout">
+                <!-- Left: Image Slider -->
+                <div class="modal-image-col">
+                    <div class="modal-image-hint">LÆ°á»›t hoáº·c báº¥m mÅ©i tĂªn Ä‘á»ƒ xem mĂ³n khĂ¡c</div>
+                    <button class="slider-btn prev"><i class="ph ph-caret-left"></i></button>
+                    <img id="modal-img" src="" alt="Product">
+                    <button class="slider-btn next"><i class="ph ph-caret-right"></i></button>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="modal-details-col">
+                    <div class="modal-category" id="modal-category">TRĂ€ TRĂI CĂ‚Y</div>
+                    <h2 class="modal-title" id="modal-title">TrĂ  Cam BÆ°á»Ÿi</h2>
+                    <p class="modal-desc" id="modal-desc">Cáº·p Ä‘Ă´i há» cam quĂ½t kinh Ä‘iá»ƒn, nhiá»u vitamin C nháº¥t menu.</p>
+
+                    <div class="modal-tags" id="modal-tags">
+                        <span class="tag">Best seller</span>
+                        <span class="tag">GiĂ u vitamin C</span>
+                    </div>
+
+                    <p class="modal-long-desc" id="modal-long-desc">Cam vĂ ng váº¯t tay láº¥y nÆ°á»›c, bÆ°á»Ÿi da xanh tĂ¡ch tĂ©p
+                        nguyĂªn mĂºi tháº£ vĂ o ly. TrĂ  Ă´ long nháº¹ hÆ°Æ¡ng giá»¯ cho vá»‹ bÆ°á»Ÿi khĂ´ng bá»‹ Ä‘áº¯ng.</p>
+
+                    <div class="modal-section">
+                        <h3>THĂ€NH PHáº¦N</h3>
+                        <div class="ingredients-list" id="modal-ingredients">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3>SIZE & CALO</h3>
+                        <div class="size-selector">
+                            <div class="size-btn active" data-size="M">
+                                <span class="size-name">Size M</span>
+                                <span class="size-price" id="price-m">55<sup>k</sup></span>
+                                <span class="size-calo" id="calo-m">142 kcal</span>
+                            </div>
+                            <div class="size-btn" data-size="L">
+                                <span class="size-name">Size L</span>
+                                <span class="size-price" id="price-l">65<sup>k</sup></span>
+                                <span class="size-calo" id="calo-l">178 kcal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3>DINH DÆ¯á» NG (<span id="current-size-label">SIZE M</span>)</h3>
+                        <div class="nutrition-list">
+                            <div class="nutri-item">
+                                <span class="nutri-label">ÄÆ°á»ng</span>
+                                <div class="nutri-bar-bg">
+                                    <div class="nutri-bar-fill" id="bar-sugar" style="width: 70%"></div>
+                                </div>
+                                <span class="nutri-val" id="val-sugar">30 g</span>
+                            </div>
+                            <div class="nutri-item">
+                                <span class="nutri-label">Cháº¥t xÆ¡</span>
+                                <div class="nutri-bar-bg">
+                                    <div class="nutri-bar-fill" id="bar-fiber" style="width: 30%"></div>
+                                </div>
+                                <span class="nutri-val" id="val-fiber">2.8 g</span>
+                            </div>
+                            <div class="nutri-item">
+                                <span class="nutri-label">Äáº¡m</span>
+                                <div class="nutri-bar-bg">
+                                    <div class="nutri-bar-fill" id="bar-protein" style="width: 10%"></div>
+                                </div>
+                                <span class="nutri-val" id="val-protein">0.8 g</span>
+                            </div>
+                            <div class="nutri-item">
+                                <span class="nutri-label">Vitamin C</span>
+                                <div class="nutri-bar-bg">
+                                    <div class="nutri-bar-fill" id="bar-vitc" style="width: 90%"></div>
+                                </div>
+                                <span class="nutri-val" id="val-vitc">96 mg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Options in modal as requested -->
+                    <div class="modal-section pt-4 border-t">
+                        <h3>TUá»² CHá»ŒN ÄÆ¯á»œNG & ÄĂ</h3>
+                        <div class="quick-options">
+                            <div class="option-group">
+                                <h4>ÄÆ°á»ng</h4>
+                                <div class="option-btns">
+                                    <button class="opt-btn">0%</button>
+                                    <button class="opt-btn">50%</button>
+                                    <button class="opt-btn active">100%</button>
+                                </div>
+                            </div>
+                            <div class="option-group">
+                                <h4>ÄĂ¡</h4>
+                                <div class="option-btns">
+                                    <button class="opt-btn">Ăt Ä‘Ă¡</button>
+                                    <button class="opt-btn active">BĂ¬nh thÆ°á»ng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <script src="script.js"></script>
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay" style="display: none;">
+        <div class="auth-modal-box text-center">
+            <button class="auth-modal-close" onclick="document.getElementById('auth-modal').style.display='none'"><i
+                    class="ph ph-x"></i></button>
+            <h2 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-dark);">ÄÄƒng
+                nháº­p / ÄÄƒng kĂ½</h2>
+            <p style="color: var(--text-light); margin-bottom: 30px;">Vui lĂ²ng Ä‘Äƒng nháº­p Ä‘á»ƒ tiáº¿p tá»¥c</p>
+            <button id="google-login-btn" class="btn-outline pill-btn"
+                style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo"
+                    style="width: 20px; height: 20px;">
+                Tiáº¿p tá»¥c vá»›i Google
+            </button>
+        </div>
+    </div>
+
+    <script type="module" src="auth.js"></script>
+</body>
+
+</html>

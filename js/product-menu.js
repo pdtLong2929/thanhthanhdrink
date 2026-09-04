@@ -195,7 +195,11 @@ function renderFullMenu() {
     } else if (currentSort === 'price-desc') {
         filtered.sort((a, b) => parseInt(b.priceM) - parseInt(a.priceM));
     } else if (currentSort === 'calo-asc') {
-        filtered.sort((a, b) => a.nutritionM.calo - b.nutritionM.calo);
+        filtered.sort((a, b) => {
+            const caloA = a.caloM || (a.nutritionM && a.nutritionM.calo) || 0;
+            const caloB = b.caloM || (b.nutritionM && b.nutritionM.calo) || 0;
+            return parseInt(caloA) - parseInt(caloB);
+        });
     }
 
     countDisplay.textContent = filtered.length;
@@ -235,9 +239,11 @@ export function renderModalData(index) {
     document.getElementById('modal-tags').innerHTML = tagsHtml;
 
     document.getElementById('price-m').innerHTML = `${product.priceM}<sup>k</sup>`;
-    document.getElementById('calo-m').textContent = `${product.nutritionM.calo} kcal`;
+    const caloM = product.caloM || (product.nutritionM && product.nutritionM.calo) || '?';
+    document.getElementById('calo-m').textContent = `${caloM} kcal`;
     document.getElementById('price-l').innerHTML = `${product.priceL}<sup>k</sup>`;
-    document.getElementById('calo-l').textContent = `${product.nutritionL.calo} kcal`;
+    const caloL = product.caloL || (product.nutritionL && product.nutritionL.calo) || '?';
+    document.getElementById('calo-l').textContent = `${caloL} kcal`;
 
     const sizeMBtn = document.querySelector('.size-btn[data-size="M"]');
     if (sizeMBtn) sizeMBtn.click();
@@ -245,12 +251,20 @@ export function renderModalData(index) {
 
 export function updateNutrition(size) {
     if (!currentProduct) return;
-    const data = size === 'M' ? currentProduct.nutritionM : currentProduct.nutritionL;
+    
+    let data;
+    if (currentProduct.nutrition) {
+        data = currentProduct.nutrition;
+    } else {
+        data = size === 'M' ? currentProduct.nutritionM : currentProduct.nutritionL;
+    }
+    if (!data) data = { sugar: 0, fiber: 0, protein: 0, vitc: 0, vitaminC: 0 };
+    
     document.getElementById('current-size-label').textContent = `SIZE ${size}`;
-    updateNutriBar('sugar', data.sugar, 60, 'g');
-    updateNutriBar('fiber', data.fiber, 10, 'g');
-    updateNutriBar('protein', data.protein, 10, 'g');
-    updateNutriBar('vitc', data.vitc, 150, 'mg');
+    updateNutriBar('sugar', data.sugar || 0, 60, 'g');
+    updateNutriBar('fiber', data.fiber || 0, 10, 'g');
+    updateNutriBar('protein', data.protein || 0, 10, 'g');
+    updateNutriBar('vitc', data.vitaminC || data.vitc || 0, 150, 'mg');
 }
 
 function updateNutriBar(id, val, max, unit) {
@@ -276,10 +290,15 @@ export function getCurrentProduct() {
 }
 
 export function updateCategoryCounts() {
-    const cats = ['TRÀ TRÁI CÂY', 'SỮA CHUA', 'SMOOTHIE'];
-    cats.forEach(cat => {
-        const count = store.products.filter(p => p && p.category === cat).length;
-        const countSpan = document.getElementById(`count-${cat}`);
+    const map = {
+        'TRÀ TRÁI CÂY': 'tra',
+        'SỮA CHUA': 'suachua',
+        'SMOOTHIE': 'smoothie'
+    };
+    Object.keys(map).forEach(catLabel => {
+        const catId = map[catLabel];
+        const count = store.products.filter(p => p && (p.category === catId || p.category === catLabel)).length;
+        const countSpan = document.getElementById(`count-${catLabel}`);
         if (countSpan) {
             countSpan.textContent = `${count} món`;
         }
