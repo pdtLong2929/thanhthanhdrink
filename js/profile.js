@@ -187,7 +187,7 @@ async function loadCartData() {
                 <img src="${item.image}" alt="${item.name}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;">
                 <div style="flex: 1;">
                     <h4 style="margin: 0; color: var(--primary-dark); font-size: 1.1rem;">${item.name}</h4>
-                    <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: var(--text-muted);">Size: ${item.size} | ${item.sugar} | ${item.ice}</p>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: var(--text-muted);">Size: ${item.size} | ${item.sugar} | ${item.ice}${item.milk ? ' | ' + item.milk : ''}${item.toppings && item.toppings.length > 0 ? ' | +' + item.toppings.join(', ') : ''}</p>
                     <div style="font-weight: 600; color: var(--primary-dark); margin-top: 5px;">${item.price}k</div>
                 </div>
                 
@@ -268,7 +268,7 @@ window.showOrderDetails = function(index) {
             <img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
             <div style="flex: 1;">
                 <h4 style="margin: 0 0 5px 0; color: var(--primary-dark);">${item.name}</h4>
-                <p style="margin: 0; font-size: 0.85rem; color: var(--text-light);">Size: ${item.size} | Đường: ${item.sugar} | Đá: ${item.ice}</p>
+                <p style="margin: 0; font-size: 0.85rem; color: var(--text-light);">Size: ${item.size} | Đường: ${item.sugar} | Đá: ${item.ice}${item.milk ? ' | Sữa: ' + item.milk : ''}${item.toppings && item.toppings.length > 0 ? ' | Topping: ' + item.toppings.join(', ') : ''}</p>
             </div>
             <div style="font-weight: 600; color: var(--primary-dark);">${item.price}k</div>
         </div>

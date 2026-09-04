@@ -238,15 +238,51 @@ export function renderModalData(index) {
     }
     document.getElementById('modal-tags').innerHTML = tagsHtml;
 
-    document.getElementById('price-m').innerHTML = `${product.priceM}<sup>k</sup>`;
+    // Reset toppings and milk options
+    document.querySelectorAll('.topping-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.background = 'transparent';
+        btn.style.borderStyle = 'dashed';
+    });
+    const milkBtns = document.querySelectorAll('.milk-btn');
+    if (milkBtns.length > 0) {
+        milkBtns.forEach(btn => btn.classList.remove('active'));
+        milkBtns[0].classList.add('active'); // default to first option
+    }
+
+    const milkContainer = document.getElementById('milk-options-container');
+    if (milkContainer) {
+        if (product.category === 'smoothie' || product.category === 'SMOOTHIE') {
+            milkContainer.style.display = 'block';
+        } else {
+            milkContainer.style.display = 'none';
+        }
+    }
+
+    updatePrice();
+    
     const caloM = product.caloM || (product.nutritionM && product.nutritionM.calo) || '?';
     document.getElementById('calo-m').textContent = `${caloM} kcal`;
-    document.getElementById('price-l').innerHTML = `${product.priceL}<sup>k</sup>`;
     const caloL = product.caloL || (product.nutritionL && product.nutritionL.calo) || '?';
     document.getElementById('calo-l').textContent = `${caloL} kcal`;
 
     const sizeMBtn = document.querySelector('.size-btn[data-size="M"]');
     if (sizeMBtn) sizeMBtn.click();
+}
+
+export function updatePrice() {
+    if (!currentProduct) return;
+    
+    let toppingPrice = 0;
+    document.querySelectorAll('.topping-btn.active').forEach(btn => {
+        toppingPrice += parseInt(btn.getAttribute('data-price') || 0);
+    });
+
+    const priceM = parseInt(currentProduct.priceM) + toppingPrice;
+    const priceL = parseInt(currentProduct.priceL) + toppingPrice;
+
+    document.getElementById('price-m').innerHTML = `${priceM}<sup>k</sup>`;
+    document.getElementById('price-l').innerHTML = `${priceL}<sup>k</sup>`;
 }
 
 export function updateNutrition(size) {

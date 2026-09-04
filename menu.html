@@ -258,6 +258,17 @@
 
                     <!-- Options in modal as requested -->
                     <div class="modal-section pt-4 border-t">
+                        <!-- Milk Options (Hidden by default, shown for smoothies) -->
+                        <div id="milk-options-container" style="display: none; margin-bottom: 20px;">
+                            <h3>LOẠI SỮA (Dành cho Smoothie)</h3>
+                            <div class="quick-options" style="margin-top: 10px;">
+                                <div class="option-btns">
+                                    <button class="opt-btn milk-btn active" style="flex: 1;">Sữa hạt</button>
+                                    <button class="opt-btn milk-btn" style="flex: 1;">Sữa ít béo</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <h3>TUỲ CHỌN ĐƯỜNG & ĐÁ</h3>
                         <div class="quick-options">
                             <div class="option-group">
@@ -275,6 +286,22 @@
                                     <button class="opt-btn active">Bình thường</button>
                                 </div>
                             </div>
+                        </div>
+
+                        <h3 style="margin-top: 20px;">TOPPING THÊM</h3>
+                        <div class="topping-options" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                            <button class="topping-btn" data-price="15" style="flex: 1; min-width: 80px; padding: 10px; border: 1px dashed rgba(82,162,159,0.5); border-radius: 8px; background: transparent; color: var(--primary-dark); font-weight: 600; cursor: pointer; transition: 0.3s; text-align: center;">
+                                Hạt chia
+                                <div style="font-size: 0.8rem; margin-top: 5px;">+15k</div>
+                            </button>
+                            <button class="topping-btn" data-price="15" style="flex: 1; min-width: 80px; padding: 10px; border: 1px dashed rgba(82,162,159,0.5); border-radius: 8px; background: transparent; color: var(--primary-dark); font-weight: 600; cursor: pointer; transition: 0.3s; text-align: center;">
+                                Yến mạch
+                                <div style="font-size: 0.8rem; margin-top: 5px;">+15k</div>
+                            </button>
+                            <button class="topping-btn" data-price="20" style="flex: 1; min-width: 80px; padding: 10px; border: 1px dashed rgba(82,162,159,0.5); border-radius: 8px; background: transparent; color: var(--primary-dark); font-weight: 600; cursor: pointer; transition: 0.3s; text-align: center;">
+                                Các loại hạt
+                                <div style="font-size: 0.8rem; margin-top: 5px;">+20k</div>
+                            </button>
                         </div>
                     </div>
 

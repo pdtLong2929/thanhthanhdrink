@@ -1,6 +1,6 @@
 import { fetchDataFromFirebase, submitDirectOrder, addToCart, store } from './firebase-service.js';
 import { initHeroSlider, initAboutSlider, initScrollspy } from './ui-components.js';
-import { initProductGrid, initFullMenu, closeModal, updateNutrition, prevModalProduct, nextModalProduct, getCurrentProduct, updateCategoryCounts } from './product-menu.js';
+import { initProductGrid, initFullMenu, closeModal, updateNutrition, prevModalProduct, nextModalProduct, getCurrentProduct, updateCategoryCounts, updatePrice } from './product-menu.js';
 import { initReviewsPage } from './reviews.js';
 import { auth } from './firebase-config.js';
 
@@ -83,6 +83,21 @@ function initApp() {
         });
     });
 
+    // Toppings
+    document.querySelectorAll('.topping-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            this.classList.toggle('active');
+            if (this.classList.contains('active')) {
+                this.style.background = 'rgba(82,162,159,0.3)';
+                this.style.borderStyle = 'solid';
+            } else {
+                this.style.background = 'transparent';
+                this.style.borderStyle = 'dashed';
+            }
+            updatePrice();
+        });
+    });
+
 
     // 8. Add to Cart Button handling
     const addCartBtn = document.getElementById('modal-btn-add-cart');
@@ -113,7 +128,20 @@ function initApp() {
             const sugarSelected = optionGroups.length > 0 && optionGroups[0].querySelector('.opt-btn.active') ? optionGroups[0].querySelector('.opt-btn.active').textContent : '100%';
             const iceSelected = optionGroups.length > 1 && optionGroups[1].querySelector('.opt-btn.active') ? optionGroups[1].querySelector('.opt-btn.active').textContent : 'Bình thường';
             
-            const price = sizeSelected === 'M' ? currentProduct.priceM : currentProduct.priceL;
+            let toppingPrice = 0;
+            const toppings = Array.from(document.querySelectorAll('.topping-btn.active')).map(btn => {
+                toppingPrice += parseInt(btn.getAttribute('data-price') || 0);
+                return btn.textContent.trim().split('\n')[0];
+            });
+
+            let milkSelected = null;
+            if (currentProduct.category === 'smoothie' || currentProduct.category === 'SMOOTHIE') {
+                const activeMilk = document.querySelector('.milk-btn.active');
+                if (activeMilk) milkSelected = activeMilk.textContent;
+            }
+
+            const basePrice = sizeSelected === 'M' ? currentProduct.priceM : currentProduct.priceL;
+            const price = parseInt(basePrice) + toppingPrice;
 
             const cartItem = {
                 productId: currentProduct.id,
@@ -122,6 +150,8 @@ function initApp() {
                 size: sizeSelected,
                 sugar: sugarSelected,
                 ice: iceSelected,
+                toppings: toppings,
+                milk: milkSelected,
                 price: price
             };
 
@@ -186,7 +216,20 @@ window.submitDirectOrder = async function () {
     const sugarSelected = optionGroups.length > 0 && optionGroups[0].querySelector('.opt-btn.active') ? optionGroups[0].querySelector('.opt-btn.active').textContent : '100%';
     const iceSelected = optionGroups.length > 1 && optionGroups[1].querySelector('.opt-btn.active') ? optionGroups[1].querySelector('.opt-btn.active').textContent : 'Bình thường';
     
-    const price = sizeSelected === 'M' ? currentProduct.priceM : currentProduct.priceL;
+    let toppingPrice = 0;
+    const toppings = Array.from(document.querySelectorAll('.topping-btn.active')).map(btn => {
+        toppingPrice += parseInt(btn.getAttribute('data-price') || 0);
+        return btn.textContent.trim().split('\n')[0];
+    });
+
+    let milkSelected = null;
+    if (currentProduct.category === 'smoothie' || currentProduct.category === 'SMOOTHIE') {
+        const activeMilk = document.querySelector('.milk-btn.active');
+        if (activeMilk) milkSelected = activeMilk.textContent;
+    }
+
+    const basePrice = sizeSelected === 'M' ? currentProduct.priceM : currentProduct.priceL;
+    const price = parseInt(basePrice) + toppingPrice;
 
     const orderItem = {
         productId: currentProduct.id,
@@ -195,6 +238,8 @@ window.submitDirectOrder = async function () {
         size: sizeSelected,
         sugar: sugarSelected,
         ice: iceSelected,
+        toppings: toppings,
+        milk: milkSelected,
         price: price
     };
 
