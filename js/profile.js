@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Vui lòng chọn ít nhất 1 món để thanh toán!");
             return;
         }
-        document.getElementById('checkout-modal').style.display = 'flex';
+        document.getElementById('cart-checkout-modal').style.display = 'flex';
     });
 
 });
@@ -317,7 +317,7 @@ window.submitCartOrder = async function() {
     
     if (itemsToOrder.length === 0) {
         alert("Vui lòng chọn ít nhất 1 món để đặt hàng!");
-        document.getElementById('checkout-modal').style.display = 'none';
+        document.getElementById('cart-checkout-modal').style.display = 'none';
         return;
     }
 
@@ -364,7 +364,7 @@ window.submitCartOrder = async function() {
             await deleteDoc(doc(db, "carts", item.docId));
         }
 
-        document.getElementById('checkout-modal').style.display = 'none';
+        document.getElementById('cart-checkout-modal').style.display = 'none';
         document.getElementById('checkout-form').reset();
         
         loadCartData();

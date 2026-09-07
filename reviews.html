@@ -21,42 +21,7 @@
 
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <div class="logo-area">
-                <img src="images/logo.png?v=2" alt="Logo" class="logo-image-header">
-                <div class="brand-text">
-                    <h1>Thanh Thanh Trà</h1>
-                    <span>TRÁI CÂY TƯƠI</span>
-                </div>
-            </div>
-            <nav class="navigation">
-                <ul>
-                    <li><a href="index.html#home">Trang chủ</a></li>
-                    <li><a href="index.html#about">Giới thiệu</a></li>
-                    <li><a href="menu.html">Thực đơn</a></li>
-                    <li><a href="reviews.html" class="active">Đánh giá</a></li>
-                    <li><a href="index.html#customize">Tuỳ chọn</a></li>
-                    <li><a href="sumenh.html">Sứ mệnh</a></li>
-                    <li><a href="index.html#contact">Liên hệ</a></li>
-                </ul>
-                <!-- Mobile Auth Button (visible only on mobile) -->
-                <div class="mobile-auth-cta">
-                    <a href="#" class="btn-primary pill-btn"
-                        onclick="if(window.openAuthModal) window.openAuthModal(); else document.getElementById('auth-modal').style.display='flex'; document.querySelector('.navigation').classList.remove('active'); return false;">Đăng
-                        nhập / Đăng ký</a>
-                </div>
-            </nav>
-            <div class="header-cta" id="header-auth-section">
-                <a href="#" class="btn-primary pill-btn" onclick="if(window.openAuthModal) window.openAuthModal(); else document.getElementById('auth-modal').style.display='flex'; return false;">Đăng nhập / Đăng ký</a>
-            </div>
-
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                <i class="ph ph-list"></i>
-            </button>
-        </div>
-    </header>
+    <div id="app-header"></div>
 
     <main>
         <section style="padding: 10px;"></section>
@@ -101,59 +66,7 @@
     </main>
 
     <!-- Footer -->
-    <footer id="contact" class="footer">
-        <div class="footer-container container">
-            <div class="footer-brand">
-                <div class="logo-area light">
-                    <img src="images/logo.png?v=2" alt="Logo" class="logo-image-header">
-                    <div class="brand-text">
-                        <h3>Thanh Thanh Trà</h3>
-                        <span>TRÁI CÂY TƯƠI</span>
-                    </div>
-                </div>
-                <p>Trà trái cây, sữa chua và smoothie làm từ trái cây tươi cắt trong ngày.</p>
-                <div class="social-links">
-                    <a href="https://facebook.com" target="_blank"><i class="ph ph-facebook-logo"></i></a>
-                    <a href="https://instagram.com" target="_blank"><i class="ph ph-instagram-logo"></i></a>
-                    <a href="https://tiktok.com" target="_blank"><i class="ph ph-tiktok-logo"></i></a>
-                </div>
-            </div>
-
-            <div class="footer-links">
-                <div class="link-column">
-                    <h4>Thực đơn</h4>
-                    <ul>
-                        <li><a href="menu.html?tab=TRÀ TRÁI CÂY">Trà trái cây</a></li>
-                        <li><a href="menu.html?tab=SỮA CHUA">Sữa chua</a></li>
-                        <li><a href="menu.html?tab=SMOOTHIE">Smoothie</a></li>
-                        <li><a href="menu.html?tab=ALL">Bảng giá</a></li>
-                    </ul>
-                </div>
-                <div class="link-column">
-                    <h4>Về quán</h4>
-                    <ul>
-                        <li><a href="index.html#customize">Tuỳ chọn đường & đá</a></li>
-                        <li><a href="about.html">Nguyên liệu</a></li>
-                        <li><a href="tuyendung.html">Tuyển dụng</a></li>
-                        <li><a href="nhuongquyen.html">Nhượng quyền</a></li>
-                    </ul>
-                </div>
-                <div class="link-column contact-column">
-                    <h4>Liên hệ</h4>
-                    <ul>
-                        <li><a href="https://maps.google.com/?q=123+Đường+ABC,+Quận+1,+TP.HCM" target="_blank" data-content="footerAddress">123 Đường ABC, Quận 1, TP.HCM</a></li>
-                        <li><a href="tel:0900000000" data-content="footerPhone">090 000 0000</a></li>
-                        <li><a href="mailto:hello@thanhthanhtra.vn" data-content="footerEmail">hello@thanhthanhtra.vn</a></li>
-                        <li data-content="footerHours">7:00 – 22:00 mỗi ngày</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom container">
-            <p>&copy; 2026 Thanh Thanh Trà. Đơn vị tính giá: 1.000 VNĐ.</p>
-            <p>Thiết kế độc quyền.</p>
-        </div>
-    </footer>
+    <div id="app-footer"></div>
 
     <!-- Product Detail Modal -->
     <div id="product-modal" class="modal">
@@ -277,78 +190,11 @@
         </div>
     </div>
 
-    <!-- Overlay -->
-    <div id="overlay" class="overlay"></div>
-
-    <!-- Checkout Modal -->
-    <div id="checkout-modal" class="modal-overlay" style="display: none;">
-        <div class="auth-modal-box">
-            <button class="auth-modal-close" onclick="document.getElementById('checkout-modal').style.display='none'" style="position:absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-main);"><i class="ph ph-x"></i></button>
-            <h2 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-dark); text-align: center;">Thông tin giao hàng</h2>
-            
-            <form id="checkout-form" onsubmit="event.preventDefault(); submitDirectOrder();">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Họ và tên người nhận</label>
-                    <input type="text" id="checkout-name" required placeholder="Nhập họ và tên" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Số điện thoại</label>
-                    <input type="tel" id="checkout-phone" required placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);">
-                </div>
-
-                <div style="margin-bottom: 25px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Địa chỉ giao hàng</label>
-                    <textarea id="checkout-address" required placeholder="Nhập số nhà, tên đường, phường/xã..." rows="3" style="width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); resize: none; font-family: inherit;"></textarea>
-                </div>
-
-                <button type="submit" id="checkout-submit-btn" class="btn-primary pill-btn" style="width: 100%; padding: 12px; font-size: 1.1rem; font-weight: 600;">Xác nhận đặt hàng</button>
-            </form>
-        </div>
-    </div>
+    <!-- Modals -->
+    <div id="app-modals"></div>
 
     <script type="module" src="js/main.js"></script>
-
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="modal-overlay" style="display: none;">
-        <div class="auth-modal-box text-center">
-            <button class="auth-modal-close" onclick="document.getElementById('auth-modal').style.display='none'"><i
-                    class="ph ph-x"></i></button>
-            <div class="auth-modal-icon">
-                <i class="ph-duotone ph-user-circle"></i>
-            </div>
-            <h2 class="auth-title" id="auth-modal-title" style="margin-bottom: 6px;">Đăng nhập / Đăng ký</h2>
-            <div id="auth-modal-notice" class="auth-modal-notice" style="display: none;">
-                <i class="ph-fill ph-warning-circle"></i>
-                <span id="auth-modal-notice-text"></span>
-            </div>
-            <p class="auth-subtitle" id="auth-modal-subtitle" style="margin-bottom: 20px; color: var(--text-light); font-size: 0.95rem;">Vui lòng đăng nhập để tiếp tục</p>
-            <button id="google-login-btn" class="auth-google-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo"
-                    class="auth-google-icon">
-                Tiếp tục với Google
-            </button>
-        </div>
-    </div>
-
     <script type="module" src="js/auth.js"></script>
-
-    <!-- Success Modal -->
-    <div id="success-modal" class="modal-overlay" style="display: none; z-index: 9999;">
-        <div class="auth-modal-box text-center">
-            <button class="auth-modal-close checkout-close" onclick="document.getElementById('success-modal').style.display='none'">
-                <i class="ph ph-x"></i>
-            </button>
-            <div style="font-size: 4rem; color: #4caf50; margin-bottom: 10px; line-height: 1;">
-                <i class="ph-fill ph-check-circle"></i>
-            </div>
-            <h2 class="auth-title" id="success-modal-title" style="margin-bottom: 10px;">Thành công!</h2>
-            <p class="auth-subtitle" id="success-modal-msg" style="margin-bottom: 25px;">Thao tác thành công.</p>
-            <a href="#" id="success-modal-btn" class="btn-primary pill-btn"
-                style="display: inline-block; width: 100%; text-align: center; font-weight: 600;">Tiếp tục</a>
-        </div>
-    </div>
-
 </body>
 
 </html>

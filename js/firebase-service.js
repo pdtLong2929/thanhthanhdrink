@@ -7,19 +7,22 @@ export const store = {
     products: [],
     reviews: [],
     categories: [],
+    toppings: [],
     siteContent: null
 };
 
 export async function fetchDataFromFirebase(callbacks) {
     try {
-        const [productsSnapshot, reviewsSnapshot, siteContentSnapshot] = await Promise.all([
+        const [productsSnapshot, reviewsSnapshot, siteContentSnapshot, toppingsSnapshot] = await Promise.all([
             getDocs(collection(db, "products")),
             getDocs(collection(db, "reviews")),
-            getDoc(doc(db, "siteContent", "main"))
+            getDoc(doc(db, "siteContent", "main")),
+            getDocs(collection(db, "toppings"))
         ]);
 
         store.products = productsSnapshot.docs.map(doc => doc.data());
         store.reviews = reviewsSnapshot.docs.map(doc => doc.data());
+        store.toppings = toppingsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         
         // Use static categories since Admin panel no longer manages them
         store.categories = [

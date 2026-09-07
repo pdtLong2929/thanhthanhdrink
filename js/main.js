@@ -3,31 +3,10 @@ import { initHeroSlider, initAboutSlider, initScrollspy } from './ui-components.
 import { initProductGrid, initFullMenu, closeModal, updateNutrition, prevModalProduct, nextModalProduct, getCurrentProduct, updateCategoryCounts, updatePrice } from './product-menu.js';
 import { initReviewsPage } from './reviews.js';
 import { auth } from './firebase-config.js';
+import { loadLayout } from './layout.js';
 
-
-function initApp() {
-    // 1. Mobile Menu
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const navigation = document.querySelector('.navigation');
-
-    if (mobileToggle && navigation) {
-        mobileToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navigation.classList.toggle('active');
-        });
-
-        navigation.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navigation.classList.remove('active');
-            });
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!navigation.contains(e.target) && !mobileToggle.contains(e.target)) {
-                navigation.classList.remove('active');
-            }
-        });
-    }
+async function initApp() {
+    await loadLayout();
 
     // 2. Fetch Data and Init Components
     fetchDataFromFirebase([
@@ -83,20 +62,6 @@ function initApp() {
         });
     });
 
-    // Toppings
-    document.querySelectorAll('.topping-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            this.classList.toggle('active');
-            if (this.classList.contains('active')) {
-                this.style.background = 'rgba(82,162,159,0.3)';
-                this.style.borderStyle = 'solid';
-            } else {
-                this.style.background = 'transparent';
-                this.style.borderStyle = 'dashed';
-            }
-            updatePrice();
-        });
-    });
 
 
     // 8. Add to Cart Button handling

@@ -174,34 +174,7 @@
 
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <div class="logo-area">
-                <a href="index.html" class="logo-area" style="text-decoration: none;">
-                    <img src="images/logo.png?v=2" alt="Logo" class="logo-image-header">
-                    <div class="brand-text">
-                        <h1>Thanh Thanh Trà</h1>
-                        <span>TRÁI CÂY TƯƠI</span>
-                    </div>
-                </a>
-            </div>
-            <nav class="navigation">
-                <ul>
-                    <li><a href="index.html">Trang chủ</a></li>
-                    <li><a href="about.html">Giới thiệu</a></li>
-                    <li><a href="menu.html">Thực đơn</a></li>
-                </ul>
-            </nav>
-            <div class="header-cta" id="header-auth-section">
-                <!-- Injected by auth.js -->
-            </div>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" aria-label="Toggle menu">
-                <i class="ph ph-list"></i>
-            </button>
-        </div>
-    </header>
+    <div id="app-header"></div>
 
     <main>
         <section class="profile-section">
@@ -295,47 +268,11 @@
     </main>
 
     <!-- Footer -->
-    <footer id="contact" class="footer">
-        <div class="footer-container container">
-            <div class="footer-brand">
-                <div class="logo-area light">
-                    <img src="images/logo.png?v=2" alt="Logo" class="logo-image-header">
-                    <div class="brand-text">
-                        <h3>Thanh Thanh Trà</h3>
-                        <span>TRÁI CÂY TƯƠI</span>
-                    </div>
-                </div>
-                <p>Trà trái cây, sữa chua và smoothie làm từ trái cây tươi cắt trong ngày.</p>
-            </div>
-            <div class="footer-links">
-                <div class="link-column contact-column">
-                    <h4>Liên hệ</h4>
-                    <ul>
-                        <li><a href="https://maps.google.com/?q=123+Đường+ABC,+Quận+1,+TP.HCM" target="_blank" data-content="footerAddress">123 Đường ABC, Quận 1, TP.HCM</a></li>
-                        <li><a href="tel:0900000000" data-content="footerPhone">090 000 0000</a></li>
-                        <li><a href="mailto:hello@thanhthanhtra.vn" data-content="footerEmail">hello@thanhthanhtra.vn</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <div id="app-footer"></div>
 
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="modal-overlay" style="display: none;">
-        <div class="auth-modal-box text-center">
-            <button class="auth-modal-close" onclick="document.getElementById('auth-modal').style.display='none'"
-                style="position:absolute; top: 15px; right: 15px;"><i class="ph ph-x"></i></button>
-            <h2 style="margin-bottom: 20px; font-family: 'Playfair Display', serif; color: var(--primary-dark);">Đăng
-                nhập</h2>
-            <p style="color: var(--text-light); margin-bottom: 30px;">Vui lòng đăng nhập để tiếp tục</p>
-            <button id="google-login-btn" class="btn-outline pill-btn"
-                style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo"
-                    style="width: 20px; height: 20px;">
-                Tiếp tục với Google
-            </button>
-        </div>
-    </div>
+    <!-- Modals -->
+    <div id="app-modals"></div>
+
     <!-- Order Details Modal -->
     <div id="order-details-modal" class="modal-overlay" style="display: none;">
         <div class="auth-modal-box" style="max-width: 500px; text-align: left; padding: 30px;">
@@ -352,28 +289,16 @@
 
     <script type="module" src="js/auth.js"></script>
     <script type="module" src="js/profile.js"></script>
-
-    <!-- Success Modal -->
-    <div id="success-modal" class="modal-overlay" style="display: none; z-index: 9999;">
-        <div class="auth-modal-box text-center">
-            <button class="auth-modal-close checkout-close" onclick="document.getElementById('success-modal').style.display='none'">
-                <i class="ph ph-x"></i>
-            </button>
-            <div style="font-size: 4rem; color: #4caf50; margin-bottom: 10px; line-height: 1;">
-                <i class="ph-fill ph-check-circle"></i>
-            </div>
-            <h2 class="auth-title" id="success-modal-title" style="margin-bottom: 10px;">Thành công!</h2>
-            <p class="auth-subtitle" id="success-modal-msg" style="margin-bottom: 25px;">Thao tác thành công.</p>
-            <a href="#" id="success-modal-btn" class="btn-primary pill-btn"
-                style="display: inline-block; width: 100%; text-align: center; font-weight: 600;">Tiếp tục</a>
-        </div>
-    </div>
+    <script type="module">
+        import { loadLayout } from './js/layout.js';
+        document.addEventListener('DOMContentLoaded', loadLayout);
+    </script>
 
 
     <!-- Checkout Modal for Cart -->
-    <div id="checkout-modal" class="modal-overlay" style="display: none; z-index: 9999;">
+    <div id="cart-checkout-modal" class="modal-overlay" style="display: none; z-index: 9999;">
         <div class="auth-modal-box">
-            <button class="auth-modal-close checkout-close" onclick="document.getElementById('checkout-modal').style.display='none'">
+            <button class="auth-modal-close checkout-close" onclick="document.getElementById('cart-checkout-modal').style.display='none'">
                 <i class="ph ph-x"></i>
             </button>
             <h2 class="auth-title">Thông tin giao hàng</h2>

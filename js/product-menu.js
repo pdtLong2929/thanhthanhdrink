@@ -238,12 +238,37 @@ export function renderModalData(index) {
     }
     document.getElementById('modal-tags').innerHTML = tagsHtml;
 
-    // Reset toppings and milk options
-    document.querySelectorAll('.topping-btn').forEach(btn => {
-        btn.classList.remove('active');
-        btn.style.background = 'transparent';
-        btn.style.borderStyle = 'dashed';
-    });
+    // Render toppings dynamically
+    const toppingContainer = document.getElementById('topping-options-container');
+    if (toppingContainer && store.toppings) {
+        toppingContainer.innerHTML = '';
+        store.toppings.forEach(t => {
+            const btn = document.createElement('button');
+            btn.className = 'topping-btn';
+            btn.setAttribute('data-price', t.price);
+            btn.setAttribute('data-calo', t.calo || 0);
+            btn.style.cssText = 'flex: 1; min-width: 80px; padding: 10px; border: 1px dashed rgba(82,162,159,0.5); border-radius: 8px; background: transparent; color: var(--primary-dark); font-weight: 600; cursor: pointer; transition: 0.3s; text-align: center;';
+            btn.innerHTML = `
+                ${t.name}
+                <div style="font-size: 0.8rem; margin-top: 5px;">+${t.price}k</div>
+            `;
+            
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                if (btn.classList.contains('active')) {
+                    btn.style.background = 'rgba(82,162,159,0.1)';
+                    btn.style.borderStyle = 'solid';
+                } else {
+                    btn.style.background = 'transparent';
+                    btn.style.borderStyle = 'dashed';
+                }
+                updatePrice();
+            });
+            
+            toppingContainer.appendChild(btn);
+        });
+    }
+
     const milkBtns = document.querySelectorAll('.milk-btn');
     if (milkBtns.length > 0) {
         milkBtns.forEach(btn => btn.classList.remove('active'));
@@ -260,11 +285,6 @@ export function renderModalData(index) {
     }
 
     updatePrice();
-    
-    const caloM = product.caloM || (product.nutritionM && product.nutritionM.calo) || '?';
-    document.getElementById('calo-m').textContent = `${caloM} kcal`;
-    const caloL = product.caloL || (product.nutritionL && product.nutritionL.calo) || '?';
-    document.getElementById('calo-l').textContent = `${caloL} kcal`;
 
     const sizeMBtn = document.querySelector('.size-btn[data-size="M"]');
     if (sizeMBtn) sizeMBtn.click();
@@ -274,8 +294,10 @@ export function updatePrice() {
     if (!currentProduct) return;
     
     let toppingPrice = 0;
+    let toppingCalo = 0;
     document.querySelectorAll('.topping-btn.active').forEach(btn => {
         toppingPrice += parseInt(btn.getAttribute('data-price') || 0);
+        toppingCalo += parseInt(btn.getAttribute('data-calo') || 0);
     });
 
     const priceM = parseInt(currentProduct.priceM) + toppingPrice;
@@ -283,6 +305,16 @@ export function updatePrice() {
 
     document.getElementById('price-m').innerHTML = `${priceM}<sup>k</sup>`;
     document.getElementById('price-l').innerHTML = `${priceL}<sup>k</sup>`;
+    
+    // Update calories
+    let baseCaloM = currentProduct.caloM || (currentProduct.nutritionM && currentProduct.nutritionM.calo) || 0;
+    let baseCaloL = currentProduct.caloL || (currentProduct.nutritionL && currentProduct.nutritionL.calo) || 0;
+    
+    if (baseCaloM !== '?') baseCaloM = parseInt(baseCaloM) + toppingCalo;
+    if (baseCaloL !== '?') baseCaloL = parseInt(baseCaloL) + toppingCalo;
+    
+    document.getElementById('calo-m').textContent = `${baseCaloM} kcal`;
+    document.getElementById('calo-l').textContent = `${baseCaloL} kcal`;
 }
 
 export function updateNutrition(size) {

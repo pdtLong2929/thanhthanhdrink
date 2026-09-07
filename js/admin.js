@@ -92,6 +92,7 @@ onAuthStateChanged(auth, async (user) => {
             adminEmail.textContent = user.email;
             
             fetchProducts();
+            fetchToppings();
         } catch(e) {
             console.error(e);
             adminError.style.display = 'block';
@@ -348,3 +349,113 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
         await showDialog(`Lỗi khi lưu món ăn. Chi tiết: ${err.message || err.code || err}`, 'error');
     }
 });
+
+// ================= TOPPINGS =================
+let allToppings = [];
+
+async function fetchToppings() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "toppings"));
+        allToppings = [];
+        querySnapshot.forEach(doc => {
+            allToppings.push({ _docId: doc.id, ...doc.data() });
+        });
+        renderToppingsTable();
+    } catch (e) {
+        console.error("Lỗi khi tải danh sách topping", e);
+    }
+}
+
+function renderToppingsTable() {
+    const tbody = document.querySelector('#toppings-table tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    
+    allToppings.forEach(t => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${t.name}</td>
+            <td>${t.price}</td>
+            <td>${t.calo}</td>
+            <td>
+                <button class="action-btn edit-topping-btn" data-docid="${t._docId}"><i class="ph ph-pencil-simple"></i></button>
+                <button class="action-btn delete-topping-btn" data-docid="${t._docId}"><i class="ph ph-trash"></i></button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    
+    document.querySelectorAll('.edit-topping-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const docId = e.currentTarget.getAttribute('data-docid');
+            openToppingModal(docId);
+        });
+    });
+    
+    document.querySelectorAll('.delete-topping-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const docId = e.currentTarget.getAttribute('data-docid');
+            if (await showDialog("Bạn có chắc muốn xóa topping này?", 'confirm')) {
+                await deleteDoc(doc(db, "toppings", docId));
+                fetchToppings();
+            }
+        });
+    });
+}
+
+// Modal handling
+const toppingModal = document.getElementById('topping-form-modal');
+const btnAddTopping = document.getElementById('btn-add-topping');
+if (btnAddTopping) {
+    btnAddTopping.addEventListener('click', () => openToppingModal(null));
+}
+const closeToppingModalBtn = document.getElementById('close-topping-modal');
+if (closeToppingModalBtn) {
+    closeToppingModalBtn.addEventListener('click', () => toppingModal.style.display = 'none');
+}
+
+function openToppingModal(docId) {
+    toppingModal.style.display = 'block';
+    const form = document.getElementById('topping-form');
+    form.reset();
+    
+    if (docId) {
+        document.getElementById('topping-modal-title').textContent = "Sửa Topping";
+        const t = allToppings.find(item => item._docId === docId);
+        if (t) {
+            document.getElementById('toppingDocId').value = t._docId;
+            document.getElementById('toppingName').value = t.name || '';
+            document.getElementById('toppingPrice').value = t.price || '';
+            document.getElementById('toppingCalo').value = t.calo || '';
+        }
+    } else {
+        document.getElementById('topping-modal-title').textContent = "Thêm Topping";
+        document.getElementById('toppingDocId').value = '';
+    }
+}
+
+const toppingForm = document.getElementById('topping-form');
+if (toppingForm) {
+    toppingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const docId = document.getElementById('toppingDocId').value;
+        const newDocId = docId || 'top_' + Date.now();
+        
+        const toppingData = {
+            name: document.getElementById('toppingName').value,
+            price: parseFloat(document.getElementById('toppingPrice').value) || 0,
+            calo: parseFloat(document.getElementById('toppingCalo').value) || 0
+        };
+        
+        try {
+            await setDoc(doc(db, "toppings", newDocId), toppingData);
+            await showDialog("Đã lưu topping!", 'success');
+            toppingModal.style.display = 'none';
+            fetchToppings();
+        } catch(err) {
+            console.error(err);
+            await showDialog(`Lỗi khi lưu topping. Chi tiết: ${err.message || err.code || err}`, 'error');
+        }
+    });
+}
