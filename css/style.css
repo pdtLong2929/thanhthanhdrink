@@ -386,6 +386,7 @@ button {
     display: flex;
     align-items: center;
     gap: 60px;
+    padding: 0 24px;
 }
 
 
