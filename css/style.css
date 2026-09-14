@@ -1399,7 +1399,19 @@ button {
 
 @media (max-width: 900px) {
     .modal-layout {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+
+    .modal-content {
+        overflow-y: auto;
+    }
+
+    .modal-details-col {
+        overflow-y: visible;
+        max-height: none;
     }
 
     .modal-image-col {
@@ -1774,7 +1786,10 @@ button {
 
     /* Modals */
     .modal-layout {
+        display: flex;
         flex-direction: column;
+        height: auto;
+        overflow: visible;
     }
 
     .modal-image-col {
@@ -1789,6 +1804,8 @@ button {
 
     .modal-details-col {
         padding: 20px 0;
+        overflow-y: visible;
+        max-height: none;
     }
 
     .modal-content {
