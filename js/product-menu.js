@@ -337,13 +337,12 @@ export function updateNutrition(size) {
     } else {
         data = size === 'M' ? currentProduct.nutritionM : currentProduct.nutritionL;
     }
-    if (!data) data = { sugar: 0, fiber: 0, protein: 0, vitc: 0, vitaminC: 0 };
+    if (!data) data = { protein: 0, carb: 0, fat: 0 };
     
     document.getElementById('current-size-label').textContent = `SIZE ${size}`;
-    updateNutriBar('sugar', data.sugar || 0, 60, 'g');
-    updateNutriBar('fiber', data.fiber || 0, 10, 'g');
-    updateNutriBar('protein', data.protein || 0, 10, 'g');
-    updateNutriBar('vitc', data.vitaminC || data.vitc || 0, 150, 'mg');
+    updateNutriBar('protein', data.protein || 0, 50, 'g');
+    updateNutriBar('carb', data.carb || 0, 100, 'g');
+    updateNutriBar('fat', data.fat || 0, 30, 'g');
 }
 
 function updateNutriBar(id, val, max, unit) {
