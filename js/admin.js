@@ -296,10 +296,15 @@ function openProductModal(docId) {
             document.getElementById('prodDesc').value = p.description || '';
             document.getElementById('prodShortDesc').value = p.modal_desc || '';
             
-            document.getElementById('prodSugar').value = p.nutrition ? p.nutrition.sugar : '';
-            document.getElementById('prodFiber').value = p.nutrition ? p.nutrition.fiber : '';
-            document.getElementById('prodProtein').value = p.nutrition ? p.nutrition.protein : '';
-            document.getElementById('prodVitC').value = p.nutrition ? p.nutrition.vitaminC : '';
+            document.getElementById('prodSugarM').value = p.nutritionM ? p.nutritionM.sugar : (p.nutrition ? p.nutrition.sugar : '');
+            document.getElementById('prodFiberM').value = p.nutritionM ? p.nutritionM.fiber : (p.nutrition ? p.nutrition.fiber : '');
+            document.getElementById('prodProteinM').value = p.nutritionM ? p.nutritionM.protein : (p.nutrition ? p.nutrition.protein : '');
+            document.getElementById('prodVitCM').value = p.nutritionM ? (p.nutritionM.vitaminC || p.nutritionM.vitc) : (p.nutrition ? (p.nutrition.vitaminC || p.nutrition.vitc) : '');
+
+            document.getElementById('prodSugarL').value = p.nutritionL ? p.nutritionL.sugar : '';
+            document.getElementById('prodFiberL').value = p.nutritionL ? p.nutritionL.fiber : '';
+            document.getElementById('prodProteinL').value = p.nutritionL ? p.nutritionL.protein : '';
+            document.getElementById('prodVitCL').value = p.nutritionL ? (p.nutritionL.vitaminC || p.nutritionL.vitc) : '';
             
             document.getElementById('prodTags').value = p.tags ? p.tags.join(', ') : '';
         }
@@ -331,11 +336,17 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
         description: document.getElementById('prodDesc').value,
         modal_desc: document.getElementById('prodShortDesc').value,
         tags: tags,
-        nutrition: {
-            sugar: parseFloat(document.getElementById('prodSugar').value) || 0,
-            fiber: parseFloat(document.getElementById('prodFiber').value) || 0,
-            protein: parseFloat(document.getElementById('prodProtein').value) || 0,
-            vitaminC: parseFloat(document.getElementById('prodVitC').value) || 0
+        nutritionM: {
+            sugar: parseFloat(document.getElementById('prodSugarM').value) || 0,
+            fiber: parseFloat(document.getElementById('prodFiberM').value) || 0,
+            protein: parseFloat(document.getElementById('prodProteinM').value) || 0,
+            vitaminC: parseFloat(document.getElementById('prodVitCM').value) || 0
+        },
+        nutritionL: {
+            sugar: parseFloat(document.getElementById('prodSugarL').value) || 0,
+            fiber: parseFloat(document.getElementById('prodFiberL').value) || 0,
+            protein: parseFloat(document.getElementById('prodProteinL').value) || 0,
+            vitaminC: parseFloat(document.getElementById('prodVitCL').value) || 0
         }
     };
     

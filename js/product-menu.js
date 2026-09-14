@@ -13,7 +13,8 @@ export function renderProductsToGrid(gridElement, productList, fullMenu = false)
         
         let tagsHtml = '';
         if (product.tags) {
-            product.tags.forEach(t => {
+            const tagsArray = Array.isArray(product.tags) ? product.tags : [product.tags];
+            tagsArray.forEach(t => {
                 if (t === 'Mới') tagsHtml += `<span class="tag-badge accent">${t}</span>`;
                 else if (t === 'Best Seller') tagsHtml += `<span class="tag-badge special">${t}</span>`;
                 else tagsHtml += `<span class="tag-badge">${t}</span>`;
@@ -40,8 +41,8 @@ export function renderProductsToGrid(gridElement, productList, fullMenu = false)
                     <div class="product-tags">${tagsHtml}</div>
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">${product.name}</h3>
-                    <p class="product-ingredients" style="font-size: 0.8rem; color: var(--text-light); border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 12px; margin-bottom: 12px; min-height: auto;">${product.ingredients}</p>
+                    <h3 class="product-title">${product.name || 'Không tên'}</h3>
+                    <p class="product-ingredients" style="font-size: 0.8rem; color: var(--text-light); border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 12px; margin-bottom: 12px; min-height: auto;">${product.ingredients || ''}</p>
                     
                     <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
                         <div style="color: var(--text-color);">
@@ -52,8 +53,9 @@ export function renderProductsToGrid(gridElement, productList, fullMenu = false)
                 </div>
             `;
         } else {
-            const sales = 100 + (product.name.length * 20);
-            const rating = (4.5 + (product.name.length % 5) * 0.1).toFixed(1);
+            const nameLen = product.name ? product.name.length : 0;
+            const sales = 100 + (nameLen * 20);
+            const rating = (4.5 + (nameLen % 5) * 0.1).toFixed(1);
 
             card.innerHTML = `
                 <div class="product-image-container">
@@ -61,8 +63,8 @@ export function renderProductsToGrid(gridElement, productList, fullMenu = false)
                     <div class="product-tags">${tagsHtml}</div>
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">${product.name}</h3>
-                    <p class="product-ingredients">${product.ingredients}</p>
+                    <h3 class="product-title">${product.name || 'Không tên'}</h3>
+                    <p class="product-ingredients">${product.ingredients || ''}</p>
                     
                     <div class="product-stats">
                         <span><i class="ph-fill ph-star"></i> ${rating}</span>
@@ -179,26 +181,35 @@ function renderFullMenu() {
     const countDisplay = document.getElementById('menu-count');
     if (!grid) return;
 
-    let filtered = store.products;
+    let filtered = [...store.products];
 
     if (currentTab !== 'ALL') {
         filtered = filtered.filter(p => p.category === currentTab);
     }
     if (currentSearch) {
         filtered = filtered.filter(p =>
-            p.name.toLowerCase().includes(currentSearch) ||
-            p.ingredients.toLowerCase().includes(currentSearch)
+            (p.name || '').toLowerCase().includes(currentSearch) ||
+            (p.ingredients || '').toLowerCase().includes(currentSearch)
         );
     }
-    if (currentSort === 'price-asc') {
-        filtered.sort((a, b) => parseInt(a.priceM) - parseInt(b.priceM));
+    
+    if (currentSort === 'default') {
+        filtered.sort((a, b) => {
+            const idA = parseInt((a.id || '').replace('p', '')) || 0;
+            const idB = parseInt((b.id || '').replace('p', '')) || 0;
+            return idA - idB;
+        });
+    } else if (currentSort === 'price-asc') {
+        filtered.sort((a, b) => (parseInt(a.priceM) || 0) - (parseInt(b.priceM) || 0));
     } else if (currentSort === 'price-desc') {
-        filtered.sort((a, b) => parseInt(b.priceM) - parseInt(a.priceM));
+        filtered.sort((a, b) => (parseInt(b.priceM) || 0) - (parseInt(a.priceM) || 0));
     } else if (currentSort === 'calo-asc') {
         filtered.sort((a, b) => {
-            const caloA = a.caloM || (a.nutritionM && a.nutritionM.calo) || 0;
-            const caloB = b.caloM || (b.nutritionM && b.nutritionM.calo) || 0;
-            return parseInt(caloA) - parseInt(caloB);
+            let caloA = parseInt(a.caloM || (a.nutritionM && a.nutritionM.calo));
+            let caloB = parseInt(b.caloM || (b.nutritionM && b.nutritionM.calo));
+            if (isNaN(caloA)) caloA = 9999; // Move items with unknown calo to the end
+            if (isNaN(caloB)) caloB = 9999;
+            return caloA - caloB;
         });
     }
 

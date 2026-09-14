@@ -1915,8 +1915,9 @@ button {
 
     /* Fix slider height on mobile */
     .hero-banner-slider {
-        aspect-ratio: 1 / 0.6 !important;
-        min-height: 320px !important;
+        aspect-ratio: 1301 / 656 !important;
+        min-height: unset !important;
+        padding-top: 0 !important;
     }
 
     .slider-hero-container .hero-title {

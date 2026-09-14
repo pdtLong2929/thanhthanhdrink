@@ -13,14 +13,19 @@ export const store = {
 
 export async function fetchDataFromFirebase(callbacks) {
     try {
+        const productsPromise = getDocs(collection(db, "products")).catch(e => { console.error("Products fetch error:", e); return { docs: [] }; });
+        const reviewsPromise = getDocs(collection(db, "reviews")).catch(e => { console.error("Reviews fetch error:", e); return { docs: [] }; });
+        const siteContentPromise = getDoc(doc(db, "siteContent", "main")).catch(e => { console.error("SiteContent fetch error:", e); return { exists: () => false }; });
+        const toppingsPromise = getDocs(collection(db, "toppings")).catch(e => { console.error("Toppings fetch error:", e); return { docs: [] }; });
+
         const [productsSnapshot, reviewsSnapshot, siteContentSnapshot, toppingsSnapshot] = await Promise.all([
-            getDocs(collection(db, "products")),
-            getDocs(collection(db, "reviews")),
-            getDoc(doc(db, "siteContent", "main")),
-            getDocs(collection(db, "toppings"))
+            productsPromise,
+            reviewsPromise,
+            siteContentPromise,
+            toppingsPromise
         ]);
 
-        store.products = productsSnapshot.docs.map(doc => doc.data());
+        store.products = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         store.reviews = reviewsSnapshot.docs.map(doc => doc.data());
         store.toppings = toppingsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         
@@ -36,9 +41,9 @@ export async function fetchDataFromFirebase(callbacks) {
         }
 
         store.products.sort((a, b) => {
-            const idA = parseInt(a.id.replace('p', ''));
-            const idB = parseInt(b.id.replace('p', ''));
-            return idA - idB;
+            const idA = parseInt((a.id || '').replace('p', ''));
+            const idB = parseInt((b.id || '').replace('p', ''));
+            return (idA || 0) - (idB || 0);
         });
 
         if (callbacks) {
