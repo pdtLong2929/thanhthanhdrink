@@ -89,11 +89,16 @@ export function initProductGrid() {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
     
-    // Explicitly define which products to feature, putting the 2 new items first
-    const desiredIds = ['p0', 'p1', 'p2', 'p3', 'p4', 'p8', 'p9', 'p16'];
-    const featuredProducts = desiredIds
+    // Dynamically get the 2 new items first
+    const newItems = store.products.filter(p => p.tags && (p.tags.includes('MỚI') || p.tags.includes('Mới'))).slice(0, 2);
+    
+    // Then get 6 other featured items
+    const defaultIds = ['p2', 'p3', 'p4', 'p8', 'p9', 'p16'];
+    const otherItems = defaultIds
         .map(id => store.products.find(p => p.id === id))
-        .filter(p => p !== undefined);
+        .filter(p => p !== undefined && !newItems.some(newP => newP.id === p.id));
+        
+    const featuredProducts = [...newItems, ...otherItems].slice(0, 8);
         
     renderProductsToGrid(grid, featuredProducts, false);
 }
