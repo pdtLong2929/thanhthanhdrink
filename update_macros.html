@@ -5,8 +5,8 @@
     <title>Cập nhật Menu Toàn Diện</title>
 </head>
 <body>
-    <h1>Trình Cập Nhật Menu (Tên, Giá, Hình Ảnh, Dinh Dưỡng)</h1>
-    <p>Công cụ này sẽ tự động tải <strong>Tên món, Hình ảnh thật, Giá bán và Chỉ số dinh dưỡng mới nhất</strong> lên Firebase của bạn.</p>
+    <h1>Trình Cập Nhật Menu (Thêm Mô tả ngắn)</h1>
+    <p>Công cụ này sẽ tự động tải <strong>Mô tả ngắn cực hấp dẫn</strong> cùng với Tên, Giá, Ảnh, Dinh dưỡng lên Firebase.</p>
     
     <button id="update-btn" style="padding: 10px 20px; font-size: 16px; background: #0b5c47; color: white; border: none; border-radius: 5px; cursor: pointer;">Bắt Đầu Cập Nhật</button>
     <p id="status" style="margin-top: 20px; font-weight: bold;"></p>
@@ -17,25 +17,25 @@
         import { doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // Dữ liệu mới nhất
+        // Dữ liệu mới nhất (Thêm desc)
         const updatedData = {
-            'p1': {name: 'Thanh Nho Hạ', ingredients: 'Khế, nho xanh', image: 'images/products/khenhoxanh.png', priceM: '55', priceL: '65', M: {calo: 34, protein: 0.6, carbs: 8.3, fat: 0.2}, L: {calo: 48, protein: 0.9, carbs: 11.6, fat: 0.3}},
-            'p2': {name: 'Thanh Citrus', ingredients: 'Cam, bưởi', image: 'images/products/cambuoi.png', priceM: '55', priceL: '65', M: {calo: 31, protein: 0.6, carbs: 7.7, fat: 0.0}, L: {calo: 44, protein: 0.9, carbs: 11.1, fat: 0.1}},
-            'p3': {name: 'Thanh Đào Mộng', ingredients: 'Mận, đào', image: 'images/products/mandao.png', priceM: '55', priceL: '65', M: {calo: 31, protein: 0.6, carbs: 7.6, fat: 0.2}, L: {calo: 44, protein: 0.8, carbs: 10.8, fat: 0.3}},
-            'p4': {name: 'Thanh Xoài Chanh', ingredients: 'Xoài, chanh dây', image: 'images/products/xoaichanhday.png', priceM: '55', priceL: '65', M: {calo: 56, protein: 1.1, carbs: 13.5, fat: 0.4}, L: {calo: 80, protein: 1.5, carbs: 19.4, fat: 0.6}},
-            'p5': {name: 'Thanh Cầu Tuyết', ingredients: 'Mãng cầu', image: 'images/products/mangcau.png', priceM: '55', priceL: '65', M: {calo: 47, protein: 0.7, carbs: 12.0, fat: 0.2}, L: {calo: 68, protein: 1.0, carbs: 17.2, fat: 0.3}},
-            'p6': {name: 'Thanh Lựu Mơ', ingredients: 'Lựu, dâu, hibiscus', image: 'images/products/luudauhibicus.png', priceM: '55', priceL: '65', M: {calo: 49, protein: 1.0, carbs: 11.1, fat: 0.7}, L: {calo: 70, protein: 1.4, carbs: 15.8, fat: 0.9}},
-            'p7': {name: 'Thanh Bưởi Sương', ingredients: 'Bưởi, chanh vàng', image: 'images/products/buoichanhvang.png', priceM: '55', priceL: '65', M: {calo: 27, protein: 0.6, carbs: 6.9, fat: 0.0}, L: {calo: 39, protein: 0.8, carbs: 9.9, fat: 0.0}},
-            'p8': {name: 'Thanh Xoài Pink', ingredients: 'Thanh long, xoài', image: 'images/products/xoaithanhlong.png', priceM: '65', priceL: '75', M: {calo: 81, protein: 2.7, carbs: 16.5, fat: 0.9}, L: {calo: 119, protein: 3.9, carbs: 24.5, fat: 1.3}},
-            'p9': {name: 'Thanh Bơ Mịn', ingredients: 'Bơ, chuối', image: 'images/products/bochuoi.png', priceM: '65', priceL: '75', M: {calo: 122, protein: 3.0, carbs: 18.7, fat: 5.1}, L: {calo: 198, protein: 4.5, carbs: 30.6, fat: 8.3}},
-            'p10': {name: 'Thanh Dâu Mộng', ingredients: 'Thanh long, dâu', image: 'images/products/dauthanhlong.png', priceM: '85', priceL: '95', M: {calo: 73, protein: 2.8, carbs: 13.9, fat: 0.9}, L: {calo: 105, protein: 3.9, carbs: 20.4, fat: 1.2}},
-            'p11': {name: 'Thanh Mướt', ingredients: 'Chuối, dâu, xoài', image: 'images/products/chuoidauxoai.png', priceM: '85', priceL: '95', M: {calo: 83, protein: 2.6, carbs: 18.0, fat: 0.8}, L: {calo: 124, protein: 3.7, carbs: 27.4, fat: 1.2}},
-            'p12': {name: 'Thanh Berry bốn mùa', ingredients: 'Chuối & các loại berry', image: 'images/products/chuoiberry.png', priceM: '85', priceL: '95', M: {calo: 98, protein: 2.8, carbs: 22.1, fat: 0.8}, L: {calo: 147, protein: 4.0, carbs: 33.4, fat: 1.1}},
-            'p13': {name: 'Thanh Bơ Vàng', ingredients: 'Chuối, xoài, bơ', image: 'images/products/chuoixoaibo.png', priceM: '55', priceL: '65', M: {calo: 122, protein: 4.3, carbs: 16.9, fat: 5.0}, L: {calo: 183, protein: 6.4, carbs: 23.9, fat: 8.2}},
-            'p14': {name: 'Thanh Bưởi Hồng', ingredients: 'Thanh long, bưởi, xoài', image: 'images/products/thanhlongbuoixoai.png', priceM: '55', priceL: '65', M: {calo: 99, protein: 4.2, carbs: 13.6, fat: 3.5}, L: {calo: 147, protein: 6.2, carbs: 20.2, fat: 5.3}},
-            'p15': {name: 'Thanh Nho Mát', ingredients: 'Chuối, nho xanh', image: 'images/products/chuoinho.png', priceM: '55', priceL: '65', M: {calo: 117, protein: 4.2, carbs: 19.2, fat: 3.5}, L: {calo: 172, protein: 6.2, carbs: 28.0, fat: 5.2}},
-            'p16': {name: 'Thanh Đa Sắc', ingredients: 'Dâu, táo, kiwi', image: 'images/products/dautaokiwi.png', priceM: '65', priceL: '75', M: {calo: 90, protein: 3.9, carbs: 11.9, fat: 3.5}, L: {calo: 135, protein: 5.9, carbs: 17.9, fat: 5.2}},
-            'p17': {name: 'Thanh Berry Tươi', ingredients: 'Các loại berry', image: 'images/products/cacloaiberry.png', priceM: '65', priceL: '75', M: {calo: 76, protein: 3.8, carbs: 8.3, fat: 3.4}, L: {calo: 116, protein: 5.8, carbs: 13.1, fat: 5.1}}
+            'p1': {name: 'Thanh Nho Hạ', desc: 'Vị chua thanh của khế hòa quyện cùng nho xanh tươi mát, đánh thức mọi giác quan.', ingredients: 'Khế, nho xanh', image: 'images/products/khenhoxanh.png', priceM: '55', priceL: '65', M: {calo: 34, protein: 0.6, carbs: 8.3, fat: 0.2}, L: {calo: 48, protein: 0.9, carbs: 11.6, fat: 0.3}},
+            'p2': {name: 'Thanh Citrus', desc: 'Cặp đôi họ cam quýt kinh điển, chua ngọt hài hòa và bùng nổ vitamin C.', ingredients: 'Cam, bưởi', image: 'images/products/cambuoi.png', priceM: '55', priceL: '65', M: {calo: 31, protein: 0.6, carbs: 7.7, fat: 0.0}, L: {calo: 44, protein: 0.9, carbs: 11.1, fat: 0.1}},
+            'p3': {name: 'Thanh Đào Mộng', desc: 'Sự kết hợp dịu dàng của mận và đào tươi, mang lại cảm giác mộng mơ tươi mới.', ingredients: 'Mận, đào', image: 'images/products/mandao.png', priceM: '55', priceL: '65', M: {calo: 31, protein: 0.6, carbs: 7.6, fat: 0.2}, L: {calo: 44, protein: 0.8, carbs: 10.8, fat: 0.3}},
+            'p4': {name: 'Thanh Xoài Chanh', desc: 'Hương vị nhiệt đới bùng nổ với xoài chín mọng và chanh dây chua thanh.', ingredients: 'Xoài, chanh dây', image: 'images/products/xoaichanhday.png', priceM: '55', priceL: '65', M: {calo: 56, protein: 1.1, carbs: 13.5, fat: 0.4}, L: {calo: 80, protein: 1.5, carbs: 19.4, fat: 0.6}},
+            'p5': {name: 'Thanh Cầu Tuyết', desc: 'Trà mãng cầu đậm đà, chua ngọt tự nhiên, ngon như lớp tuyết tan đầu mùa.', ingredients: 'Mãng cầu', image: 'images/products/mangcau.png', priceM: '55', priceL: '65', M: {calo: 47, protein: 0.7, carbs: 12.0, fat: 0.2}, L: {calo: 68, protein: 1.0, carbs: 17.2, fat: 0.3}},
+            'p6': {name: 'Thanh Lựu Mơ', desc: 'Thức uống đỏ mọng với lựu, dâu tây và hoa hibiscus, thanh lọc cơ thể hoàn hảo.', ingredients: 'Lựu, dâu, hibiscus', image: 'images/products/luudauhibicus.png', priceM: '55', priceL: '65', M: {calo: 49, protein: 1.0, carbs: 11.1, fat: 0.7}, L: {calo: 70, protein: 1.4, carbs: 15.8, fat: 0.9}},
+            'p7': {name: 'Thanh Bưởi Sương', desc: 'Vị đắng nhẹ thanh tao của bưởi và chanh vàng, sảng khoái đánh tan cơn khát.', ingredients: 'Bưởi, chanh vàng', image: 'images/products/buoichanhvang.png', priceM: '55', priceL: '65', M: {calo: 27, protein: 0.6, carbs: 6.9, fat: 0.0}, L: {calo: 39, protein: 0.8, carbs: 9.9, fat: 0.0}},
+            'p8': {name: 'Thanh Xoài Pink', desc: 'Sự kết hợp rực rỡ giữa thanh long đỏ và xoài chín, thơm béo mịn màng.', ingredients: 'Thanh long, xoài', image: 'images/products/xoaithanhlong.png', priceM: '65', priceL: '75', M: {calo: 81, protein: 2.7, carbs: 16.5, fat: 0.9}, L: {calo: 119, protein: 3.9, carbs: 24.5, fat: 1.3}},
+            'p9': {name: 'Thanh Bơ Mịn', desc: 'Bơ sáp dẻo quánh xay cùng chuối ngọt ngào, tạo nên ly smoothie tràn đầy năng lượng.', ingredients: 'Bơ, chuối', image: 'images/products/bochuoi.png', priceM: '65', priceL: '75', M: {calo: 122, protein: 3.0, carbs: 18.7, fat: 5.1}, L: {calo: 198, protein: 4.5, carbs: 30.6, fat: 8.3}},
+            'p10': {name: 'Thanh Dâu Mộng', desc: 'Thanh long đỏ và dâu tây tươi hòa quyện, chua chua ngọt ngọt đầy hấp dẫn.', ingredients: 'Thanh long, dâu', image: 'images/products/dauthanhlong.png', priceM: '85', priceL: '95', M: {calo: 73, protein: 2.8, carbs: 13.9, fat: 0.9}, L: {calo: 105, protein: 3.9, carbs: 20.4, fat: 1.2}},
+            'p11': {name: 'Thanh Mướt', desc: 'Sự cân bằng hoàn hảo giữa chuối, dâu và xoài, mướt mịn đánh thức vị giác.', ingredients: 'Chuối, dâu, xoài', image: 'images/products/chuoidauxoai.png', priceM: '85', priceL: '95', M: {calo: 83, protein: 2.6, carbs: 18.0, fat: 0.8}, L: {calo: 124, protein: 3.7, carbs: 27.4, fat: 1.2}},
+            'p12': {name: 'Thanh Berry bốn mùa', desc: 'Hội tụ tinh hoa các loại quả mọng và chuối, một trải nghiệm bùng nổ vị giác.', ingredients: 'Chuối & các loại berry', image: 'images/products/chuoiberry.png', priceM: '85', priceL: '95', M: {calo: 98, protein: 2.8, carbs: 22.1, fat: 0.8}, L: {calo: 147, protein: 4.0, carbs: 33.4, fat: 1.1}},
+            'p13': {name: 'Thanh Bơ Vàng', desc: 'Sữa chua sánh mịn cùng chuối, xoài, bơ béo ngậy, vô cùng bổ dưỡng.', ingredients: 'Chuối, xoài, bơ', image: 'images/products/chuoixoaibo.png', priceM: '55', priceL: '65', M: {calo: 122, protein: 4.3, carbs: 16.9, fat: 5.0}, L: {calo: 183, protein: 6.4, carbs: 23.9, fat: 8.2}},
+            'p14': {name: 'Thanh Bưởi Hồng', desc: 'Sữa chua tốt cho tiêu hóa kết hợp cùng thanh long, bưởi và xoài thanh mát.', ingredients: 'Thanh long, bưởi, xoài', image: 'images/products/thanhlongbuoixoai.png', priceM: '55', priceL: '65', M: {calo: 99, protein: 4.2, carbs: 13.6, fat: 3.5}, L: {calo: 147, protein: 6.2, carbs: 20.2, fat: 5.3}},
+            'p15': {name: 'Thanh Nho Mát', desc: 'Vị chua nhẹ của nho xanh kết hợp chuối dẻo, mang đến sự tươi mát tột độ.', ingredients: 'Chuối, nho xanh', image: 'images/products/chuoinho.png', priceM: '55', priceL: '65', M: {calo: 117, protein: 4.2, carbs: 19.2, fat: 3.5}, L: {calo: 172, protein: 6.2, carbs: 28.0, fat: 5.2}},
+            'p16': {name: 'Thanh Đa Sắc', desc: 'Bản giao hưởng sắc màu với dâu, táo, kiwi hòa quyện trong nền sữa chua chua ngọt.', ingredients: 'Dâu, táo, kiwi', image: 'images/products/dautaokiwi.png', priceM: '65', priceL: '75', M: {calo: 90, protein: 3.9, carbs: 11.9, fat: 3.5}, L: {calo: 135, protein: 5.9, carbs: 17.9, fat: 5.2}},
+            'p17': {name: 'Thanh Berry Tươi', desc: 'Trọn vị chua thanh của các loại quả mọng tươi kết hợp cùng sữa chua sánh mịn.', ingredients: 'Các loại berry', image: 'images/products/cacloaiberry.png', priceM: '65', priceL: '75', M: {calo: 76, protein: 3.8, carbs: 8.3, fat: 3.4}, L: {calo: 116, protein: 5.8, carbs: 13.1, fat: 5.1}}
         };
 
         const currentTags = {
@@ -63,6 +63,7 @@
                     
                     await setDoc(docRef, {
                         name: d.name,
+                        desc: d.desc,
                         ingredients: d.ingredients,
                         image: d.image,
                         priceM: d.priceM,
@@ -74,7 +75,7 @@
                     
                     console.log(`Đã cập nhật ${p_id}`);
                 }
-                statusText.innerText = 'Cập nhật thành công! Tên, Thành phần, Hình ảnh, Giá và Calo đã chuẩn 100%.';
+                statusText.innerText = 'Cập nhật thành công! Đã chèn thêm Mô Tả Ngắn cho toàn bộ menu.';
                 statusText.style.color = 'green';
             } catch (error) {
                 console.error("Lỗi:", error);
