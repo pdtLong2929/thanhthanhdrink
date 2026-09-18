@@ -3,25 +3,22 @@ import { auth } from "./firebase-config.js";
 
 const provider = new GoogleAuthProvider();
 
-// DOM Elements
-const loginBtn = document.getElementById("google-login-btn");
-const authModal = document.getElementById("auth-modal");
-const headerAuthSection = document.getElementById("header-auth-section");
-
-// Handle Google Login
-if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
+// Use event delegation for dynamically loaded DOM elements
+document.addEventListener("click", (e) => {
+    const loginBtn = e.target.closest("#google-login-btn");
+    if (loginBtn) {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log("Logged in:", result.user);
-                authModal.style.display = "none";
+                const authModal = document.getElementById("auth-modal");
+                if (authModal) authModal.style.display = "none";
             })
             .catch((error) => {
                 console.error("Login Error:", error);
                 alert("Đăng nhập thất bại. Vui lòng thử lại!");
             });
-    });
-}
+    }
+});
 
 // Global function to handle logout
 window.handleLogout = () => {
@@ -70,6 +67,7 @@ window.openAuthModal = (message, title) => {
 // Listen to auth state changes
 onAuthStateChanged(auth, (user) => {
     const mobileAuthCta = document.querySelector('.mobile-auth-cta');
+    const headerAuthSection = document.getElementById("header-auth-section");
     
     if (user) {
         // User is signed in.
