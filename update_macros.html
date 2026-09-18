@@ -1,72 +1,74 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
-    <title>Cập nhật Menu Toàn Diện</title>
+    <title>Cập nhật Dinh Dưỡng</title>
 </head>
-
 <body>
-    <h1>Trình Cập Nhật Menu (Thêm Mô tả dài sinh động)</h1>
-    <p>Công cụ này sẽ tự động cập nhật <strong>Mô tả chi tiết cực kỳ hấp dẫn</strong> cho từng món nước lên Firebase.
-    </p>
-
-    <button id="update-btn"
-        style="padding: 10px 20px; font-size: 16px; background: #0b5c47; color: white; border: none; border-radius: 5px; cursor: pointer;">Bắt
-        Đầu Cập Nhật</button>
+    <h1>Trình Cập Nhật Dinh Dưỡng (Từ File PDF Chuẩn)</h1>
+    <p>Công cụ này sẽ tự động cập nhật chính xác <strong>Calo, Protein, Carb, Fat</strong> cho từng món nước lên Firebase.</p>
+    
+    <button id="update-btn" style="padding: 10px 20px; font-size: 16px; background: #0b5c47; color: white; border: none; border-radius: 5px; cursor: pointer;">Cập Nhật Dinh Dưỡng</button>
     <p id="status" style="margin-top: 20px; font-weight: bold;"></p>
 
     <!-- Firebase SDKs -->
     <script type="module">
         import { auth, db } from './js/firebase-config.js';
-        import { doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // Dữ liệu mới nhất (Thêm longDesc)
-        const updatedData = {
-            'p1': { longDesc: 'Khế chua thanh được thái lát mỏng, kết hợp cùng những quả nho xanh không hạt giòn ngọt đập dập. Nền trà nhài ủ lạnh ướp hương hoa tinh tế làm nền, mang lại cảm giác giải nhiệt tức thì trong những ngày hè oi ả.' },
-            'p2': { longDesc: 'Cam vàng vắt tay lấy nước cốt tươi mới, bưởi hồng tách tép nguyên múi mọng nước thả vào ly. Nền trà ô long lên men thoang thoảng hương mộc, được điều vị tỉ mỉ giúp trọn vị trái cây mà không để lại vị đắng chát.' },
-            'p3': { longDesc: 'Những quả đào chín mọng cắt miếng, quyện cùng nước ép mận Hà Nội đỏ au chua dịu. Trái cây tươi dầm thủ công giúp giải phóng hoàn toàn lớp tinh dầu mỏng nhẹ, mang đến một ly trà nồng nàn hương sắc mùa thu.' },
-            'p4': { longDesc: 'Cốt xoài Cát Chu chín ngọt lịm được xay rối, phủ lên trên là lớp mứt chanh dây nguyên hạt chua thanh rực rỡ. Sự hòa quyện nhịp nhàng giữa vị ngọt béo tự nhiên và chút chua gắt đánh thức mọi nơ-ron vị giác ngay từ ngụm đầu tiên.' },
-            'p5': { longDesc: 'Mãng cầu xiêm tươi được tách hạt tỉ mỉ, dầm nhuyễn cùng chút đường phèn thanh tao tạo nên lớp sệt tự nhiên. Lắc đều cùng đá viên và trà xanh thanh mát, mỗi ngụm uống đều cảm nhận được từng thớ thịt mãng cầu chua ngọt tan trên đầu lưỡi.' },
-            'p6': { longDesc: 'Nền trà sâm dứa ngâm hoa Hibiscus đỏ rực rỡ mang vị chua dịu nhẹ, tôn lên những hạt lựu đỏ tươi giòn rụm và dâu tây Đà Lạt xắt hạt lựu. Một thức uống lộng lẫy không chỉ trọn vị mà còn giàu chất chống oxy hóa giúp làm đẹp da.' },
-            'p7': { longDesc: 'Chanh vàng Mỹ thái lát mỏng ngâm lấy tinh dầu thơm nồng, hòa cùng những tép bưởi da xanh mọng nước chua thanh thanh. Lớp trà xanh đậm vị làm nền hoàn hảo, tạo nên hương vị sảng khoái và cực kỳ thanh khiết cho vóc dáng.' },
+        const currentTags = {
+            'p1': ['MỚI'], 'p2': ['BÁN CHẠY'], 'p3': ['BÁN CHẠY'], 'p4': ['BÁN CHẠY'], 'p5': ['ĐẶC TRƯNG'],
+            'p6': ['MỚI'], 'p7': ['ÍT CALO'], 'p8': ['MỚI'], 'p9': ['BÁN CHẠY'], 'p10': ['ĐẶC TRƯNG'],
+            'p11': ['BÁN CHẠY'], 'p12': ['SIGNATURE'], 'p13': ['MỚI'], 'p14': ['THANH LỌC'], 'p15': ['ÍT NGỌT'],
+            'p16': ['BÁN CHẠY'], 'p17': ['ĐẶC TRƯNG']
+        };
 
-            'p8': { longDesc: 'Lớp dưới là sinh tố xoài chín vàng ruộm ngọt ngào, lớp trên là thanh long đỏ xay nhuyễn tạo nên hiệu ứng loang màu cực nghệ thuật. Vị béo thơm của sữa hòa cùng trái cây nhiệt đới mang đến một ly smoothie vừa no bụng lại vô cùng đẹp mắt.' },
-            'p9': { longDesc: 'Bơ sáp loại 1 béo ngậy được chọn lọc kỹ càng, xay nhuyễn mịn màng cùng những quả chuối tiêu chín kỹ rục ngọt lịm. Chút sữa đặc và sữa tươi giúp món sinh tố thêm phần sánh đặc, mang lại nguồn năng lượng dồi dào mà không ngấy.' },
-            'p10': { longDesc: 'Sự kết hợp hoàn hảo của sắc đỏ tự nhiên: thanh long ruột đỏ mọng nước và dâu tây Đà Lạt chua thanh. Được xay nghiền cùng lớp đá tuyết mát lạnh, ly sinh tố vừa mang màu sắc quyến rũ, vừa cung cấp lượng vitamin C bùng nổ.' },
-            'p11': { longDesc: 'Bản giao hưởng nhiệt đới hoàn chỉnh với vị béo của chuối, chua thanh của dâu tây và hương thơm nồng nàn của xoài chín. Từng lớp hương vị đan xen mượt mà trên nền đá xay nhuyễn, tạo nên một ly thức uống mướt mịn đúng như tên gọi.' },
-            'p12': { longDesc: 'Hội tụ tinh túy của các loại quả mọng cao cấp (dâu tằm, việt quất, mâm xôi) chua chua ngòn ngọt, điểm xuyết thêm chút dẻo béo của chuối tươi. Màu tím thẫm đặc trưng cùng hương thơm lan tỏa quyến rũ chắc chắn sẽ làm bạn say đắm.' },
-
-            'p13': { longDesc: 'Lớp nền sữa chua lên men tự nhiên đặc sánh, chua dịu nhẹ ôm trọn lấy lớp trái cây dầm nhuyễn gồm bơ sáp béo ngậy, xoài chín ngọt thơm và chuối dẻo. Một bữa ăn nhẹ hoàn hảo, cân bằng tuyệt vời giữa chất xơ và lợi khuẩn.' },
-            'p14': { longDesc: 'Sự kết hợp độc đáo giúp làm thanh mát cơ thể với những tép bưởi hồng giòn tan, thanh long đỏ dịu dàng và xoài chín xắt hạt lựu. Trộn đều cùng sữa chua dẻo mịn, mang lại cảm giác nhẹ nhàng, dễ tiêu và cực kỳ tươi mát cho làn da.' },
-            'p15': { longDesc: 'Những quả nho xanh không hạt giòn sần sật cắn vui miệng, kết hợp với chuối chín cắt lát bùi béo trên lớp nền sữa chua thanh khiết. Vị chua nhẹ của nho giúp cân bằng hoàn hảo vị ngọt của chuối, tạo nên một món tráng miệng thanh tao.' },
-            'p16': { longDesc: 'Một bữa tiệc sắc màu thực sự với dâu tây đỏ au, kiwi xanh mướt chua gắt nhẹ và táo giòn rụm ngọt thanh. Trái cây tươi xắt hạt lựu hòa quyện hoàn hảo trong sữa chua trắng muốt, cung cấp nguồn vitamin phong phú cho cả ngày dài.' },
-            'p17': { longDesc: 'Cốt sữa chua sánh mịn hòa quyện hoàn toàn với mứt berry dầm thủ công chua chua ngọt ngọt, mang màu tím lịm đẹp mắt. Vị quả mọng đặc trưng nổ bung trong khoang miệng, để lại dư vị tươi mát đầy sảng khoái và vương vấn dài lâu.' }
+        const updatedMacros = {
+            'p1': { M: {calo: 34, protein: 0.6, carbs: 8.3, fat: 0.2}, L: {calo: 48, protein: 0.8, carbs: 11.6, fat: 0.3} },
+            'p2': { M: {calo: 31, protein: 0.6, carbs: 7.7, fat: 0.0}, L: {calo: 44, protein: 0.9, carbs: 11.1, fat: 0.1} },
+            'p3': { M: {calo: 31, protein: 0.6, carbs: 7.6, fat: 0.2}, L: {calo: 44, protein: 0.8, carbs: 10.8, fat: 0.3} },
+            'p4': { M: {calo: 56, protein: 1.1, carbs: 13.5, fat: 0.4}, L: {calo: 80, protein: 1.5, carbs: 19.4, fat: 0.6} },
+            'p5': { M: {calo: 47, protein: 0.7, carbs: 12.0, fat: 0.2}, L: {calo: 68, protein: 1.0, carbs: 17.2, fat: 0.3} },
+            'p6': { M: {calo: 49, protein: 1.0, carbs: 11.1, fat: 0.7}, L: {calo: 70, protein: 1.4, carbs: 15.8, fat: 0.9} },
+            'p7': { M: {calo: 27, protein: 0.6, carbs: 6.9, fat: 0.1}, L: {calo: 39, protein: 0.8, carbs: 9.9, fat: 0.1} },
+            'p8': { M: {calo: 81, protein: 2.7, carbs: 16.5, fat: 0.9}, L: {calo: 119, protein: 3.9, carbs: 24.5, fat: 1.3} },
+            'p9': { M: {calo: 122, protein: 3.0, carbs: 18.7, fat: 5.1}, L: {calo: 198, protein: 4.5, carbs: 30.6, fat: 8.4} },
+            'p10': { M: {calo: 73, protein: 2.8, carbs: 13.9, fat: 0.9}, L: {calo: 105, protein: 3.9, carbs: 20.4, fat: 1.3} },
+            'p11': { M: {calo: 83, protein: 2.6, carbs: 18.0, fat: 0.8}, L: {calo: 124, protein: 3.7, carbs: 27.4, fat: 1.2} },
+            'p12': { M: {calo: 98, protein: 2.7, carbs: 22.1, fat: 0.8}, L: {calo: 147, protein: 3.9, carbs: 33.4, fat: 1.2} },
+            'p13': { M: {calo: 122, protein: 4.3, carbs: 16.9, fat: 5.0}, L: {calo: 183, protein: 6.4, carbs: 23.9, fat: 8.2} },
+            'p14': { M: {calo: 99, protein: 4.2, carbs: 13.6, fat: 3.5}, L: {calo: 147, protein: 6.2, carbs: 20.2, fat: 5.3} },
+            'p15': { M: {calo: 117, protein: 4.1, carbs: 19.2, fat: 3.5}, L: {calo: 173, protein: 6.2, carbs: 27.9, fat: 5.2} },
+            'p16': { M: {calo: 90, protein: 3.9, carbs: 12.0, fat: 3.5}, L: {calo: 135, protein: 5.9, carbs: 18.0, fat: 5.3} },
+            'p17': { M: {calo: 76, protein: 4.1, carbs: 14.3, fat: 3.6}, L: {calo: 117, protein: 5.7, carbs: 13.1, fat: 5.2} }
         };
 
         document.getElementById('update-btn').addEventListener('click', async () => {
             const statusText = document.getElementById('status');
             statusText.innerText = 'Đang tiến hành đăng nhập Admin... Vui lòng không đóng trang.';
-
+            
             try {
                 // Đăng nhập trước khi ghi
                 const provider = new GoogleAuthProvider();
                 await signInWithPopup(auth, provider);
 
-                statusText.innerText = 'Đăng nhập thành công! Đang tải dữ liệu lên...';
+                statusText.innerText = 'Đăng nhập thành công! Đang tải dữ liệu dinh dưỡng chuẩn lên...';
 
-                for (const [p_id, d] of Object.entries(updatedData)) {
+                for (const [p_id, macros] of Object.entries(updatedMacros)) {
                     const docRef = doc(db, 'products', p_id);
-
-                    // Chỉ update trường longDesc để giữ nguyên các thứ khác đã update trước đó
+                    const newTags = [...currentTags[p_id], `${macros.M.calo} kcal`];
+                    
+                    // Chỉ update trường dinh dưỡng và tags
                     await setDoc(docRef, {
-                        longDesc: d.longDesc
+                        nutritionM: macros.M,
+                        nutritionL: macros.L,
+                        tags: newTags
                     }, { merge: true });
-
-                    console.log(`Đã cập nhật longDesc cho ${p_id}`);
+                    
+                    console.log(`Đã cập nhật dinh dưỡng cho ${p_id}`);
                 }
-                statusText.innerText = 'Cập nhật thành công! Đã chèn thêm Mô Tả Chi Tiết cho toàn bộ 17 món.';
+                statusText.innerText = 'Cập nhật thành công! Đã đồng bộ số liệu dinh dưỡng chuẩn xác tuyệt đối.';
                 statusText.style.color = 'green';
             } catch (error) {
                 console.error("Lỗi:", error);
@@ -76,5 +78,4 @@
         });
     </script>
 </body>
-
 </html>
