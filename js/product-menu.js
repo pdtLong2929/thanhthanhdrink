@@ -249,10 +249,24 @@ export function renderModalData(index) {
     document.getElementById('modal-img').src = product.image;
     document.getElementById('modal-category').textContent = product.category || 'MÓN NƯỚC';
     document.getElementById('modal-title').textContent = product.name;
-    document.getElementById('modal-desc').textContent = product.ingredients;
+    document.getElementById('modal-desc').textContent = product.desc || product.ingredients;
     const longDescEl = document.getElementById('modal-long-desc');
     if (longDescEl) {
-        longDescEl.textContent = product.longDesc || product.desc || '';
+        longDescEl.textContent = product.longDesc || '';
+    }
+
+    const ingredientsContainer = document.getElementById('modal-ingredients');
+    if (ingredientsContainer) {
+        ingredientsContainer.innerHTML = '';
+        if (product.ingredients) {
+            const items = product.ingredients.split(',').map(i => i.trim());
+            items.forEach(item => {
+                const badge = document.createElement('span');
+                badge.className = 'ing-badge';
+                badge.textContent = item;
+                ingredientsContainer.appendChild(badge);
+            });
+        }
     }
 
     let tagsHtml = '';
