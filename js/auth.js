@@ -7,15 +7,23 @@ const provider = new GoogleAuthProvider();
 document.addEventListener("click", (e) => {
     const loginBtn = e.target.closest("#google-login-btn");
     if (loginBtn) {
+        const originalContent = loginBtn.innerHTML;
+        loginBtn.innerHTML = '<i class="ph-duotone ph-spinner ph-spin" style="margin-right: 8px;"></i> Đang tải...';
+        loginBtn.style.pointerEvents = 'none';
+
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log("Logged in:", result.user);
                 const authModal = document.getElementById("auth-modal");
                 if (authModal) authModal.style.display = "none";
+                loginBtn.innerHTML = originalContent;
+                loginBtn.style.pointerEvents = 'auto';
             })
             .catch((error) => {
                 console.error("Login Error:", error);
                 alert("Đăng nhập thất bại. Vui lòng thử lại!");
+                loginBtn.innerHTML = originalContent;
+                loginBtn.style.pointerEvents = 'auto';
             });
     }
 });
