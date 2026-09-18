@@ -89,8 +89,8 @@ export function initProductGrid() {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
     
-    // Explicitly define which products to feature, putting 'p1' (Trà Khế Nho Xanh) first
-    const desiredIds = ['p1', 'p2', 'p3', 'p4', 'p8', 'p9', 'p16', 'p17'];
+    // Explicitly define which products to feature, putting the 2 new items first
+    const desiredIds = ['p0', 'p1', 'p2', 'p3', 'p4', 'p8', 'p9', 'p16'];
     const featuredProducts = desiredIds
         .map(id => store.products.find(p => p.id === id))
         .filter(p => p !== undefined);
