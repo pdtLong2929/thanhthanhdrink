@@ -15,143 +15,262 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="icon" type="image/png" href="images/logo.png?v=2">
     <style>
+        /* Base styles */
         .mission-hero {
-            padding: 120px 0 60px 0;
-            background-color: var(--cream-bg);
+            padding: 140px 0 80px 0;
+            background: linear-gradient(135deg, #f8fbfb 0%, #e8f5f4 100%);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        .mission-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(82, 162, 159, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .mission-hero .container {
+            position: relative;
+            z-index: 1;
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+        
         .mission-section {
-            padding: 60px 0;
-            background: #fff;
+            padding: 80px 0;
+            background: #ffffff;
+            position: relative;
         }
+
         .mission-card {
-            background: white;
+            background: #ffffff;
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-            border: 1px solid rgba(0,0,0,0.02);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+            margin-bottom: 50px;
+            border: 1px solid rgba(82, 162, 159, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
         .mission-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(82, 162, 159, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(82, 162, 159, 0.12);
         }
+
         .mission-title {
             color: var(--primary-dark);
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            border-bottom: 2px dashed rgba(82, 162, 159, 0.2);
-            padding-bottom: 15px;
+            gap: 20px;
+            border-bottom: 2px solid rgba(82, 162, 159, 0.1);
+            padding-bottom: 20px;
         }
+        
         .mission-icon {
-            width: 55px;
-            height: 55px;
-            background: var(--mint-bg);
-            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--mint-bg) 0%, rgba(82,162,159,0.2) 100%);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary-dark);
-            font-size: 2rem;
+            font-size: 2.2rem;
             flex-shrink: 0;
+            transform: rotate(-5deg);
+            transition: transform 0.3s ease;
         }
+        .mission-card:hover .mission-icon {
+            transform: rotate(0deg) scale(1.1);
+        }
+
         .mission-content {
             color: var(--text-main);
             line-height: 1.8;
             font-size: 1.05rem;
         }
-        .mission-content p {
-            margin-bottom: 15px;
-        }
-        .mission-content strong {
-            color: var(--primary-dark);
-        }
+        .mission-content p { margin-bottom: 15px; }
+        .mission-content strong { color: var(--primary-dark); }
+        
         .mission-list {
             list-style: none;
             padding: 0;
-            margin: 0 0 20px 0;
+            margin: 0;
         }
         .mission-list > li {
             position: relative;
-            padding-left: 25px;
-            margin-bottom: 15px;
+            padding-left: 35px;
+            margin-bottom: 20px;
         }
         .mission-list > li::before {
-            content: '\2713'; /* Checkmark */
-            color: var(--primary-dark);
+            content: '\2713';
+            color: #fff;
+            background: var(--primary-color);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
             font-weight: bold;
             position: absolute;
             left: 0;
-            top: 0;
+            top: 4px;
         }
+
         .sub-list {
             list-style: none;
-            padding-left: 25px;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            padding-left: 20px;
+            margin-top: 12px;
+            margin-bottom: 12px;
         }
         .sub-list li {
             position: relative;
             margin-bottom: 8px;
             color: var(--text-color);
+            padding-left: 15px;
         }
         .sub-list li::before {
-            content: '•';
-            color: var(--text-light);
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--primary-light);
+            border-radius: 50%;
             position: absolute;
-            left: -15px;
-            font-size: 1.5rem;
-            line-height: 1;
-            top: -2px;
+            left: 0;
+            top: 10px;
         }
+
+        /* Two column layout for Section 1 */
+        .section-split {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .section-split .mission-image {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+            object-fit: cover;
+        }
+        .mission-card:hover .mission-image {
+            transform: scale(1.02);
+        }
+
         .highlight-box {
-            background: rgba(82, 162, 159, 0.05);
+            background: rgba(82, 162, 159, 0.06);
             border-left: 4px solid var(--primary-dark);
-            padding: 20px;
-            border-radius: 0 12px 12px 0;
-            margin: 20px 0;
+            padding: 25px;
+            border-radius: 0 16px 16px 0;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
         }
+        .highlight-box::after {
+            content: '\2728'; /* Sparkles icon */
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            font-size: 3rem;
+            opacity: 0.05;
+        }
+
         .win-win-box {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 35px;
         }
         .win-card {
-            background: #fff;
-            border: 1px solid rgba(82, 162, 159, 0.2);
-            padding: 25px;
-            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid rgba(82, 162, 159, 0.15);
+            padding: 30px 25px;
+            border-radius: 20px;
             text-align: left;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .win-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(82,162,159,0.05) 0%, transparent 100%);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         .win-card:hover {
-            background: var(--mint-bg);
-            border-color: transparent;
+            transform: translateY(-8px);
+            border-color: rgba(82, 162, 159, 0.4);
+            box-shadow: 0 15px 30px rgba(82, 162, 159, 0.08);
+        }
+        .win-card:hover::before {
+            opacity: 1;
         }
         .win-title {
             color: var(--primary-dark);
             font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
+            font-size: 1.25rem;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
+        .win-icon-wrapper {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            background: #f8fafc;
+        }
+
         .formula-box {
             background: #f8fafc;
-            padding: 15px 20px;
-            border-radius: 12px;
-            font-family: monospace;
-            font-size: 1rem;
-            margin: 15px 0;
+            padding: 20px 25px;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            margin: 25px 0;
             border: 1px dashed #cbd5e1;
             color: #334155;
+            position: relative;
+        }
+        .formula-box::before {
+            content: '=';
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            color: rgba(0,0,0,0.03);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 992px) {
+            .section-split { grid-template-columns: 1fr; }
+            .section-split .mission-image { max-width: 500px; margin: 0 auto 30px; display: block; }
+        }
+        @media (max-width: 768px) {
+            .mission-title { font-size: 1.5rem; }
+            .mission-card { padding: 25px; }
         }
     </style>
 </head>
@@ -164,50 +283,59 @@
     <main>
         <section class="mission-hero">
             <div class="container text-center">
-                <span class="badge-outline" style="margin-bottom: 20px;" data-content="missionBadge">PHÁT TRIỂN BỀN VỮNG</span>
-                <h1 style="color: var(--primary-dark); margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 3rem;" data-content="missionTitle">
+                <span class="badge-outline" style="margin-bottom: 25px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.05);" data-content="missionBadge">PHÁT TRIỂN BỀN VỮNG</span>
+                <h1 style="color: var(--primary-dark); margin-bottom: 25px; font-family: 'Playfair Display', serif; font-size: 3.5rem; letter-spacing: -0.5px;" data-content="missionTitle">
                     Sứ Mệnh Xanh
                 </h1>
-                <p style="color: var(--text-main); font-size: 1.15rem; max-width: 800px; margin: 0 auto; line-height: 1.8;" data-content="missionDesc">
+                <p style="color: var(--text-main); font-size: 1.2rem; max-width: 800px; margin: 0 auto; line-height: 1.8;" data-content="missionDesc">
                     Tại Thanh Thanh Trà, chúng tôi không chỉ mang đến những ly nước thơm ngon, lành mạnh mà còn cam kết phát triển bền vững cùng cộng đồng và môi trường. Mỗi ly nước bạn uống là một phần đóng góp cho hành tinh Xanh.
                 </p>
             </div>
         </section>
 
         <section class="mission-section bg-mint-light">
-            <div class="container" style="max-width: 900px;">
+            <div class="container" style="max-width: 1050px;">
                 
                 <!-- Section 1 -->
-                <div class="mission-card">
+                <div class="mission-card" style="animation: fadeUp 0.8s ease-out 0.2s forwards; opacity: 0;">
                     <h2 class="mission-title">
                         <div class="mission-icon"><i class="ph-duotone ph-recycle"></i></div>
-                        1. Quy trình Tuần hoàn Phế phẩm F&B (Eco-Enzyme & Composting)
+                        1. Quy trình Tuần hoàn Phế phẩm F&B
                     </h2>
-                    <div class="mission-content">
-                        <ul class="mission-list">
-                            <li>
-                                <strong>Thực trạng nguyên liệu:</strong> Khi bán trà trái cây, smoothie và sữa chua, quán sẽ phát sinh 2 nhóm rác thải hữu cơ chính:
-                                <ul class="sub-list">
-                                    <li><strong>Nhóm 1 (Vỏ trái cây giàu tinh dầu & axit):</strong> Vỏ cam, bưởi, chanh dây, dứa (thơm)...</li>
-                                    <li><strong>Nhóm 2 (Bã thực vật giàu nitơ):</strong> Bã trà, bã hạt (chia, yến mạch) và phần thịt trái cây thừa sau khi ép/vắt.</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <strong>Cách thức thực hiện thực tế tại quán:</strong>
-                                <div class="highlight-box">
-                                    <p style="margin-bottom: 10px;"><strong>Làm Nước rửa chén/Nước lau sàn sinh học (Eco-Enzyme):</strong><br> Thu gom Vỏ nhóm 1 &rarr; Ngâm ủ theo tỷ lệ chuẩn <strong>3 phần Vỏ : 1 phần Đường đen/Mật rỉ : 10 phần Nước</strong> trong thùng nhựa kín từ 1 – 3 tháng. Enzyme lên men tự nhiên sẽ tạo ra dung dịch tẩy rửa sinh học lành tính, dùng trực tiếp để vệ sinh bàn ghế, dụng cụ tại quán. Việc này giúp giảm 100% chi phí mua hóa chất tẩy rửa công nghiệp cho quán.</p>
-                                    <p style="margin: 0;"><strong>Làm Phân bón Hữu cơ (Organic Compost):</strong><br> Thu gom Bã nhóm 2 &rarr; Trộn với đất và ủ vi sinh theo phương pháp ủ khô (Dry Composting) đơn giản. Sau 2 – 3 tuần, bã phân hủy thành đất mùn dinh dưỡng.</p>
-                                </div>
-                            </li>
-                            <li>
-                                <strong>Điểm chạm với khách hàng:</strong> Đóng gói phần đất mùn này vào các túi giấy nhỏ tái chế (mang thương hiệu của quán) đặt tại "Trạm Xanh" ở góc quán. Khách hàng đến mua nước có thể <strong>miễn phí nhận 1 túi phân bón vi sinh</strong> về trồng cây tại nhà.
-                            </li>
-                        </ul>
+                    
+                    <div>
+                        <div class="mission-content">
+                            <ul class="mission-list">
+                                <li>
+                                    <strong>Thực trạng nguyên liệu:</strong> Khi bán trà trái cây, smoothie và sữa chua, quán sẽ phát sinh 2 nhóm rác thải hữu cơ chính:
+                                    <ul class="sub-list">
+                                        <li><strong>Nhóm 1 (Vỏ trái cây giàu tinh dầu & axit):</strong> Vỏ cam, bưởi, chanh dây, dứa (thơm)...</li>
+                                        <li><strong>Nhóm 2 (Bã thực vật giàu nitơ):</strong> Bã trà, bã hạt (chia, yến mạch) và phần thịt trái cây thừa sau khi ép/vắt.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Cách thức thực hiện thực tế tại quán:</strong>
+                                    <div class="highlight-box">
+                                        <p style="margin-bottom: 15px;"><strong>Làm Nước rửa chén/Nước lau sàn sinh học (Eco-Enzyme):</strong><br> Thu gom Vỏ nhóm 1 &rarr; Ngâm ủ theo tỷ lệ chuẩn <strong>3 phần Vỏ : 1 phần Đường đen/Mật rỉ : 10 phần Nước</strong> trong thùng nhựa kín từ 1 – 3 tháng. Enzyme lên men tự nhiên sẽ tạo ra dung dịch tẩy rửa sinh học lành tính, dùng trực tiếp để vệ sinh bàn ghế, dụng cụ tại quán. Việc này giúp giảm 100% chi phí mua hóa chất tẩy rửa công nghiệp cho quán.</p>
+                                        
+                                        <!-- Added Image Here -->
+                                        <div style="text-align: center; margin: 25px 0;">
+                                            <img src="images/nuocruachen.png" alt="Nước rửa chén sinh học từ vỏ trái cây" style="max-width: 100%; width: 450px; border-radius: 16px; box-shadow: 0 12px 24px rgba(0,0,0,0.15);">
+                                        </div>
+
+                                        <p style="margin: 0;"><strong>Làm Phân bón Hữu cơ (Organic Compost):</strong><br> Thu gom Bã nhóm 2 &rarr; Trộn với đất và ủ vi sinh theo phương pháp ủ khô (Dry Composting) đơn giản. Sau 2 – 3 tuần, bã phân hủy thành đất mùn dinh dưỡng.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Điểm chạm với khách hàng:</strong> Đóng gói phần đất mùn này vào các túi giấy nhỏ tái chế (mang thương hiệu của quán) đặt tại "Trạm Xanh" ở góc quán. Khách hàng đến mua nước có thể <strong>miễn phí nhận 1 túi phân bón vi sinh</strong> về trồng cây tại nhà.
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Section 2 -->
-                <div class="mission-card">
+                <div class="mission-card" style="animation: fadeUp 0.8s ease-out 0.4s forwards; opacity: 0;">
                     <h2 class="mission-title">
                         <div class="mission-icon"><i class="ph-duotone ph-tree"></i></div>
                         2. Chiến lược Trích Quỹ Trồng Rừng qua Hiệu ứng Nâng Size
@@ -216,40 +344,51 @@
                         <p><strong>Cơ chế vận hành:</strong> Thay vì trích tiền trên tất cả các đơn hàng (gây áp lực lên biên lợi nhuận của Size M), bạn gắn trực tiếp hành động bảo vệ môi trường vào Chiến lược Nâng Size (Size-Up Strategy).</p>
                         
                         <div class="formula-box">
-                            <strong>Công thức kinh tế:</strong><br><br>
-                            &bull; Khách mua Size M &rarr; Sản phẩm tiêu chuẩn.<br>
-                            &bull; Khách nâng cấp lên <strong>Size L (+10.000 VNĐ)</strong> &rarr; Thương hiệu cam kết trích cố định <strong>1.000 VNĐ</strong> vào <strong>Quỹ Trồng Rừng Phòng Hộ</strong> (Hợp tác với các Quỹ uy tín như GAIA hoặc Hạnh Phúc Xanh).
+                            <strong style="color: var(--primary-dark); font-size: 1.1rem; display: block; margin-bottom: 10px;">Công thức kinh tế:</strong>
+                            <div style="margin-bottom: 8px;">&bull; Khách mua Size M &rarr; <span style="color: #64748b;">Sản phẩm tiêu chuẩn.</span></div>
+                            <div>&bull; Khách nâng cấp lên <strong style="color: #0ea5e9;">Size L (+10.000 VNĐ)</strong> &rarr; Thương hiệu cam kết trích cố định <strong style="color: #10b981;">1.000 VNĐ</strong> vào <strong>Quỹ Trồng Rừng Phòng Hộ</strong> (Hợp tác với các Quỹ uy tín như GAIA hoặc Hạnh Phúc Xanh).</div>
                         </div>
 
-                        <h3 style="color: var(--primary-dark); font-size: 1.3rem; margin: 30px 0 15px 0;">Bài toán Đúp (Win-Win-Win):</h3>
+                        <h3 style="color: var(--primary-dark); font-family: 'Playfair Display', serif; font-size: 1.6rem; margin: 40px 0 20px 0; text-align: center;">Bài toán Đúp (Win-Win-Win)</h3>
                         
                         <div class="win-win-box">
                             <div class="win-card">
                                 <div class="win-title">
-                                    <i class="ph-fill ph-smiley" style="color: #f59e0b; font-size: 1.5rem;"></i> Cho Khách hàng
+                                    <div class="win-icon-wrapper" style="background: rgba(245, 158, 11, 0.1);">
+                                        <i class="ph-fill ph-smiley" style="color: #f59e0b; font-size: 1.5rem;"></i>
+                                    </div>
+                                    Cho Khách hàng
                                 </div>
-                                Khách bỏ thêm 10k không chỉ vì nhận được ly nước to hơn 35%, mà còn cảm thấy bản thân đang trực tiếp đóng góp 1 cây xanh cho rừng phòng hộ (giải tỏa tâm lý, tạo động lực nâng Size).
+                                <p style="font-size: 0.95rem; color: #475569; margin: 0;">Khách bỏ thêm 10k không chỉ vì nhận được ly nước to hơn 35%, mà còn cảm thấy bản thân đang trực tiếp đóng góp 1 cây xanh cho rừng phòng hộ (giải tỏa tâm lý, tạo động lực nâng Size).</p>
                             </div>
                             
                             <div class="win-card">
                                 <div class="win-title">
-                                    <i class="ph-fill ph-storefront" style="color: #3b82f6; font-size: 1.5rem;"></i> Cho Thương hiệu
+                                    <div class="win-icon-wrapper" style="background: rgba(59, 130, 246, 0.1);">
+                                        <i class="ph-fill ph-storefront" style="color: #3b82f6; font-size: 1.5rem;"></i>
+                                    </div>
+                                    Cho Thương hiệu
                                 </div>
-                                Biên lợi nhuận của Size L rất cao. Dù trích 1.000 VNĐ, doanh nghiệp vẫn thu về phần lợi nhuận thuần (Net Margin) cao hơn hẳn so với việc bán Size M.
+                                <p style="font-size: 0.95rem; color: #475569; margin: 0;">Biên lợi nhuận của Size L rất cao. Dù trích 1.000 VNĐ, doanh nghiệp vẫn thu về phần lợi nhuận thuần (Net Margin) cao hơn hẳn so với việc bán Size M.</p>
                             </div>
 
                             <div class="win-card">
                                 <div class="win-title">
-                                    <i class="ph-fill ph-plant" style="color: #10b981; font-size: 1.5rem;"></i> Cho Môi trường
+                                    <div class="win-icon-wrapper" style="background: rgba(16, 185, 129, 0.1);">
+                                        <i class="ph-fill ph-plant" style="color: #10b981; font-size: 1.5rem;"></i>
+                                    </div>
+                                    Cho Môi trường
                                 </div>
-                                Dòng tiền đóng góp được tạo ra liên tục và ổn định dựa trên doanh số bán hàng hàng ngày, tạo ra tác động tích cực thực sự cho hành tinh.
+                                <p style="font-size: 0.95rem; color: #475569; margin: 0;">Dòng tiền đóng góp được tạo ra liên tục và ổn định dựa trên doanh số bán hàng hàng ngày, tạo ra tác động tích cực thực sự cho hành tinh.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center" style="margin-top: 50px;">
-                    <a href="index.html#menu" class="btn-primary pill-btn" style="padding: 15px 40px; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(82, 162, 159, 0.3);">Đặt món ngay</a>
+                <div class="text-center" style="margin-top: 60px; animation: fadeUp 0.8s ease-out 0.6s forwards; opacity: 0;">
+                    <a href="index.html#menu" class="btn-primary pill-btn" style="padding: 16px 45px; font-size: 1.15rem; font-weight: 600; box-shadow: 0 15px 30px rgba(82, 162, 159, 0.25); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        Cùng chung tay - Đặt món ngay
+                    </a>
                 </div>
 
             </div>

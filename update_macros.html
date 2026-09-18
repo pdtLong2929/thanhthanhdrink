@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Cập nhật Menu Toàn Diện</title>
+</head>
+<body>
+    <h1>Trình Cập Nhật Menu (Tên, Giá, Hình Ảnh, Dinh Dưỡng)</h1>
+    <p>Công cụ này sẽ tự động tải <strong>Tên món, Hình ảnh thật, Giá bán và Chỉ số dinh dưỡng mới nhất</strong> lên Firebase của bạn.</p>
+    
+    <button id="update-btn" style="padding: 10px 20px; font-size: 16px; background: #0b5c47; color: white; border: none; border-radius: 5px; cursor: pointer;">Bắt Đầu Cập Nhật</button>
+    <p id="status" style="margin-top: 20px; font-weight: bold;"></p>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { auth, db } from './js/firebase-config.js';
+        import { doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // Dữ liệu mới nhất
+        const updatedData = {
+            'p1': {name: 'Thanh Nho Hạ', ingredients: 'Khế, nho xanh', image: 'images/products/khenhoxanh.png', priceM: '55', priceL: '65', M: {calo: 34, protein: 0.6, carbs: 8.3, fat: 0.2}, L: {calo: 48, protein: 0.9, carbs: 11.6, fat: 0.3}},
+            'p2': {name: 'Thanh Citrus', ingredients: 'Cam, bưởi', image: 'images/products/cambuoi.png', priceM: '55', priceL: '65', M: {calo: 31, protein: 0.6, carbs: 7.7, fat: 0.0}, L: {calo: 44, protein: 0.9, carbs: 11.1, fat: 0.1}},
+            'p3': {name: 'Thanh Đào Mộng', ingredients: 'Mận, đào', image: 'images/products/mandao.png', priceM: '55', priceL: '65', M: {calo: 31, protein: 0.6, carbs: 7.6, fat: 0.2}, L: {calo: 44, protein: 0.8, carbs: 10.8, fat: 0.3}},
+            'p4': {name: 'Thanh Xoài Chanh', ingredients: 'Xoài, chanh dây', image: 'images/products/xoaichanhday.png', priceM: '55', priceL: '65', M: {calo: 56, protein: 1.1, carbs: 13.5, fat: 0.4}, L: {calo: 80, protein: 1.5, carbs: 19.4, fat: 0.6}},
+            'p5': {name: 'Thanh Cầu Tuyết', ingredients: 'Mãng cầu', image: 'images/products/mangcau.png', priceM: '55', priceL: '65', M: {calo: 47, protein: 0.7, carbs: 12.0, fat: 0.2}, L: {calo: 68, protein: 1.0, carbs: 17.2, fat: 0.3}},
+            'p6': {name: 'Thanh Lựu Mơ', ingredients: 'Lựu, dâu, hibiscus', image: 'images/products/luudauhibicus.png', priceM: '55', priceL: '65', M: {calo: 49, protein: 1.0, carbs: 11.1, fat: 0.7}, L: {calo: 70, protein: 1.4, carbs: 15.8, fat: 0.9}},
+            'p7': {name: 'Thanh Bưởi Sương', ingredients: 'Bưởi, chanh vàng', image: 'images/products/buoichanhvang.png', priceM: '55', priceL: '65', M: {calo: 27, protein: 0.6, carbs: 6.9, fat: 0.0}, L: {calo: 39, protein: 0.8, carbs: 9.9, fat: 0.0}},
+            'p8': {name: 'Thanh Xoài Pink', ingredients: 'Thanh long, xoài', image: 'images/products/xoaithanhlong.png', priceM: '65', priceL: '75', M: {calo: 81, protein: 2.7, carbs: 16.5, fat: 0.9}, L: {calo: 119, protein: 3.9, carbs: 24.5, fat: 1.3}},
+            'p9': {name: 'Thanh Bơ Mịn', ingredients: 'Bơ, chuối', image: 'images/products/bochuoi.png', priceM: '65', priceL: '75', M: {calo: 122, protein: 3.0, carbs: 18.7, fat: 5.1}, L: {calo: 198, protein: 4.5, carbs: 30.6, fat: 8.3}},
+            'p10': {name: 'Thanh Dâu Mộng', ingredients: 'Thanh long, dâu', image: 'images/products/dauthanhlong.png', priceM: '85', priceL: '95', M: {calo: 73, protein: 2.8, carbs: 13.9, fat: 0.9}, L: {calo: 105, protein: 3.9, carbs: 20.4, fat: 1.2}},
+            'p11': {name: 'Thanh Mướt', ingredients: 'Chuối, dâu, xoài', image: 'images/products/chuoidauxoai.png', priceM: '85', priceL: '95', M: {calo: 83, protein: 2.6, carbs: 18.0, fat: 0.8}, L: {calo: 124, protein: 3.7, carbs: 27.4, fat: 1.2}},
+            'p12': {name: 'Thanh Berry bốn mùa', ingredients: 'Chuối & các loại berry', image: 'images/products/chuoiberry.png', priceM: '85', priceL: '95', M: {calo: 98, protein: 2.8, carbs: 22.1, fat: 0.8}, L: {calo: 147, protein: 4.0, carbs: 33.4, fat: 1.1}},
+            'p13': {name: 'Thanh Bơ Vàng', ingredients: 'Chuối, xoài, bơ', image: 'images/products/chuoixoaibo.png', priceM: '55', priceL: '65', M: {calo: 122, protein: 4.3, carbs: 16.9, fat: 5.0}, L: {calo: 183, protein: 6.4, carbs: 23.9, fat: 8.2}},
+            'p14': {name: 'Thanh Bưởi Hồng', ingredients: 'Thanh long, bưởi, xoài', image: 'images/products/thanhlongbuoixoai.png', priceM: '55', priceL: '65', M: {calo: 99, protein: 4.2, carbs: 13.6, fat: 3.5}, L: {calo: 147, protein: 6.2, carbs: 20.2, fat: 5.3}},
+            'p15': {name: 'Thanh Nho Mát', ingredients: 'Chuối, nho xanh', image: 'images/products/chuoinho.png', priceM: '55', priceL: '65', M: {calo: 117, protein: 4.2, carbs: 19.2, fat: 3.5}, L: {calo: 172, protein: 6.2, carbs: 28.0, fat: 5.2}},
+            'p16': {name: 'Thanh Đa Sắc', ingredients: 'Dâu, táo, kiwi', image: 'images/products/dautaokiwi.png', priceM: '65', priceL: '75', M: {calo: 90, protein: 3.9, carbs: 11.9, fat: 3.5}, L: {calo: 135, protein: 5.9, carbs: 17.9, fat: 5.2}},
+            'p17': {name: 'Thanh Berry Tươi', ingredients: 'Các loại berry', image: 'images/products/cacloaiberry.png', priceM: '65', priceL: '75', M: {calo: 76, protein: 3.8, carbs: 8.3, fat: 3.4}, L: {calo: 116, protein: 5.8, carbs: 13.1, fat: 5.1}}
+        };
+
+        const currentTags = {
+            'p1': ['MỚI'], 'p2': ['BÁN CHẠY'], 'p3': ['BÁN CHẠY'], 'p4': ['BÁN CHẠY'], 'p5': ['ĐẶC TRƯNG'],
+            'p6': ['MỚI'], 'p7': ['ÍT CALO'], 'p8': ['MỚI'], 'p9': ['BÁN CHẠY'], 'p10': ['ĐẶC TRƯNG'],
+            'p11': ['BÁN CHẠY'], 'p12': ['SIGNATURE'], 'p13': ['MỚI'], 'p14': ['THANH LỌC'], 'p15': ['ÍT NGỌT'],
+            'p16': ['BÁN CHẠY'], 'p17': ['ĐẶC TRƯNG']
+        };
+
+        // Hàm này an toàn hơn: dùng { merge: true } với setDoc sẽ tạo mới nếu chưa có, và update nếu đã có
+        document.getElementById('update-btn').addEventListener('click', async () => {
+            const statusText = document.getElementById('status');
+            statusText.innerText = 'Đang tiến hành đăng nhập Admin... Vui lòng không đóng trang.';
+            
+            try {
+                // Đăng nhập trước khi ghi
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+
+                statusText.innerText = 'Đăng nhập thành công! Đang tải dữ liệu lên...';
+
+                for (const [p_id, d] of Object.entries(updatedData)) {
+                    const docRef = doc(db, 'products', p_id);
+                    const newTags = [...currentTags[p_id], `${d.M.calo} kcal`];
+                    
+                    await setDoc(docRef, {
+                        name: d.name,
+                        ingredients: d.ingredients,
+                        image: d.image,
+                        priceM: d.priceM,
+                        priceL: d.priceL,
+                        nutritionM: d.M,
+                        nutritionL: d.L,
+                        tags: newTags
+                    }, { merge: true });
+                    
+                    console.log(`Đã cập nhật ${p_id}`);
+                }
+                statusText.innerText = 'Cập nhật thành công! Tên, Thành phần, Hình ảnh, Giá và Calo đã chuẩn 100%.';
+                statusText.style.color = 'green';
+            } catch (error) {
+                console.error("Lỗi:", error);
+                statusText.innerText = 'Cập nhật thất bại. Chi tiết lỗi: ' + error.message;
+                statusText.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,34 +1,19 @@
 import { store } from './firebase-service.js';
 
-let currentReviewFilter = 'all';
 let currentReviewSort = 'default';
 
 export function initReviewsPage() {
-    const filterTabs = document.querySelectorAll('#review-filters .menu-tab-btn');
     const sortSelect = document.getElementById('review-sort');
     const reviewsGrid = document.getElementById('reviews-grid');
 
     if (!reviewsGrid) return;
 
-    filterTabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
-            currentReviewFilter = e.target.getAttribute('data-filter');
-            filterTabs.forEach(t => {
-                t.style.background = 'transparent';
-                t.style.color = 'var(--text-color)';
-                t.classList.remove('active');
-            });
-            e.target.style.background = 'var(--primary-dark)';
-            e.target.style.color = 'white';
-            e.target.classList.add('active');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            currentReviewSort = e.target.value;
             renderReviewsPage();
         });
-    });
-
-    sortSelect.addEventListener('change', (e) => {
-        currentReviewSort = e.target.value;
-        renderReviewsPage();
-    });
+    }
 
     renderReviewsPage();
 }
@@ -38,12 +23,6 @@ function renderReviewsPage() {
     if (!grid) return;
 
     let filtered = [...store.reviews];
-
-    if (currentReviewFilter === 'with-image') {
-        filtered = filtered.filter(r => r.image !== null);
-    } else if (currentReviewFilter === 'without-image') {
-        filtered = filtered.filter(r => r.image === null);
-    }
 
     if (currentReviewSort === 'rating-desc') {
         filtered.sort((a, b) => b.rating - a.rating);
@@ -72,8 +51,6 @@ function renderReviewsPage() {
             }
         }
 
-        const imageHtml = review.image ? `<img src="${review.image}" alt="Review image" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px;">` : '';
-
         card.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                 <div>
@@ -82,7 +59,6 @@ function renderReviewsPage() {
                 </div>
                 <div style="display: flex; gap: 2px;">${starsHtml}</div>
             </div>
-            ${imageHtml}
             <p style="margin: 0; color: var(--text-color); line-height: 1.6;">"${review.text}"</p>
         `;
         grid.appendChild(card);

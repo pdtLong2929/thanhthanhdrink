@@ -107,14 +107,14 @@
             <div class="banner-overlay-fade right-fade-about"></div>
 
             <!-- Content -->
-            <div class="hero-container slider-hero-container" id="about-texts-wrapper">
+            <div class="about-container slider-about-container" id="about-texts-wrapper">
                 <div class="about-text-slide active">
-                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                    <div class="about-content" style="max-width: 600px; position: relative; z-index: 10;">
                         <span class="badge-outline" data-content="aboutBadge1"
                             style="background: rgba(255,253,243,0.9);">CÂU CHUYỆN THƯƠNG
                             HIỆU</span>
-                        <h2 class="hero-title" data-content="aboutTitle1">Hương vị từ sự tận tâm</h2>
-                        <p class="hero-description" data-content="aboutDesc1">Chúng tôi chọn lọc kỹ lưỡng từng loại trái
+                        <h2 class="about-title" data-content="aboutTitle1">Hương vị từ sự tận tâm</h2>
+                        <p class="about-description" data-content="aboutDesc1">Chúng tôi chọn lọc kỹ lưỡng từng loại trái
                             cây tươi ngon nhất mỗi
                             ngày để mang đến cho bạn những thức uống không chỉ ngon miệng mà còn tốt cho sức khỏe.</p>
                         <a href="about.html" class="btn-primary pill-btn"
@@ -122,11 +122,11 @@
                     </div>
                 </div>
                 <div class="about-text-slide">
-                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                    <div class="about-content" style="max-width: 600px; position: relative; z-index: 10;">
                         <span class="badge-outline" data-content="aboutBadge2"
                             style="background: rgba(255,253,243,0.9);">NGUỒN GỐC TỰ NHIÊN</span>
-                        <h2 class="hero-title" data-content="aboutTitle2">Nông sản Việt nguyên bản</h2>
-                        <p class="hero-description" data-content="aboutDesc2">Khởi nguồn từ tình yêu với nông sản Việt,
+                        <h2 class="about-title" data-content="aboutTitle2">Nông sản Việt nguyên bản</h2>
+                        <p class="about-description" data-content="aboutDesc2">Khởi nguồn từ tình yêu với nông sản Việt,
                             Thanh Thanh Trà trân trọng
                             từng trái cây từ nông trại đến tay bạn, mong muốn mỗi ly nước là một trải nghiệm trọn vẹn.
                         </p>
@@ -135,12 +135,12 @@
                     </div>
                 </div>
                 <div class="about-text-slide">
-                    <div class="hero-content" style="max-width: 600px; position: relative; z-index: 10;">
+                    <div class="about-content" style="max-width: 600px; position: relative; z-index: 10;">
                         <span class="badge-outline" data-content="aboutBadge3"
                             style="background: rgba(255,253,243,0.9);">PHONG CÁCH SỐNG
                             XANH</span>
-                        <h2 class="hero-title" data-content="aboutTitle3">Tươi trẻ & Đầy năng lượng</h2>
-                        <p class="hero-description" data-content="aboutDesc3">Không chỉ là thức uống giải khát, mỗi sản
+                        <h2 class="about-title" data-content="aboutTitle3">Tươi trẻ & Đầy năng lượng</h2>
+                        <p class="about-description" data-content="aboutDesc3">Không chỉ là thức uống giải khát, mỗi sản
                             phẩm còn mang theo nguồn
                             năng lượng tích cực, giúp bạn khởi đầu một ngày mới đầy cảm hứng và sảng khoái.</p>
                         <a href="about.html" class="btn-primary pill-btn"
@@ -172,7 +172,7 @@
             <div class="categories-grid container" id="categories-grid">
                 <div class="category-card">
                     <div class="cat-icon-placeholder">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="Trà Trái Cây">
+                        <img src="images/tratraicay.png" alt="Trà Trái Cây">
                     </div>
                     <h3>Trà Trái Cây</h3>
                     <p>Trà ủ lạnh 8 tiếng, pha cùng trái cây tươi cắt trong ngày. Thanh mát, ít calo, uống cả ngày không
@@ -186,7 +186,7 @@
 
                 <div class="category-card">
                     <div class="cat-icon-placeholder">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2405/2405479.png" alt="Sữa Chua">
+                        <img src="images/suachua.png" alt="Sữa Chua">
                     </div>
                     <h3>Sữa Chua</h3>
                     <p>Sữa chua nhà làm lên men 12 tiếng, kết hợp trái cây nghiền. Nhiều lợi khuẩn, chua dịu, béo nhẹ.
@@ -200,7 +200,7 @@
 
                 <div class="category-card">
                     <div class="cat-icon-placeholder">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1182/1182103.png" alt="Smoothie">
+                        <img src="images/smoothie.png" alt="Smoothie">
                     </div>
                     <h3>Smoothie</h3>
                     <p>Trái cây đông lạnh xay mịn cùng sữa, không thêm nước. Đặc, no lâu – hợp cho bữa sáng hoặc sau
@@ -456,6 +456,19 @@
 
     <!-- Modals -->
     <div id="app-modals"></div>
+
+    <!-- Floating Contact Buttons -->
+    <div class="floating-contact">
+        <a href="tel:0123456789" class="contact-btn phone" title="Gọi điện">
+            <i class="ph ph-phone"></i>
+        </a>
+        <a href="https://zalo.me/" target="_blank" rel="noopener noreferrer" class="contact-btn zalo" title="Zalo">
+            <span style="font-weight: 700; font-size: 0.95rem;">Zalo</span>
+        </a>
+        <a href="https://www.messenger.com/" target="_blank" rel="noopener noreferrer" class="contact-btn messenger" title="Messenger">
+            <i class="ph ph-messenger-logo"></i>
+        </a>
+    </div>
 
     <script type="module" src="js/main.js?v=4"></script>
     <script type="module" src="js/auth.js"></script>
