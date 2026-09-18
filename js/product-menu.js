@@ -236,8 +236,13 @@ export function renderModalData(index) {
     currentProduct = product;
     
     document.getElementById('modal-img').src = product.image;
+    document.getElementById('modal-category').textContent = product.category || 'MÓN NƯỚC';
     document.getElementById('modal-title').textContent = product.name;
     document.getElementById('modal-desc').textContent = product.ingredients;
+    const longDescEl = document.getElementById('modal-long-desc');
+    if (longDescEl) {
+        longDescEl.textContent = product.longDesc || product.desc || '';
+    }
 
     let tagsHtml = '';
     if (product.tags) {
