@@ -321,6 +321,10 @@ button {
     object-position: center;
 }
 
+#about-slides-wrapper .banner-slide img {
+    object-fit: cover;
+}
+
 .banner-overlay-fade {
     position: absolute;
     top: 0;
